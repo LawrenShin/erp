@@ -1,0 +1,36 @@
+/* reset */
+$min-width: 250px; 
+$max-width: 1750px; 
+$base-bg: #f8f8fa; 
+$base-font-size: 12px; 
+$base-line-height: 1.25; 
+$base-font-family: Lato, arial, sans-serif; 
+$custom-font-family: 'Myriad Pro', arial, sans-serif; 
+$third-font-family: Avenir, arial, sans-serif; 
+$default-transition:all 0.3s ease-in;
+
+/* main variables */
+
+//text, titles
+$text-color: #161616;
+$title-color: $text-color;
+$title-font-family: $custom-font-family;
+$color-active: #40bde8;
+$link-color: $color-active;
+$color1: #77848f;
+$color2: #bad3db;
+$color3: #41bee8;
+$color4: #343f4b;
+
+$placeholder: rgba(#000,.3);
+
+$font-size-h1: 36px;
+$line-height-h1: 42px;
+$font-size-h2: 32px;
+$line-height-h2: 37px;
+$font-size-h3: 28px;
+$line-height-h3: 32px;
+
+.internet-store {
+	$color-active: #129C8D;
+}

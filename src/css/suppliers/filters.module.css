@@ -1,0 +1,71 @@
+@import '../base.scss';
+
+.header{
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 2vh;
+  color: var(--filters-subtitle);
+  font-size: var(--font-small);
+}
+.title{
+  font-size: var(--font-size-medium-res);
+  color: #ccc;
+}
+.clear-button{ background-color: #cccccc24 !important; font-size: var(--font-small); }
+
+.filters-wrapper{}
+.filters-wrapper div{
+  color: var(--yeeze-grey) !important;
+  margin-right: 1vw;
+}
+.filter{
+  font-size: var(--font-small) !important;
+  margin-top: 1rem;
+  border: none !important;
+}
+/* rating */
+.title-rating{
+  width: 100%;
+  margin: 0 0 0 1.5rem;
+}
+.title-holder{
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+.title-rating i{
+  float: right;
+  font-size: .85em;
+}
+
+.rating-wrapper{
+  border-radius: 3px;
+  width: 19.8rem;
+  background-color: white;
+  text-align: left;
+  padding: 0px 0px 1rem 0;
+}
+.rating-wrapper:hover{cursor: pointer;}
+.rating{
+  width: 100%;
+  background-color: white;
+  padding: 3rem 1rem 1rem 1rem;
+}
+.active{color: black;}
+.inactive{color: #ccc;}
+.caret-position{
+  line-height: 1.5 !important;
+  font-size: 0.85em !important;
+  margin-right: -.1rem !important;
+}
+.hide{display: none;}
+.button-delete{
+  background: transparent !important;
+}
+.button-delete i{
+  background: transparent !important;
+}
+.snap-right{
+  display: flex;
+  flex-direction: row-reverse;
+}

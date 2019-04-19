@@ -1,0 +1,19 @@
+@import '../../base.scss';
+
+.container{
+  padding: 5rem 2rem 1rem 2rem;
+  background-color: var(--light-grey);
+}
+.controls{
+  width: 1rem;
+  font-size: 1.2rem;
+  position: absolute;
+  right: 2rem;
+  top: 50%;
+}
+.proceed{
+  color: var(--light-blue);
+}
+.errors{
+  border: 1px solid var(--notifications-notificator-color);
+}

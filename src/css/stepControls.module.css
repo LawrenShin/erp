@@ -1,0 +1,22 @@
+@import './base.scss';
+
+.container{
+  display: grid;
+  width: 1rem;
+  position: absolute;
+  right: -1rem;
+  top: 12rem;
+}
+.options-form-container{
+  display: grid;
+  width: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 27.8rem;
+}
+
+.button{
+  color: var(--light-blue) !important;
+  margin: .5rem 0 !important;
+  font-size: 12pt !important;
+}

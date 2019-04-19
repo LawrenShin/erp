@@ -1,0 +1,26 @@
+.check{ 
+  display: inline-block;
+  margin: 2rem 0 0 2rem;
+}
+.check label{
+  padding-left: 2rem !important; 
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input + label {
+  background: url('/images/checkboxes/unchecked.svg') no-repeat;
+  background-size: 1.8rem;
+}
+input[type="checkbox"] + label{
+  display: inline-block;
+  width: auto;
+  height: 2rem;
+  padding-left: 2rem;
+}
+input:checked + label {
+  background: url('/images/checkboxes/check.svg') no-repeat;
+  background-size: 1.8rem;
+}

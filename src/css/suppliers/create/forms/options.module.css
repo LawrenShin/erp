@@ -1,0 +1,50 @@
+@import '../../../base.scss';
+
+.container{
+  display: inline-flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+.option{
+  border: 1px solid;
+  padding: 1rem 0rem;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  margin-left: -1px;
+}
+.closing-icon{
+  align-self: center;
+  width: 100%;
+}
+
+.selected{color: var(--light-blue); z-index: 10;}
+.unselected{color: var(--normal-grey); z-index: 9;}
+
+/* Alternative styles for layout in options form, create supplier page */
+.container-options-step{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: fit-content;
+  margin-bottom: 2rem;
+}
+.option-options-step{
+  border: 1px solid;
+  border-radius: 1rem;
+  padding: 1rem 1rem;
+  width: fit-content;
+  text-align: center;
+  cursor: pointer;
+  margin: 1rem .5rem 0 0;
+}
+
+.selected-options-step{
+  color: var(--white);
+  background: var(--light-blue);
+  z-index: 10;
+}
+.unselected-options-step{
+  color: var(--normal-grey); 
+  z-index: 9;
+}

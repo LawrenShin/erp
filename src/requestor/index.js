@@ -1,0 +1,10 @@
+export const Auth = require('./auth').default;
+export const Common = require('./common').default;
+export const Customer = require('./customer').default;
+export const Product = require('./product').default;
+export const Supplier = require('./supplier').default;
+export const Dashboard = require('./dashboard').default;
+export const Messages = require('./messages').default;
+export const Quotation = require('./quotation').default;
+export const Order = require('./order').default;
+export const resetPassword = require('./resetPassword').default;

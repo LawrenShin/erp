@@ -1,0 +1,220 @@
+@import '../utils/_variables.scss';
+$color4: #343f4b;
+
+
+.dashboard-info {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+    &__item {
+        display: flex;
+        margin: 0 15px 33px;
+        width: calc(100% + 30px);
+        min-height: 68px;
+        &_link {
+            cursor: pointer;
+            width: calc(25% - 30px);
+            &:hover {
+               .dashboard-info__icon i {
+                    transform: scale(1.05);
+               } 
+            }
+        }
+        &:last-child {
+            margin-bottom: 0
+        }
+    }
+    &__icon {
+        font-size: 28px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        i {
+            display: inline-block;
+            transition: transform .3s ease-in
+        }
+        .icon-instruction {
+            font-size: 30px;
+        }
+        .icon-bill {
+            font-size: 33px;
+        }
+        .icon-messages {
+            font-size: 20px
+        }
+    }
+    &__details {
+        background: #fff;
+        color: $color4;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 12px 28px 11px 24px;
+        width: calc(100% - 48px);
+        &_1 {
+            padding-right: 7px;
+            padding-left: 15px
+        }
+        &_big {
+            min-height: 116px;
+            padding: 21px 34px 26px
+        }
+    }
+}
+.upload-buttons {
+    margin-top: 8px;
+    margin-bottom: -5px;
+}
+.btn-upload {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px 10px 5px 0;
+    height: 34px;
+    line-height: 33px;
+    font-size: 12px;
+    min-width: 150px;
+    padding-left: 15px;
+    padding-right: 15px;
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.upload-diveder-text {
+    font-weight: 700;
+    margin: 0 15px 0 5px;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+.dasboard-text_strong {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.upload-file-btn {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+
+}
+.file-hidden {
+    position: absolute;
+    left: 0;
+    top: 0;
+    min-height: 200%;
+    min-width: 200%;
+    opacity: 0;
+}
+.action-dashboard {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 26px;
+    text-align: left;
+    height: 100%;
+    &_download {
+        background: #55cec1;
+    }
+    &_disabled {
+        cursor: default;
+        background: #e3e3e3 
+    }
+}
+.window-head_single {
+    justify-content: flex-end;
+    border-bottom: 0;
+}
+.supplier-dashboard-list {
+    margin-top: 33px;
+}
+.dashboard-tabs_supliers {
+    margin-top: 34px
+}
+.dashboard-nav {
+    display: flex;
+    flex-wrap: wrap;
+    &__link {
+        align-items: center;
+        display: flex;
+        font-size: 14px;
+        background: #e3e3e3;
+        color: #a1a0a0;
+        cursor: pointer;
+        font-weight: 700;
+        justify-content: center;
+        min-width: 168px;
+        padding: 5px 14px;
+        min-height: 60px;
+        margin-right: 2px;
+        text-transform: uppercase;
+        transition: color .3s ease-in, background .3s ease-in;
+        &.selected, &.selected:hover {
+            background: #fff;
+            color: $color4;
+            cursor: default;
+        }
+    }
+}
+.table-supplier-list_dashboard {
+    padding-top: 33px
+}
+.variant-upload {
+    display: inline-block;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1280px) {
+   .upload-diveder-text {
+        margin: 7px 0;
+        display: block;
+   }
+}
+@media screen and (min-width: 1041px) {
+
+    .dashboard-nav {
+        display: flex;
+        flex-wrap: wrap;
+        &__link:not(.selected):hover {            
+            color: #fff;
+            background: $color-active;
+        }
+    }
+}
+@media screen and (max-width: 1320px) {
+    .dashboard-info__item_link {
+        width: calc(50% - 30px)
+    }
+    .dashboard-info__details {
+        padding-left: 15px
+    }
+}
+@media screen and (max-width: 1280px) {
+   .dashboard-nav__link {
+        font-size: 12px;
+        min-width: 0
+   } 
+}
+@media screen and (max-width: 767px) {
+   .dashboard-nav {
+        justify-content: center;
+        &__link {
+            margin-bottom: 8px;
+            width: 100%;
+            max-width: 180px;
+        }
+   } 
+   .upload-diveder-text {
+        margin: 7px 0;
+        display: block;
+   }
+   .dasboard-text_strong {
+    font-size: 14px
+   }
+}
+@media screen and (max-width: 480px) {
+
+    .dashboard-info__item_link {
+        width: calc(100% - 30px)
+    }
+}

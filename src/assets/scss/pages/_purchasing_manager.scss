@@ -1,0 +1,346 @@
+.purchasing {
+    padding: 6px 0 0;
+
+    &__flex-block {
+        margin: 0 -16px;
+    }
+
+    &__graphs {
+        flex: 1 1 66.66%;
+        max-width: 66.66%;
+        padding: 0px 16px;
+        display: flex;
+        flex-direction: column;
+
+        .window {
+
+            &:not(:last-child) {
+                margin-bottom: 30px;
+            }
+        }
+
+    }
+
+    &-graph {
+        padding: 35px 0px 32px;
+        
+        &-2{
+            padding: 80px 0px 4px;
+        }
+    }
+
+    &__table {
+        padding: 47px 0px 30px;
+
+        &-text {
+            text-align: left;
+        }
+
+        .col-list-info {
+            padding: 0;
+        }
+    }
+
+    .public_fixedDataTableRow_main {
+        padding: 8px 0 5px;
+    }
+
+    .public_fixedDataTableRow_highlighted,
+    .public_fixedDataTableRow_highlighted .public_fixedDataTableCell_main {
+        border-right: 1px solid #f0f0f2;
+    }
+
+    .public_fixedDataTableCell_cellContent {
+        border-right: none;
+        padding: 3px 8px 5px;
+    }
+}
+
+.statuses {
+    flex: 1 1 33.33%;
+    max-width: 33.33%;
+    padding: 0px 16px;
+}
+
+.status {
+    &:not(:last-child) {
+        margin-bottom: 34px;
+    }
+
+    &__head {
+        display: flex;
+        padding: 4px;
+        background: #40bde8;
+        align-items: center;
+
+
+        .search-bl__input {
+            height: 22px;
+        }
+
+        .search-bl__btn i {
+            font-size: 14px;
+            transform: translate(-60%, -47%);
+        }
+    }
+
+    &-title {
+        flex: 1 1 53%;
+        max-width: 53%;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 14px;
+        padding-left: 4px;
+        line-height: 20px;
+        color: #fff;
+    }
+
+    &-search {
+        flex: 1 1 47%;
+        max-width: 47%;
+    }
+
+
+    &__table {
+        background: #fff;
+        margin-top: 2px;
+        .table-row {
+            &:not(:last-child) {
+                border-bottom: 1px solid #eaeaea;
+            }
+        }
+
+        .table-cell {
+            padding: 8px 4px 8px 7px;
+
+            &:nth-child(1) {
+                max-width: 230px;
+            }
+        }
+    }
+    .status-number:not(:last-child) {
+        margin-right: 7px;
+    }
+    &-numbers {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -3px;
+    }
+
+    &-number {
+        min-width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 20px;
+        font-size: 10px;
+        color: #fff;
+        line-height: 20px;
+        font-weight: 400;
+
+        &:not(:last-child) {
+            margin-right: 5px;
+        }
+    }
+}
+
+.table {
+    width: 100%;
+
+    &-cell {
+        color: #161616;
+        font-size: 10px;
+        font-weight: 500;
+        padding: 8px 0;
+    }
+
+    &-row {}
+}
+
+.stages {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 0 35px;
+    margin: 0 -16px;
+}
+
+.stage {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    &-box {
+        flex: 1 1 33.33%;
+        max-width: 33.33%;
+        padding: 0px 16px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__head {
+        flex: 0 1 auto;
+    }
+
+    &__title {
+        font-size: 14px;
+        text-transform: uppercase;
+        line-height: 20px;
+        color: #fff;
+        padding: 10px 5px 5px;
+        font-weight: 500;
+        background: #55cec1;
+    }
+
+    &__date {
+        background: #ececec;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        padding: 6px 5px 6px;
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        background: #fff;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8px 8px 2px;
+    }
+
+    &__info {
+
+        &-item {
+            color: #343f4b;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            text-transform: uppercase;
+
+            &_center {
+                text-align: center;
+            }
+        }
+
+        &-cost {
+            display: inline-block;
+
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+        }
+    }
+
+    &__text {
+        font-size: 10px;
+        font-weight: 500;
+
+        &-item {
+            &:not(:last-child) {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+.status-search {
+    .search-bl__btn {
+        width: 17px
+    }
+    .search-bl__input {
+        padding-right: 23px
+    }
+}
+@media screen and (max-width: 1280px) {
+    .statuses {
+        flex-basis: 50%;
+        max-width: 50%;
+    }
+
+    .purchasing__graphs {
+        flex-basis: 50%;
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .statuses {
+        padding: 15px 0;
+        flex-basis: 100%;
+        max-width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .purchasing__flex-block {
+        margin: 0;
+    }
+
+    .status {
+        flex: 1 1 48%;
+        max-width: 48%;
+    }
+
+    .purchasing__graphs {
+        padding: 15px 0;
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+    .stages {
+        padding: 15px 0;
+    }
+
+    .stage-box {
+        flex-basis: 50%;
+        max-width: 50%;
+        padding: 16px;
+    }
+
+    .status__head {
+        display: block;
+    }
+    
+    .status-title{
+        flex-basis: 100%;
+        max-width: 100%;
+        padding: 10px 0;
+    }
+    .status-search{
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    
+    .stages {
+        display: block;
+        margin: 0;
+    }
+    
+    .stage-box{
+        flex-basis: 100%;
+        max-width: 100%;
+        padding: 16px 0;
+    }
+    
+    .statuses{
+        display: block;
+    }
+    
+    .status{
+        flex-basis: 100%;
+        max-width: 100%;
+    }
+    
+    .status-title{
+        text-align: center;
+    }
+}

@@ -1,0 +1,50 @@
+    @font-face {
+    font-family: 'Avenir-Black';
+        src: url('/fonts/avenir-black.eot');
+        src: url('/fonts/avenir-black.woff') format('woff'),
+             url('/fonts/avenir-black.woff2') format('woff2'),
+             url('/fonts/avenir-black.ttf') format('truetype'),
+             url('/fonts/avenir-black.svg#svgFontName') format('svg');
+    }
+    @font-face {
+        font-family: 'Avenir-Light';
+        src: url('/fonts/avenir-light.eot');
+        src: url('/fonts/avenir-light.woff') format('woff'),
+                url('/fonts/avenir-light.woff2') format('woff2'),
+                url('/fonts/avenir-light.ttf') format('truetype'),
+                url('/fonts/avenir-light.svg#svgFontName') format('svg');
+        }
+    
+    @font-face {
+        font-family: 'Lato-Regular';
+        src: url('/fonts/lato-regular.eot');
+        src: url('/fonts/lato-regular.woff') format('woff'),
+                url('/fonts/lato-regular.woff2') format('woff2'),
+                url('/fonts/lato-regular.ttf') format('truetype')
+        }
+    @font-face {
+    font-family: 'Lato-Medium';
+    src: url('/fonts/lato-medium.eot');
+    src: url('/fonts/lato-medium.woff') format('woff'),
+            url('/fonts/lato-medium.woff2') format('woff2'),
+            url('/fonts/lato-medium.ttf') format('truetype')
+    }
+
+
+    @font-face {
+    font-family: 'Myriadpro';
+    src: url('/fonts/myriadpro-regular.eot');
+    src: url('/fonts/myriadpro-regular.woff') format('woff'),
+            url('/fonts/myriadpro-regular.ttf') format('truetype')
+    }
+
+html{ 
+    font-size: 62.5%;
+    font-family: 'Lato-Regular';
+ }
+#root{
+    min-width: 102rem;
+}
+// vars
+:root{
+}

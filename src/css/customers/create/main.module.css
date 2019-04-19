@@ -1,0 +1,6 @@
+@import '../../base.scss';
+
+.create-container{
+  padding: 0 1vw;
+  background-color: var(--light-grey);
+}

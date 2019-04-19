@@ -1,0 +1,29 @@
+.main{display: inline-flex;width: 100%;}
+.title-container{ width: max-content; }
+
+.passed{ background-color: var(--light-blue); }
+.not-passed{ background-color: var(--white); }
+
+.step-container{
+  display: grid;
+  grid-template-columns: 100%;
+  justify-items: center;
+  position: relative;
+  top: -2.4rem;
+  width: 0%;
+}
+.dot{
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: var(--light-blue);
+  border-radius: 50%;
+}
+
+.rail-start{
+  width: 50%;
+  height: .5rem;
+}
+.rail-finish{
+  width: 50%;
+  height: .5rem;
+}

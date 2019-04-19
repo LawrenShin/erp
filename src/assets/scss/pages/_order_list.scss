@@ -1,0 +1,45 @@
+.box-order {
+	padding-top: 10px;
+	.public_fixedDataTableCell_cellContent {
+		padding-top: 12px;
+		padding-bottom: 12px;
+	}
+	.fixedDataTableLayout_header .public_fixedDataTableCell_cellContent {
+		padding-top: 2px;
+		padding-bottom: 9px
+	}
+}
+.suppliers-order {
+	display: flex;
+	align-items: center;
+	margin-right: -30px;
+	.table-supplier-list {
+		width: calc(100% - 30px);
+		color: $text-color
+	}
+}
+.steps-orders {
+	width: 30px;
+	.steps-nav__arrow {
+		margin: 0;
+	}
+}
+@media screen and (max-width: 1040px) {
+	.suppliers-order {
+		margin-right: -22px;
+	}	
+}
+@media screen and (max-width: 767px) {
+	.suppliers-order {
+		display: block;
+		margin-right: 0;
+		.table-supplier-list {
+			width: 100%
+		}
+	}
+	.steps-orders {
+		margin: 15px 0 0;
+		text-align: right;
+		width: 100%;
+	}
+}

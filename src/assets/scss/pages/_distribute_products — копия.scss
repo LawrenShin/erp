@@ -1,0 +1,92 @@
+.steps-heading {
+	margin-top: 31px;
+	display: flex;
+	justify-content: space-between;
+}
+.start-date {
+	margin-top: 2px;
+	&__title {
+		font-weight: 700
+	}
+	&__val {
+		color: #77848f;
+		margin-left: 5px;	
+	}
+	&__icon {
+		color: #bad3db;
+		font-size: 13px;
+		margin-left: 10px
+	}
+}
+.steps-search {
+	margin-left: 15px;
+    width: 100%;
+    max-width: 45%;
+}
+.stage-subtitle {
+	font-size: 16px;
+	font-weight: 500;
+}
+.filters-header_steps {
+	margin: 15px 0 0
+}
+.status-stage {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	&_canceled {
+		background: #f0f0f2;
+		color: #898993;
+	}
+	&_low {
+		background: #55cec1;
+		color: #fff
+	}
+	&_remind {
+		background: #ebbd41;
+		color: #ebbd41
+	}
+}
+.table-steps {
+	padding-top: 12px
+}
+.btn-remind {
+	background: #fff;
+	border: 1px solid #c39a2b;
+	cursor: pointer;
+	display: inline-block;
+	padding: 5px 10px 4px;
+	transition: background .3s ease-in, color .3s ease-in;
+	&:hover {
+		background: #c39a2b;
+		color: #fff;
+	};
+}
+.btn-steps {
+	min-width: 120px;
+	margin: 0 14px 10px 0;
+	padding: 0 21px;
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.counts-suppliers-heading, .steps-heading {
+		display: block;
+	}
+	.steps-search {
+		margin-left: 0;
+	    max-width: 100%;
+	    margin-top: 20px
+	}
+	.buttons-list-distribute {
+		text-align: center;
+		margin-left: -5px;
+		margin-right: -5px
+	}
+	.btn-steps {
+		margin: 0 5px
+	}
+}

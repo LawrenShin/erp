@@ -1,0 +1,27 @@
+@import '../../base.scss';
+
+.container{
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+.item{
+  width: fit-content;
+  text-align: center;
+  padding: 1rem 2rem;
+  background: var(--white);
+}
+.item:hover{
+  cursor: pointer;
+}
+.item svg{
+  margin-right: 1rem; 
+  height: 2rem;
+  max-width: 2rem;
+  vertical-align: bottom;
+}
+.selected{
+  color: white;
+  background: var(--light-blue);
+  box-shadow: 0px 15px 3rem -10px grey;
+}

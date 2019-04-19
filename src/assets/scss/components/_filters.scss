@@ -1,0 +1,287 @@
+.ui.selection.active.dropdown:hover {
+    box-shadow: none
+}
+.filters-header {
+    display: flex;
+    justify-content: space-between;
+    &__title {
+        color: #b4bfc7;
+        font-weight: 500
+    }
+    &__reset {
+        background: none;
+        border: 0;
+        height: auto;
+        padding: 0;
+        color: #b4bfc7;
+        font-size: 12px;
+        font-weight: 500;
+        margin-top: -1px;
+        transition: color .3s ease-in;
+        i {
+            margin-left: 12px;
+        }
+        &:hover {
+            color: $color-active;
+        }
+    }
+}
+.checkbox-elem {
+    position: relative;
+    z-index: 0;
+    input[type="checkbox"], input[type="radio"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        z-index: -1;
+    }
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+        & + .checkbox-label:before {
+            @extend .icon-check:before;
+            font-family: icomoon;
+            border: 0;
+            color: #40BDE8;
+            font-size: 16px;
+        }
+        &:disabled + .checkbox-label:before {
+            color: #bcbcbd;
+        }
+    } 
+    input[type="checkbox"]:disabled + .checkbox-label,
+    input[type="radio"]:disabled + .checkbox-label {
+        cursor: default;
+        color: #b1b1b1;
+        &:before {
+            border-color: #bdbdbe;
+        }
+    }
+}
+.checkbox-label {
+    color: #354052;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    padding-left: 25px;
+    min-height: 16px;
+    &:before {
+        content: '';
+        display: block;
+        border: 1px solid #40BDE8;;
+        border-radius: 50%;
+        height: 16px;
+        width: 16px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        line-height: 1
+    }
+}
+/*.input-elem {
+    max-width: 131px
+}*/
+
+.filters-input, .filters-input[type="text"] {
+    transition: border-color .3s ease-in;
+    height: 24px;
+    line-height: 20px;
+    padding: 0 10px 3px;
+    width: 100%;
+    &:focus {
+        border-color:$color2
+    }
+}
+.filters-elem {
+    &_rating {
+        position: relative;
+    }
+    .select-elem {
+        .ui.selection.dropdown {
+            border: 0;
+            background: #fff;       
+            border-radius: 2px;
+            height: 24px;
+            min-height: 24px;
+            min-width: 100%;
+            padding-top: 4px
+        }
+    }
+    .ui.dropdown > .dropdown.icon {
+        font-size: 4px;
+    }
+    .ui.selection.dropdown > .dropdown.icon {
+        margin: 4px 0 0
+    }
+}
+.filters-range {
+    display: flex;
+    &__title {
+        color: #707a8a;
+        padding-right: 11px;
+        margin-top: -3px;
+        display: flex;
+        align-items: center;
+        width: 98px;
+        margin-top: -4px;
+    }
+    &__slider {
+        width: calc(100% - 98px)
+    }
+    &__inputs {
+        display: flex;
+        align-items: center;
+    }
+    &__divider {
+        color: #707a8a;
+        margin: 0 5px;
+    }
+    .rc-slider {
+        margin-top: 12px;
+    }
+}
+.filters-range__input, input.filters-range__input{
+        padding: 0 10px 4px;
+        line-height: 13px;
+        height: 24px;
+        width: calc(50% - 10px)
+    }
+.filters-box {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px -21px 0;
+    &__item {
+        margin: 0 0 15px;
+        padding: 0 21px;
+        width: 14.28%;
+        .select-elem {
+            .ui.selection.dropdown {
+                height: 24px;
+                min-height: 24px;
+                padding-top: 4px;
+                padding-right: 17px;
+            }
+        }
+        .checkbox-elem {
+            margin-top: 4px;
+        }
+        .select-elem__text {
+            height: 24px;
+            padding: 3px 10px;
+        }
+    }
+    .filters-input, .filters-input[type="text"], .select-elem .ui.selection.dropdown, .select-elem__text, 
+    .select-elem .ui.selection.dropdown .menu, .filters-range__input, input.filters-range__input {
+        border-color: #e6eaee;
+    }
+}
+
+.filters-box .select-elem_multiple .ui.selection.dropdown {
+    border-color: transparent;
+    background: transparent;
+    padding: 24px 0 0;
+}
+.filters-box-without-decor {
+    .select-elem .ui.selection.dropdown {
+        border-color: #fff;
+    }
+    .filters-input, .filters-input[type="text"] {   
+        background: #fff;
+        border-color:#fff;
+    }
+    .select-elem__text {
+        border-color: #fff;
+    }
+    .select-elem_multiple .ui.selection.dropdown {
+        border-color: transparent;
+    }
+    .filters-range__input {
+        border-color:#fff;
+    }
+    .select-elem .ui.selection.dropdown .menu {
+        border: 0;
+    }
+}
+.checkbox-revert {
+    .checkbox-label {
+        padding-left: 0;
+        padding-right: 30px;
+        &:before {
+            left: auto;
+            right: 0;
+        }
+    }
+}
+.checkbox-elem_square {
+    .checkbox-label:before {
+        border-color: #a7a7a7;
+        color: #fff;
+        height: 14px;
+        font-size: 14px;
+        width: 14px;
+        border-radius: 0;
+    }
+    input[type="checkbox"]:checked + .checkbox-label:before,
+    input[type="radio"]:checked + .checkbox-label:before  {
+        @extend .icon-check-2:before;
+        font-family: 'icomoon';
+        font-size: 5px;
+        background: #a7a7a7;
+        padding: 4px 0 0 4px;
+        color: #fff;
+    }
+}
+@media screen and (min-width: 1600px) {
+    .filters-box__item {
+        width: 12.5%
+    }
+}
+@media screen and (max-width: 1370px) {
+    .filters-box {
+        margin-left: -15px;
+        margin-right: -15px;
+        &__item {
+            width: 16.66%;
+            padding-left: 15px;
+            padding-right: 15px
+        }
+    }
+}
+@media screen and (max-width: 1200px) {
+     .filters-box__item {
+        width: 20%
+    }   
+}
+
+@media screen and (max-width: 890px) {
+     .filters-box__item {
+        width: 25%
+    }   
+}
+@media screen and (max-width: 760px) {
+     .filters-box__item {
+        width: 33.33%
+    }   
+}
+@media screen and (max-width: 610px) {
+     .filters-box__item {
+        width: 50%
+    }   
+}
+@media screen and (max-width: 480px) {
+     .filters-box__item {
+        width: 100%
+    }   
+
+    .filters-range {
+        display: block;
+        &__title {
+            padding-right: 0;
+            margin-bottom: 5px;
+            width: 100%
+        }
+        &__slider {
+            width: 100%
+        }
+    }
+}

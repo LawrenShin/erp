@@ -1,0 +1,9 @@
+@import '../../../base.scss';
+.container{
+  margin: 2rem;
+  background: white;
+}
+
+.check{
+  margin: 1rem;
+}

@@ -1,0 +1,20 @@
+@import './base.scss';
+
+.container{
+  cursor: pointer;
+  width: 3rem;
+  align-self: center;
+}
+.settings{
+  cursor: pointer;
+  width: 2rem;
+  vertical-align: bottom;
+}
+.settings img{
+  width: 2.5rem;
+  vertical-align: bottom;
+}
+.exchange{
+  width: 2rem;
+  margin: 1.5rem .5rem 0 .5rem;
+}

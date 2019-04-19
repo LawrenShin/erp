@@ -1,0 +1,6 @@
+@import '../../base.scss';
+
+.h1{
+  color: var(--dark-letters);
+  font-size: var(--font-huge-plus);
+}

@@ -1,0 +1,24 @@
+@import './base.scss';
+
+.container{
+  display: flex;
+  justify-content: flex-end;
+}
+.container i{
+  border: 1px solid var(--eazy-grey);
+  font-size: 1em !important;
+  padding: 0 0.3rem !important;
+  width: fit-content;
+}
+.container span{
+  color: var(--dark-letters);
+  margin-right: 1rem;
+}
+
+.active{
+  color: var(--light-blue);
+}
+.active:hover{cursor: pointer;}
+.inactive{
+  color: #ccc;
+}

@@ -1,0 +1,7 @@
+@import '../base.scss';
+
+.main-container{
+  padding: 0 1vw;
+  background-color: var(--light-grey);
+}
+.text-center{ text-align: center; }

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1">
+		<title>create supplier_contacts</title>
+		<meta name='description' content="" />
+		<meta name="keywords" content="" />
+		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+		<link rel="stylesheet" type="text/css" href="css/semantic.css" /> <!-- удалить когда подключится аналогичное с реакта -->
+		<link rel="stylesheet" type="text/css" href="css/fixed-data-table.css" /> <!-- удалить когда подключится аналогичное с реакта -->
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+
+	</head>
+	<body>
+		<div class="main-wrapper">
+			<aside class="aside js-scroll" id="aside">
+				<div class="aside-wrapper" id="asideInner">
+					<a href="#" class="logo">
+						<span><span class="logo__title">NL</span><span class="logo__head">GROUP</span></span>
+						<span class="logo_v">ENTERPRISE v1.0</span>
+					</a>
+					<div class="user-profile">
+						<div class="user-profile__initials">EP</div>
+						<div class="user-profile__title">Elena Pazukhina</div>
+						<div class="user-profile__post">Administrator</div>
+					</div>
+					<nav class="main-menu">
+						<ul>
+							<li>
+								<a href="#"><i class="icon-dashboard"></i><span>Dashboard</span></a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-customers"></i><span>Customers</span></a>
+							</li>
+							<li>
+								<a href="#" class="active"><i class="icon-suppliers"></i><span>Suppliers</span></a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-messages"></i><span>Messages</span></a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-orders"></i><span>Orders</span></a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-products"></i><span>Products</span></a>
+							</li>
+							<li>
+								<a href="#"><i class="icon-analytics"></i><span>Analytics</span></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</aside>
+			<main class="content">
+
+				<!-- header -->
+				<header class="header">
+					<div class="wrapper">
+						<div class="header-currency">
+							<div role="listbox" aria-expanded="true" class="ui dropdown currency-dropdown">
+								<i class="caret"></i>
+								<div class="text">USD/RUB</div>  
+								<div class="menu transition">
+									<div role="option" aria-checked="false" aria-selected="false" class="item">
+										<span class="text">EUR/RUB</span>
+									</div>
+									<div role="option" aria-checked="true" aria-selected="true" class="active selected item">
+										<span class="text">USD/RUB</span>
+									</div>
+									<div role="option" aria-checked="false" aria-selected="false" class="item">
+										<span class="text">CNY/RUB</span>
+									</div>
+								</div>  
+							</div>
+							<div class="currency-value">
+								<span class="currency-value__count text currency-value_up">- 68.05</span>
+								<i class="currency-value__icon currency-value_up icon-arrow-grow"></i>
+							</div>
+							<!-- при снижении
+							<div class="currency-value">
+								<span class="currency-value__count text currency-value_down">- 68.05</span>
+								<i class="currency-value__icon currency-value_up arrow-decline"></i>
+							</div> -->
+						</div>
+						<div class="currency-converter">
+							<div class="currency-converter__col">
+								<label class="currency-converter__label">USD</label>
+								<input type="number" class="currency-converter__input" value="1">
+							</div>
+							<span class="currency-converter__divider"><a><i class="icon-exchange"></i></a></span>						
+							<div class="currency-converter__col">
+								<label class="currency-converter__label">RUB</label>
+								<input type="number" class="currency-converter__input" value="65.6899">
+							</div>
+						</div>
+						<div class="header-notifications">
+							<div class="header-notifications__item">
+								<a href="#">
+									<i class="header-notifications__icon icon-messages"></i>
+									<span class="header-notifications__badge">12</span>
+								</a>
+							</div>
+							<div class="header-notifications__item header-notifications_email">
+								<div role="listbox" aria-expanded="true" class="ui dropdown" tabindex="0">
+									<div class="text" role="alert" aria-live="polite">
+										<i class="header-notifications__icon icon-notification"></i>
+										<span class="header-notifications__badge">1</span>
+									</div>
+									<div class="menu notifications transition">
+										<div class="notifications__heading">
+											<i class="icon-notification"></i>
+											<span class="notifications__title">Notifications</span>
+											<a class="dropdown-close"><i class="icon-close"></i></a>
+										</div>
+										<div role="option" class="notifications__item">
+											<a class="notifications__link">
+												<span class="notifications__text">You’ve got 100 signups</span>
+												<i class="notifications__status"></i>
+											</a>
+										</div>
+										<div role="option" class="notifications__item">
+											<a class="notifications__link">
+												<span class="notifications__text">Model 03 doesn’t fit</span>
+												<i class="notifications__status"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="header-profile">
+							<div role="listbox" aria-expanded="true" class="ui dropdown">
+								<div class="header-profile__content">
+									<span class="header-profile__text">Hello, Elena</span>
+									<span class="header-profile__noavatar">EP</span>
+									<i class="caret"></i>
+								</div> 
+								<div class="menu transition">
+									<div role="option" aria-checked="true" aria-selected="true" class="item">
+										<span class="text">Profile settings</span>
+									</div>
+									<div role="option" aria-checked="false" aria-selected="false" class="item">
+										<span class="text">Logout</span>
+									</div>
+								</div>  
+							</div>
+						</div>
+					</div>
+				</header>
+				<!--EOF  header -->
+
+
+				<div class="content-page">
+					<div class="wrapper">
+						<div class="page-heading page-heading_supplier">	
+							<div class="page-heading__title">
+								<div class="page-heading__top">
+									<h1 class="h1">Create supplier</h1>
+								</div>
+							</div>
+							<div class="page-heading__navs">								
+								<div class="card-filters-nav">
+									<a href="#" class="card-filters-nav__item card-filters-nav__back">
+										<i class="icon-arrow-left"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- supplier steps -->
+						<div class="supplier-steps-navigation">
+							<div class="supplier-steps-nav">
+								<div class="supplier-steps-nav__item complete">
+									<div class="supplier-steps-nav__link">
+										<i class="icon-general-info"></i><span class="supplier-steps-nav__title">GENERAL INFORMATION</span>
+									</div>
+								</div>
+								<div class="supplier-steps-nav__item complete">
+									<div class="supplier-steps-nav__link selected">
+										<i class="icon-contacts"></i><span class="supplier-steps-nav__title">CONTACTS</span>
+									</div>
+								</div>
+								<div class="supplier-steps-nav__item">
+									<div class="supplier-steps-nav__link">
+										<i class="icon-options"></i><span class="supplier-steps-nav__title">OPTIONS</span>
+									</div>
+								</div>
+								<div class="supplier-steps-nav__item">
+									<div class="supplier-steps-nav__link">
+										<i class="icon-accounting"></i><span class="supplier-steps-nav__title">BANK INFORMATION</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- eof supplier steps -->								
+						
+						<div class="bg-box box-supplier">
+							<form>
+								<div class="form-box">
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Address:</label>
+											<input type="text" class="box-field__input" value="AG">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Address (Factory):</label>
+											<input type="text" class="box-field__input" value="AG">
+										</div>
+									</div>
+									<div class="form-box__item">
+										<div class="select-elem">
+											<label class="box-field__label">Legal city:</label>
+											<div class="ui fluid selection dropdown">
+												<input type="hidden" name="status">
+												<div class="default text"></div>
+												<i class="dropdown icon"></i>
+												<div class="menu">
+													<div class="item" data-value="af">online</div>
+													<div class="item active" data-value="ax">offline</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-box__item">
+										<div class="select-elem">
+											<label class="box-field__label">Legal city:</label>
+											<div class="ui fluid selection dropdown">
+												<input type="hidden" name="status">
+												<div class="default text"></div>
+												<i class="dropdown icon"></i>
+												<div class="menu">
+													<div class="item" data-value="af">online</div>
+													<div class="item active" data-value="ax">offline</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-box__item">
+										<div class="select-elem">
+											<label class="box-field__label">Legal country:</label>
+											<div class="ui fluid selection dropdown">
+												<input type="hidden" name="status">
+												<div class="default text"></div>
+												<i class="dropdown icon"></i>
+												<div class="menu">
+													<div class="item" data-value="af">online</div>
+													<div class="item active" data-value="ax">offline</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-box__item">
+										<div class="select-elem">
+											<label class="box-field__label">Legal country:</label>
+											<div class="ui fluid selection dropdown">
+												<input type="hidden" name="status">
+												<div class="default text"></div>
+												<i class="dropdown icon"></i>
+												<div class="menu">
+													<div class="item" data-value="af">online</div>
+													<div class="item active" data-value="ax">offline</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Person:</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Person (factory):</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Email:</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Email (factory):</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Tel 1:</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Tel 1 (factory):</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Tel 2:</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item">									
+										<div class="box-field">
+											<label class="box-field__label">Tel 2 (factory):</label>
+											<input type="text" class="box-field__input">
+										</div>
+									</div>
+									<div class="form-box__item checkbox-card">								
+										<div class="checkbox-elem">
+											<input type="checkbox" id="checkbox-1" checked>
+											<label class="checkbox-label" for="checkbox-1">factory address is the same</label>
+										</div>
+									</div>
+								</div>
+								<div class="table-add-wrap">
+									<div class="table-add">
+										<div class="table-add__row table-add__head">
+											<div class="table-add__th">PURPOSE</div>
+											<div class="table-add__th">PERSON</div>
+											<div class="table-add__th">EMAIL</div>
+											<div class="table-add__th">TEL 1</div>
+											<div class="table-add__th">TEL 1</div>
+											<div class="table-add__th td-remove"></div>
+										</div>
+										<div class="table-add__row">
+											<div class="table-add__td">
+												<label class="box-field__label">PURPOSE:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">PERSON:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">EMAIL:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">TEL 1:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">TEL 1:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td td-remove">
+												<a href="#" class="table-add__remove"><i class="icon-trash"></i></a>
+											</div>
+										</div>
+										<div class="table-add__row">
+											<div class="table-add__td">
+												<label class="box-field__label">PURPOSE:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">PERSON:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">EMAIL:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">TEL 1:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td">
+												<label class="box-field__label">TEL 1:</label>
+												<input type="text" class="table-add__input">
+											</div>
+											<div class="table-add__td td-remove">
+												<a href="#" class="table-add__remove"><i class="icon-trash"></i></a>
+											</div>
+										</div>
+									</div>
+									<div class="port-add">
+										<a href="#">
+											<i class="icon-add-button"></i>
+											<span class="port-add__text">Add another Incoterm plus port</span>
+										</a>
+									</div>
+								</div>
+							</form>	
+
+							<!-- aside step arrows -->
+							<div class="steps-nav">
+								<a href="#" class="steps-nav__arrow"><i class="icon-next"></i></a>	
+								<a href="#" class="steps-nav__arrow"><i class="icon-prev"></i></a>	
+							</div>
+							<!-- aside step arrows -->
+
+						</div>
+						
+					</div>
+				</div>
+			</main>
+		</div>
+
+
+
+
+
+		<!-- BODY EOF   -->
+
+
+
+
+	</body>
+</html>

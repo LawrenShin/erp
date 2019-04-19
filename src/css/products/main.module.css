@@ -1,0 +1,23 @@
+@import '../base.scss';
+
+.main-container{
+  padding: 0 1vw;
+  background-color: var(--light-grey);
+}
+.export{
+  color: var(--export-letters);
+  margin-top: 2rem;
+  min-width: 12rem;
+  max-width: 25rem;
+}
+.export:hover{
+  cursor: pointer;
+}
+.export span{
+  margin: 0 0 0 .7rem;
+}
+.export svg{
+  width: 1.8rem;
+  vertical-align: middle;
+}
+.text-center{ text-align: center; }

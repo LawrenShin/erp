@@ -1,0 +1,14 @@
+@import '../../../base.scss';
+
+.form{
+  background: white;
+}
+.add-incoterm{
+  margin: 0rem 0 2rem 2rem;
+  padding-bottom: 2rem;
+}
+.add-incoterm:hover{
+  cursor: pointer;
+  color: var(--light-blue);
+}
+

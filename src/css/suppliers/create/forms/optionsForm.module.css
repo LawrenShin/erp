@@ -1,0 +1,22 @@
+.container{
+  width: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  font-size: var(--font-small);
+}
+.title{
+  
+}
+.termsContainer{
+  margin: 2rem;
+  grid-column: 1 / span 3;
+}
+.terms-form-container{
+  display: grid;
+  grid-template-columns: 50% 20%;
+  grid-column-gap: 2rem;
+}
+.checkbox-in-terms{
+  align-self: center;
+}

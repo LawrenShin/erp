@@ -1,0 +1,39 @@
+@import '../base.scss';
+
+.container{
+    display: inline-flex;
+    align-items: center;
+}
+.rate{ margin: 0 1vw 0 0; }
+.convertion{
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.course-up{
+    color: var(--messages-notificator-color);
+    width: .1rem;
+}
+.course-down{
+    color: var(--notifications-notificator-color);
+    width: .1rem;
+}
+.dropdown{ 
+    border: none !important;
+    font-size: var(--font-medium);
+    margin: 0 0.5vw 0 0;
+    color: var(--currency-letters) !important;
+}
+.loader{ min-width: 1.1rem !important; margin: 0 1vw 0 0; }
+.converter-input{
+    display: grid;
+    font-size: 10px;
+    color: var(--currency-letters);
+}
+.converter-input label{
+    display: block;
+    width: auto;
+    height: auto;
+    padding-left: 0;
+    margin-bottom: -.5rem;
+}

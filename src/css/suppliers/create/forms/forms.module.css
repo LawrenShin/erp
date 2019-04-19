@@ -1,0 +1,36 @@
+/* @import '../../../base.scss'; */
+
+.container{
+  /* width: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 33% 33% 33% 1%; */
+}
+.column{
+  /* padding: 2rem; */
+}
+.input{ 
+  /* display: grid;
+  padding: 1rem 0;
+  font-size: var(--font-small); */
+}
+.input label {
+  /* padding: 0; */
+}
+.MOQ{display: grid; padding: 1rem 0;}
+.MOQ span{ margin-bottom: 1rem; }
+.short{
+  /* grid-row: 2 / span 1; */
+}
+input[name="min"], input[name="max"]{
+  /* width: 10rem !important; */
+}
+label[for="min"], label[for="max"]{
+  /* margin-right: 1rem; */
+}
+textarea{
+  /* border: 1px solid var(--normal-grey); */
+}
+.checkboxes{
+  /* padding: 3.9rem 0; */
+}

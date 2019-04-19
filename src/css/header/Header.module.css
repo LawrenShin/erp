@@ -1,0 +1,81 @@
+@import '../base.scss';
+
+/* header itself with list on the right */
+.container{
+    display: grid;
+    /* grid-template-columns: 14.5% 85.5%; */
+    grid-template-columns: minmax(17rem, 10%) minmax(100rem, 90%);
+    height: 6.6rem;
+}
+
+@media only screen and (max-width: 1250px){
+    .container{
+        grid-template-columns: minmax(11rem, 8%) minmax(100rem, 90%);
+    }
+}
+
+.shadow{
+    box-shadow: var(--header-shadow);
+    z-index: 9999;
+}
+.header{
+    height: 5rem;
+    width: 100%;
+}
+.header_list{
+    display: inline-flex;
+    align-items: center;
+    float: right;
+    list-style: none;
+    margin: 0rem 2rem 0 0;
+    height: 100%;
+}
+.header_list li {
+    display: inline;
+    float: right;
+}
+.header_list li:nth-child(even){
+    padding: 0 4rem;
+}
+.splitter{
+    width: 0.1rem;
+    height: 2rem;
+    background-color: #ccc;
+}
+.notification_container{
+    display: inline-flex;
+    width: 2rem;
+}
+.messages{
+    background-color: var(--messages-notificator-color);
+    color: var(--letters-white);
+    font-weight: bold;
+}
+.notifications{
+    background-color: var(--notifications-notificator-color);
+    color: var(--letters-white);
+    font-weight: bold;
+}
+.notificator{
+    height: 1re;
+    width: fit-content;
+    min-width: 1.5rem;
+    height: fit-content;
+    padding: .1rem;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 14px;
+
+    position: relative;
+    top: -0.5rem;
+    left: -1rem;
+}
+.notificator_messages{
+    composes: notificator;
+    composes: messages;
+}
+.notificator_notifications{
+    composes: notificator;
+    composes: notifications;
+}

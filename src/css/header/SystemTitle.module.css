@@ -1,0 +1,49 @@
+@import '../base.scss';
+
+.container{
+    background-color: var(--system-back);
+}
+.info{
+    /* padding: 14px 0 13.5px 23px; */
+    margin: 6% 0 0px 13%;
+}
+.h1{
+    font-family: 'Avenir-Light';
+    font-size: var(--font-NL);
+    margin-left: 8px;
+    letter-spacing: -1.5px;
+    color: white;
+}
+.h1-bold{
+    font-size: var(--font-huge);
+    font-weight: bold;
+    font-family: 'Avenir-Black';
+    font-size: var(--font-NL);
+    letter-spacing: -1px;
+    color: white;
+}
+.systemTitle_container{
+    background-color: var(--system-title-gb);
+    color: white;
+    padding: 1rem 1rem 1rem 2.5rem;
+    text-align: left;
+    font-family: 'Avenir-Light';
+}
+.version{
+    font-size: var(--font-small);
+    color: aquamarine;
+    font-size: var(--font-small);
+    font-family: 'Avenir-Light';
+    letter-spacing: -0.5pt;
+    margin-top: 2pt;
+    display: inline-block;
+    line-height: 100%;
+}
+@media only screen and (max-width: 1250px){
+    .h1-bold{ font-size: 18px; }
+    .h1{ font-size: 18px; }
+    .version{ font-size: 12px; }
+    .info{
+        margin: 12% 0 0px 10%;
+    }
+}

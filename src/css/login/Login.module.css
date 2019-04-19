@@ -1,0 +1,65 @@
+@import '../base.scss';
+
+.font{
+    font-size: var(--font-medium) !important;
+    color: var(--dark-blue) !important;
+}
+.container{
+    background-image: url('/images/login_back.png');
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+.woman{
+    background-image: url('/images/strings.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 57rem;
+    min-height: 40vh
+}
+.form-wrapper-outer{
+    display: grid;
+    grid-template-columns: 60% 40%;
+    height: 51.1vh;
+    min-height: 33.3rem;
+    width: 52.3vw;
+    min-width: 67rem;
+    margin: 12% 0 0 25%;
+    
+    background-color: rgba(255,255,255, 1);
+    box-shadow: 0rem 1rem 11rem 1rem;
+}
+.form-wrapper-inner{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 40% 60%;
+    background: white;
+}
+.form-itself{
+    padding: 6vh 2vw 0 2vw;
+}
+.form-item{
+    width: 100%;
+    margin: 0 0 1rem 0;
+}
+.form-button{
+    margin: 1rem 0;
+    background-color: var(--light-blue) !important;
+}
+.form-troubleshoot{    
+    display: flex;
+    justify-content: space-between;
+    margin: 1vh 0 0 0;
+    font-size: var(--font-medium);
+}
+.message{
+    margin-top: 1rem;
+}
+.system-logo{
+    display: grid;
+    justify-items: center;
+    grid-row-gap: 1rem;
+    margin: 3vh 0 0 0;
+    color: var(--light-blue);
+}

@@ -1,0 +1,19 @@
+.save{
+  border: 1px solid var(--light-blue);
+  padding: 1rem 2rem;
+  color: var(--light-blue);
+  width: 10rem;
+  text-align: center;
+}
+.save:hover{
+  cursor: pointer;
+}
+.selected{
+  color: var(--white);
+  background: var(--light-blue);
+  z-index: 10;
+}
+.unselected{
+  color: var(--light-blue); 
+  z-index: 9;
+}

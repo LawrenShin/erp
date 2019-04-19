@@ -1,0 +1,57 @@
+@import '../../base.scss';
+
+@media only screen and (max-width: 1400px){
+  .container{font-size: .9em;}
+}
+
+.container{
+  background: var(--white);
+  padding: 1rem 3rem
+}
+/* INPUT */
+.input{ 
+  display: grid;
+  padding: 1rem 0;
+  font-size: var(--font-small);
+}
+.input label {
+  padding: 0;
+}
+.error-border{
+  border: 1px solid var(--notifications-notificator-color);
+}
+.error-color{
+  color: var(--notifications-notificator-color);
+}
+/* INPUT */
+
+.noName{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr;
+}
+.noName-inputs{ width: 80%; }
+.description{ grid-column: 1 / span 3; width: 100%; }
+/* GENERAL */
+.general-svg{
+  width: 2rem;
+}
+.general-head{
+  border-bottom: 1px solid var(--light-blue);
+  display: flex;
+  align-items: center;
+  padding-bottom: .5rem;
+}
+.general-head span{
+  color: var(--light-blue);
+  margin: 0rem 1rem;
+}
+.general-fields{
+  display: grid;
+  grid-template-columns: repeat(3, 2fr) 1fr;
+}
+.general-fields > div:nth-child(4) > div{
+  position: relative;
+  left: 0;
+}
+/* GENERAL */
