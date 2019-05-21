@@ -55,12 +55,15 @@ class CustomerOrders extends Component {
                                     <button type="submit" className="search-bl__btn"><i className="icon-search"></i></button>
                                 </div>
                             </div>
-                            <a href="#" className="page-heading__settings"><i className="icon-settings"></i></a>
+                            /*
+                            Return for future use
+                             */
+                            /*<a href="#" className="page-heading__settings"><i className="icon-settings"></i></a>
                             <div className="filters-list">
                                 <a href="" className="filters-list__link">top year</a>
                                 <a href="" className="filters-list__link selected">top month</a>
                                 <a href="" className="filters-list__link">top week</a>
-                            </div>
+                            </div>*/
                         </form>
                     </div>
                 </div>

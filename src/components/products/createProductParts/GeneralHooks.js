@@ -147,8 +147,8 @@ const GeneralHooks = (props) => {
           </div>
           <div className="product-columns__item">																		
             <div className="checkbox-elem checkbox-elem_1">
-              <input type="checkbox" id="checkbox-1" checked />
-              <label className="checkbox-label" for="checkbox-1">Package</label>
+              <input type="checkbox" id="checkbox-1" />
+              <label className="checkbox-label" htmlFor="checkbox-1">Package</label>
             </div>
           </div>
         </div>

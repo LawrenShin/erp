@@ -75,10 +75,29 @@ export default class Api {
     static all(methods){
         return axios.all(methods);
     }
+
+    static delete(url, token = true, data = {}, fullResponse = false, noCheck = false, providedHeader = false){
+        return axios.delete(`${HOST}/api/${url}`, data, {headers: this.getHeaders(token, providedHeader)})
+                    .then(res => fullResponse ? res : res.data)
+                    .catch(e => {
+                        const error = new AxiosError(e);
+                        if(!noCheck && error.status == 401){
+                            return Api.post(`auth/token/refresh/`, false, {
+                                refresh: sessionStorage.getItem("refresh_token")
+                            }, false, true).then( data => {
+                                sessionStorage.setItem("access_token", data.access);
+                                return Api.post(url, token, data, fullResponse);
+                            }).catch( e => {
+                                return Promise.reject("bad_token");
+                            })
+                        }
+                        return Promise.reject(error);
+                    });
+    }
 }
 
 export const Swisskit = {
-    gatherRequests: (dataTypes, limit, requestorName) => Api.all( dataTypes.map(dt => Api.get(`${requestorName}/${dt}/${limit}`)) ),
+    makeRequests: (dataTypes, limit, requestorName) => Api.all( dataTypes.map(dt => Api.get(`${requestorName}/${dt}/${limit}`)) ),
   
     mapOver: ({ dataTypes, results }) => {
         const map = new Map()
@@ -87,5 +106,13 @@ export const Swisskit = {
             map.set(rName, r)
         })
         return map
-    }
+    },
+
+    gatherParameters: (options) => {
+        let arr = ['?']
+        for(let o in options){
+            arr = [...arr, `${o}=${options[o]}&`]
+        }
+        return arr.join('')
+    },
   }

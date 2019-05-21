@@ -118,7 +118,7 @@ class Dashboard extends Component {
     }
 }
 
-const mapStateToProps = ({dashboard}) => ({
+const mapStateToProps = ({ dashboard }) => ({
     options: dashboard.options,
     weeklyPayments: dashboard.weeklyPayments,
     reconsiderTerms: dashboard.reconsiderTerms

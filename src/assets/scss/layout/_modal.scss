@@ -1,0 +1,31 @@
+.ui {
+  &.page {
+    &.dimmer {
+      left: 170px!important;
+      top: 64px!important;
+      width: calc(100% - 170px);
+      height: calc(100% - 64px);
+      background-color: rgba(146, 146, 146, 0.502);
+      @media (max-width: 1049px) {
+        left: 70px!important;
+        width: calc(100% - 70px);
+      }
+      @media (max-width: 767px) {
+        left: 60px!important;
+        width: calc(100% - 60px);
+      }
+    }
+  }
+
+  &.modal {
+    box-shadow: 0px 29px 35px 0px rgba(0, 0, 0, 0.24);
+    &.-lg {
+      width: 100%;
+      max-width: 1170px;
+    }
+    &.-sm {
+      width: 100%;
+      max-width: 925px;
+    }
+  }
+}

@@ -18,9 +18,9 @@ const getProductThemes = () => Api.get(`products/themes/${UNLIM}`)
 const getProductsCategories = () => Api.get(`products/category/${UNLIM}`)
 // in create page
 const getDesign = async () => {
-    const dataTypes = ['groups', 'colors', 'decors', 'styles', 'wearing_occasion', 'print_mood', 'ages', 'gender']
+    const dataTypes = ['groups', 'colors', 'decors', 'styles', 'wearing_occasion', 'print_mood']
     
-    let results = await Swisskit.gatherRequests(dataTypes, UNLIM, 'products')
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
     results = results.map(r => r.results)
     return Swisskit.mapOver({ dataTypes, results })
 }
@@ -28,7 +28,7 @@ const getDesign = async () => {
 const getGeneral = async () => {
     const dataTypes = ['collections']
 
-    let results = await Swisskit.gatherRequests(dataTypes, UNLIM, 'products')
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
     results = results.map(r => r.results)
     return Swisskit.mapOver({ dataTypes, results })
 }
@@ -36,7 +36,7 @@ const getGeneral = async () => {
 const getTechnical = async () => {
     const dataTypes = ['kinds', 'sizes', 'purpose', 'category', 'length', 'typepocket', 'levelwaist', 'kindneck', 'kindfastener', 'silhouettes', 'kindstrap', 'product_care_recomendation']
     
-    let results = await Swisskit.gatherRequests(dataTypes, UNLIM, 'products')
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
     results = results.map(r => r.results)
     return Swisskit.mapOver({ dataTypes, results })
 }
@@ -44,7 +44,7 @@ const getTechnical = async () => {
 const getFabric = async () => {
     const dataTypes = ['shell_fabric', 'weight', 'compositions', 'constructions']
     
-    let results = await Swisskit.gatherRequests(dataTypes, UNLIM, 'products')
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
     results = results.map(r => r.results)
     return Swisskit.mapOver({ dataTypes, results })
 }

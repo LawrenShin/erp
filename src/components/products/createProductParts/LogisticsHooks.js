@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import uuid from 'uuid'
 import { createAction } from '../../../actions'
 import { logisticsStore } from '../../../ducks/createProduct'
 import { connect } from 'react-redux'
@@ -37,7 +38,7 @@ class LogisticsHooks extends Component {
 
     return list.map(inp => {
       const properName = this.irrigateHeader(inp)
-      return <div className="product-details__item">
+      return <div className="product-details__item" key={uuid()}>
         <div className="box-field">
           <Input 
             simple={true} 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import uuid from 'uuid'
 
 import ConnectedDropdown from '../../../controls/ConnectedDropdown';
 
@@ -9,6 +10,7 @@ const ProductTabsHooks = (props) => {
     const renderTabs = () => tabs.map(t => {
         return (
         <span 
+            key={uuid()}
             className={`nav-tab__link ${tab === t ? 'active' : ''}`} 
             onClick={() => setTab(t)}>
             {t}
@@ -21,6 +23,7 @@ const ProductTabsHooks = (props) => {
         for(let [name, options] of map){
           drops.push(
             <ConnectedDropdown 
+              key={uuid()}
               name={`${name}_${index}`}
               options={options}
               saveToStore={props.saveToStore}

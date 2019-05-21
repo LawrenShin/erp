@@ -1,14 +1,15 @@
-import React, {Component} from 'react';
-import {NavLink} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, {Component, useState} from 'react'
+import {connect} from 'react-redux'
 
-import Spans from './Spans.js';
-import AddBtn from '../controls/addbtn';
-import styled from 'styled-components';
-import {createAction} from '../../actions';
+import Spans from './Spans.js'
+import AddBtn from '../controls/addbtn'
+import styled from 'styled-components'
+import {createAction} from '../../actions'
+import ModalSemantic from '../common/ModalSemantic'
+import QuotationCreateWizard from '../quotations/quotationWizard/QuotationCreateWizard'
 
 const SettingsBtn = styled( ({className, onClick}) => {
-  return <span className={`page-heading__settings ${className}`} onClick={onClick}><i className="icon-settings"></i></span>
+  return <></> /* Return for future use *//*<span className={`page-heading__settings ${className}`} onClick={onClick}><i className="icon-settings"></i></span>*/
 })`
   cursor: pointer;
   i {
@@ -60,15 +61,24 @@ class SuppliersHeader extends Component{
         this.props.setFilterName(filterName);
       }, 500);
     }
-  }
 
+  }
   render(){
     return(
       <div className="page-heading">
         <div className="page-heading__title">
           <div className="page-heading__top">
             <h1 className={`h1`}>{this.state.title}</h1>
-            <AddBtn to={this.props.link || "/suppliers/create"} />
+
+            { this.props.quotation ? 
+                <ModalSemantic
+                  style={{ marginLeft: '0 !important' }}
+                  trigger={ <div className={`page-heading__icon`}><span className="cls-1">+</span></div> }>
+                  <QuotationCreateWizard />
+                </ModalSemantic> 
+              : 
+                <AddBtn to={this.props.link || "/suppliers/create"} /> }
+
           </div>
           <h2 className={"page-subtitle"}>{this.state.subtitle}</h2>
         </div>

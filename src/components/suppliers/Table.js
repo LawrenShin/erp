@@ -107,7 +107,7 @@ class DynamicTable extends React.PureComponent {
     if(this.state.loading)
         return;
 
-    const {getApi} = this.props;
+    const { getApi } = this.props;
 
     if(valueY / height > 0.9 && valueY > this.backY && this.offset + this.state.options.limit < this.count) {
 
@@ -210,15 +210,17 @@ class DynamicTable extends React.PureComponent {
                     return null;
             }}
             cell={(value, name, row) => 
-                name === "q" ? <span className="action-quatation action-quatation_add">Add supplier to quotation</span> :              
+                name === "q" ? <span className="action-quatation action-quatation_add">Add supplier to quotation</span> : 
                 name === "id" ? (
                     this.props.addToQuotation ?
                     <>                      
                       <NavLink to={`/suppliers/view/${value}`}>{value}</NavLink>
                     </> :
                     <>
+                        <div className="-flex">
                         <Expand active={row === this.state.rowIndex} onClick={() => {this.setState(({rowIndex}) => rowIndex === row ? ({rowIndex: -1, backRowIndex: row, list: Array.from(this.state.list)}) : ({backRowIndex: rowIndex, rowIndex: row, list: Array.from(this.state.list)}))}}/>
                         <NavLink to={`/suppliers/view/${value}`}>{value}</NavLink>
+                        </div>
                     </>
                 ) : 
                 name === "name" ? <><div className="col-name">{this.state.list[row].name.replace("&nbsp;", " ")}</div><span>{this.state.list[row].type === 'FC' ? 'Factory' : 'Agent'}</span></> : 

@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 export default styled(({className, ...rest}) => (
     <div className={className} {...rest}>
-        <FlapperSpinner color="#4892BC" />
-    </div>    
+        <div className="spinner">
+        </div>
+    </div>
     
 ))`
     display: flex;

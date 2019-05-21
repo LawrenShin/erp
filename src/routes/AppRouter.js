@@ -1,16 +1,27 @@
 import React from 'react';
-import Loadmang from '../components/helpers/Loadmang';
 import {Router, Route, Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
+//import {history} from './history';
+
+import LoginPage from '../components/login/LoginPage';
+import Analytics from '../components/analytics/Analytics';
+import Customers from '../components/customers/Customers';
 
 import StuffDashboard from '../components/dashboard/StuffDashboard';
 import PurchasingDashboard from '../components/dashboard/purchasingDashboard';
 import SourcingDashboard from '../components/dashboard/soursingDashboard';
 import SupplierDashboard from '../components/dashboard/supplierDashboard';
 
+import MessagesComponent from '../components/messages/MessagesComponent';
+import Orders from '../components/orders/Orders';
+import SupplierOrders from '../components/orders/suppliers';
+import CustomerOrders from '../components/orders/customers';
+import Products from '../components/products/Products';
+import CreateProduct from '../components/products/create';
 import ViewProduct from '../components/products/view';
 import EditProduct from '../components/products/edit';
 import Suppliers from '../components/suppliers/Suppliers';
+import CreateSupplierPage from '../components/suppliers/create/CreateSupplierPage';
 import CreateCustomer from '../components/customers/create/CreateCustomer';
 import EditCustomer from '../components/customers/edit/EditCustomer';
 import ViewCustomer from '../components/customers/view/ViewCustomer';
@@ -19,14 +30,15 @@ import ViewSupplierContacts from '../components/suppliers/cart/contacts';
 import ViewSupplierOptions from '../components/suppliers/cart/options';
 import ViewSupplierBank from '../components/suppliers/cart/bank';
 import ViewSuppierOrderHistory from '../components/suppliers/cart/orderHistory';
+import UserProfile from '../components/user/profile';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import NotFound from '../404';
-import CreateQuotation from '../components/quotation/create';
-import QuotationStage from '../components/quotation/stage';
-import Distribute from '../components/quotation/distribute';
 import ResetPassword from '../components/resetPassword';
 import ResetPasswordConfirmer from '../components/resetPassword/ResetPasswordConfirmer';
+import QuotationsComponent from '../components/quotations'
+import QuotationItem from '../components/quotations/quotationItem/QuotationItem'
+
 
 import { ConnectedRouter } from 'connected-react-router';
 
@@ -42,19 +54,6 @@ const ChooseDashboard = (role) => {
     }
 }
 
-const UserProfile = Loadmang({ loader: () => import('../components/user/profile') })
-const CreateSupplierPage = Loadmang({ loader: () => import('../components/suppliers/create/CreateSupplierPage') })
-const Customers = Loadmang({ loader: () => import('../components/customers/Customers') })
-const MessagesComponent = Loadmang({ loader: () => import('../components/messages/MessagesComponent') })
-const Orders = Loadmang({ loader: () => import('../components/orders/Orders') })
-const SupplierOrders = Loadmang({ loader: () => import('../components/orders/suppliers') })
-const CustomerOrders = Loadmang({ loader: () => import('../components/orders/customers') })
-const Products = Loadmang({ loader: () => import('../components/products/Products') })
-const CreateProduct = Loadmang({ loader: () => import('../components/products/create') })
-const Analytics = Loadmang({ loader: () => import('../components/analytics/Analytics') })
-const LoginPage = Loadmang({ loader: () => import('../components/login/LoginPage') })
-const Quotations = Loadmang({ loader: () => import('../components/quotation/list') })
-
 const AppRouter = ({ history, context, role }) => (
     <ConnectedRouter history={history} context={context}>
         <React.Fragment>
@@ -62,12 +61,16 @@ const AppRouter = ({ history, context, role }) => (
                 <PublicRoute exact path='/' component={LoginPage} />
                 <PublicRoute exact path='/reset_passwd_confirm/:token' component={ResetPasswordConfirmer} />
                 <PrivateRoute exact path='/reset' component={ResetPassword} />
+                
                 <PrivateRoute path='/dashboard' component={ChooseDashboard(role)} />
+                
                 <PrivateRoute path='/user' component={UserProfile} />
+                
                 <PrivateRoute exact path='/customers' component={Customers} />
                     <PrivateRoute exact path='/customers/create' component={CreateCustomer} />
                     <PrivateRoute exact path='/customers/edit/:id' component={EditCustomer} />
                     <PrivateRoute exact path='/customers/view/:id' component={ViewCustomer} />
+                
                 <PrivateRoute exact path='/suppliers' component={Suppliers} />
                     <PrivateRoute exact path='/suppliers/create' component={CreateSupplierPage} />
                     <PrivateRoute exact path='/suppliers/view/:id' component={ViewSupplierGeneral} readOnly={true}/>
@@ -80,21 +83,25 @@ const AppRouter = ({ history, context, role }) => (
                     <PrivateRoute exact path='/suppliers/edit/options/:id' component={ViewSupplierOptions}/>
                     <PrivateRoute exact path='/suppliers/edit/accounting/:id' component={ViewSupplierBank}/>
                     <PrivateRoute exact path='/suppliers/edit/history/:id' component={ViewSuppierOrderHistory}/>
+                
                 <PrivateRoute exact path='/messages/:folder/:type' component={MessagesComponent} />
                 <PrivateRoute exact path='/messages/:folder' component={MessagesComponent} />
                 <PrivateRoute path='/messages' component={MessagesComponent} />
+                
                 <PrivateRoute exact path='/orders' component={Orders} />
                 <PrivateRoute exact path='/orders/suppliers' component={SupplierOrders} />
                 <PrivateRoute exact path='/orders/customers' component={CustomerOrders} />
+                
                 <PrivateRoute exact path='/products' component={Products} />
                     <PrivateRoute exact path='/products/create' component={CreateProduct} />
                     <PrivateRoute exact path='/products/view/:id' component={ViewProduct} />
                     <PrivateRoute exact path='/products/edit/:id' component={EditProduct} />
+                
                 <PrivateRoute path='/analytics' component={Analytics} />
-                <PrivateRoute exact path='/quotations' component={Quotations} />
-                <PrivateRoute exact path='/quotations/create' component={CreateQuotation} />
-                <PrivateRoute exact path='/quotations/stage/:step' component={QuotationStage} />
-                <PrivateRoute exact path='/quotations/distribute' component={Distribute} />
+                
+                <PrivateRoute exact path='/quotations' component={QuotationsComponent} />
+                <PrivateRoute exact path='/quotations/:id' component={QuotationItem} />
+                
                 <Route component={NotFound} />
             </Switch>
         </React.Fragment>

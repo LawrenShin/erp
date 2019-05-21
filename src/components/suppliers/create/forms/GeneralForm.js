@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import moment from 'moment';
 import PaymentTerms from './PaymentTerms.js';
-import SingleDatePickerComponent from './SingleDatePickerComponent.js';
+import SingleDatePickerComponent from '../../../common/SingleDatePickerComponent';
 import StepControls from '../../../StepControls.js';
 import Input from '../../../controls/input';
 import Checkbox from '../../../controls/checkbox';

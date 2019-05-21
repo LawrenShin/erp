@@ -8,7 +8,10 @@ const list = (options = '') => Api.get(`dashboard/dashboard/${collectOptions(opt
 
 const getRaiting = (query) => Api.post(`supplier/get_dashboard_suppliers_financial_rating/`, true, { query });
 
-const getPackingList = (options = '') => Api.get(`supplier/get_dashboard_packing_list/${collectOptions(options)}`);
+const getPackingList = (options = '') => {
+    console.log( options )
+    return Api.get(`supplier/get_dashboard_packing_list/${collectOptions(options)}`)
+};
 
 //stuff dashboard
 const getWeeklyPayments = () => Api.get('dashboards/payment_manager_weekly_payments/');

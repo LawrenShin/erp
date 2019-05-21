@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 
 const suppliersList = state => state.suppliers.list;
 
+export const suppliersOptionsSelector = state => state.suppliers.options
+
 export const singleSupplierSelector = createSelector(
     suppliersList,
     (list) => {

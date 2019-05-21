@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 import { createAction } from '../../actions';
@@ -9,7 +9,7 @@ import Table from './Table.js';
 import { fetchFilters } from '../../actions/suppliers.js';
 import {Loading, Error} from '../helpers';
 
-class Suppliers extends PureComponent {
+class Suppliers extends Component {
     state = {
         filterName: '',
         checkBoxes: [{ inReact: "Respond in time", inUrl: "is_timely_response_to_letters" },
@@ -49,7 +49,7 @@ class Suppliers extends PureComponent {
                     link='suppliers/create' />
                 {state === "loaded" ? 
                     <>
-                        {showFilters ? <Filters onResize={this.onResize} filters={this.props.filters.data} checkBoxesToRender={this.state.checkBoxes} /> : null}               
+                        {showFilters ? <Filters onResize={this.onResize} filters={this.props.filters.data} checkBoxesToRender={this.state.checkBoxes} /> : null}
                         {<Table 
                             list={this.props} 
                             store={this.props.store} 

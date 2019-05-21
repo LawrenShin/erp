@@ -5,11 +5,14 @@
 @import "layout/_header";
 @import "layout/_main";
 @import "layout/_popups";
+@import "layout/_modal";
+@import "layout/_table";
 @import "base/_fonts";
 @import "components/_dropdowns";
 @import "components/_filters";
 @import "components/_rc-slider";
 @import "components/_fixed-data-table";
+@import "components/_datepicker";
 @import "pages/_supplier_list_filters";
 @import "pages/_card_contacts";
 @import "pages/_card_option_history";
@@ -44,3 +47,5 @@
 @import "pages/_distribute_products";
 @import "pages/_create-quotation-step";
 @import "pages/_supplier_dashboard";
+@import "pages/_quotation";
+@import "utils/_modificators";

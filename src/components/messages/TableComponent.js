@@ -1,9 +1,8 @@
-import React,{ Component } from 'react';
-import { connect } from 'react-redux';
-import uuid from 'uuid';
+import React,{Component} from 'react';
+import {connect} from 'react-redux';
 
 import Message from './subComponents/Message';
-import { createAction } from '../../actions/index';
+import {createAction} from '../../actions/index';
 
 class TableComponent extends Component{
   state = { messages: '' };
@@ -21,19 +20,18 @@ class TableComponent extends Component{
   }
 
   render(){
-      if(this.state.messages.length){
+      if(this.state.messages){
       return (
         <div className="messages-table">
           <table>
             <tbody>
               {this.state.messages.map((message) => {
                 return <Message 
-                  section={this.props.section}
-                  item={message} 
-                  // key={message.message_id} 
-                  key={uuid()}
-                  toggleSelectMessage={this.props.toggleSelectMessage}
-                  selectedMessages={this.props.selectedMessages} />
+                section={this.props.section}
+                item={message} 
+                key={message.message_id} 
+                toggleSelectMessage={this.props.toggleSelectMessage}
+                selectedMessages={this.props.selectedMessages} />
               })}
             </tbody>
           </table>
@@ -47,7 +45,7 @@ class TableComponent extends Component{
   }
 }
 
-const mapStateToProps = ({ messages }) => ({
+const mapStateToProps = ({messages}) => ({
   selectedMessages: messages.selectedMessages
 });
 

@@ -1,0 +1,38 @@
+.DayPicker__withBorder {
+  box-shadow: -1px 29px 35px 0px rgba(0, 0, 0, 0.24) !important;
+  border: none;
+
+
+}
+
+.SingleDatePicker_picker {
+  background-color: transparent !important;
+}
+
+.DateInput_fang.DateInput_fang_1 {
+  display: none !important;
+}
+
+.DayPickerNavigation_button__default {
+  border-color: transparent !important;
+}
+
+.CalendarDay__blocked_out_of_range, .CalendarDay__blocked_out_of_range:active, .CalendarDay__blocked_out_of_range:hover, .CalendarDay__default {
+  border-color: #bad3db !important;
+}
+
+.CalendarDay__selected, .CalendarDay__selected:active, .CalendarDay__selected:hover {
+  background: $blue !important;
+  border-color: $blue !important;
+}
+
+.DayPicker_weekHeader {
+  top: 54px !important;
+}
+
+.DayPickerKeyboardShortcuts_show__bottomRight {
+  border-right: 33px solid $blue!important;
+}
+.SingleDatePicker_picker {
+  top: 30px!important;
+}

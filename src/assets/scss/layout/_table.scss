@@ -1,0 +1,124 @@
+.data-table {
+  min-width: 100%;
+  overflow: auto;
+  position: relative;
+
+  &__header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+
+    .data-table__column {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      height: 50px;
+      padding: 10px;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background: 0 0;
+      white-space: nowrap;
+    }
+  }
+
+  &__wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__column {
+    text-align: center;
+    min-width: 100px;
+    flex-basis: 25%;
+
+    &--checkbox {
+      min-width: 50px;
+      flex-basis: auto;
+    }
+
+    button:not(.btn) {
+      background: transparent;
+      border: none;
+    }
+
+    .box-field-checkbox {
+      margin: 0;
+    }
+
+  }
+
+  &__row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    position: relative;
+
+    &:hover {
+      .data-table__column {
+        background: #DEF
+      }
+    }
+  }
+
+  &__body {
+    .data-table__column {
+      &:not(.hidden):not(:last-child) {
+        position: relative;
+
+        &:after {
+          content: '';
+          display: block;
+          width: 1px;
+          position: absolute;
+          right: 1px;
+          top: 12px;
+          bottom: 12px;
+          background: #f0f0f2;
+        }
+      }
+
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      height: 70px;
+      padding: 10px;
+      margin: 8px 0 0 0;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      background: $white;
+      color: $black;
+    }
+  }
+}
+
+.data-table__column--id, .data-table__column--name, .data-table__column--supplier_name.data-table__column--0 {
+  flex-grow: 1;
+}

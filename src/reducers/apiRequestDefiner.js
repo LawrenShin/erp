@@ -20,6 +20,7 @@ class ApiRequestDefinerObject {
 
     run() {
         const {payload, type} = this.action;
+
         if( payload.type === this.type &&
             payload.method === this.method) {
                 const map = {

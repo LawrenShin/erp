@@ -1,0 +1,163 @@
+/*
+Background
+ */
+.-bg-color {
+
+  &-blue {
+    background: $blue !important;
+    color: $white;
+  }
+
+  &-green {
+    background: $green !important;
+    color: $white;
+  }
+
+  &-yellow {
+    background: $yellow !important;
+    color: $white;
+  }
+
+  &-gray {
+    background: $gray !important;
+    color: $white;
+  }
+
+  &-bgGray {
+    background: $bgGray !important;
+    color: $white;
+  }
+
+  &-lightGray {
+    background: $lightGray !important;
+    color: $white;
+  }
+
+  &-white {
+    background: $white !important;
+    color: $white;
+  }
+
+  &-red {
+    background: $red;
+    color: $white;
+  }
+}
+
+/*
+Text color
+ */
+.-text-color {
+  &-blue {
+    color: $blue !important;;
+  }
+
+  &-green {
+    color: $green !important;;
+  }
+
+  &-yellow {
+    color: $yellow !important;;
+  }
+
+  &-gray {
+    color: $gray !important;;
+  }
+
+  &-bgGray {
+    color: $bgGray !important;;
+  }
+
+  &-lightGray {
+    color: $lightGray !important;;
+  }
+
+  &-white {
+    color: $white !important;;
+  }
+
+  &-red {
+    color: $red !important;
+  }
+
+  a, button {
+    color: inherit !important;;
+  }
+}
+
+/*
+Shadow
+ */
+.-with-shadow {
+  box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+}
+
+.-after-shadow {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+  }
+
+  &.-supplier-page {
+    &:after {
+      width: calc(100% - 420px);
+    }
+  }
+}
+
+/*
+Fix max width
+ */
+.-fix-max-width {
+  &-85 {
+    max-width: 85%;
+  }
+}
+
+/*
+Margin
+ */
+.-with-margin {
+  &-right {
+    margin-right: 7px;
+  }
+
+  &-left {
+    margin-left: 7px;
+  }
+}
+
+/*
+Position
+ */
+
+.-position {
+  &-relative {
+    position: relative;
+  }
+}
+
+/*
+Flex
+ */
+.-flex {
+  display: flex;
+
+  &-grow {
+    &-1 {
+      flex-grow: 1;
+    }
+    &-0 {
+      flex-grow: 0;
+    }
+  }
+}
+
+/* Состояния */
+.-error {
+  color: $red!important;
+}

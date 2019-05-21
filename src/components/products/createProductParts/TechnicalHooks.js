@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid'
 
 import { technicalStore } from '../../../ducks/createProduct';
 import { createAction } from '../../../actions';
@@ -28,7 +29,7 @@ const TechnicalHooks = (props) => {
         const nameInStore = ch.replace(/[\s,\-,\/]/g, '_').toLowerCase(),
         valueFromStore = props.technicalStore.checkboxes[nameInStore]
         return (
-            <div className="product-columns__item product-columns__item_checkboxes">							
+            <div className="product-columns__item product-columns__item_checkboxes" key={uuid()}>
                 <div className="checkbox-elem">
                     <Checkbox 
                         label={ch} 
@@ -46,6 +47,7 @@ const TechnicalHooks = (props) => {
         for(let [name, options] of map){
           drops.push(
             <ConnectedDropdown 
+              key={uuid()}
               name={name}
               options={options}
               saveToStore={props.saveToStore}

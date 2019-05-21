@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import styled from 'styled-components';
-import uuid from 'uuid'
 
 const RowComponent =  styled.div`
   display: flex;
@@ -30,7 +29,7 @@ const RowComponent =  styled.div`
 class TableRows extends Component{
 
   renderRowTop30 = ({ name, total_amount_pcs, total_order_amount }) => (
-    <RowComponent key={uuid()}>
+    <RowComponent>
       <div>{name}</div>
       {total_amount_pcs && <div>{total_amount_pcs}</div>}
       {total_order_amount && <div>{total_order_amount}</div>}

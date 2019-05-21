@@ -2,9 +2,9 @@ import React,{Component} from 'react';
 
 class CurrencyConverter extends Component{
   state = {
-    exchange: null,
+    exchange: '',
     from: 1,
-    to: 60
+    to: ''
   };
 
   componentDidUpdate(prevProps){

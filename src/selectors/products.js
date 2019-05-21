@@ -4,6 +4,8 @@ const productsFiltersSelector = state => state.products.filters;
 const productsList = state => state.products.list;
 const productsHeaders = state => state.products.headers;
 
+export const productsOptionsSelector = state => state.products.options
+
 export const renamedFilters = createSelector(
     productsFiltersSelector,
     (filters) => {

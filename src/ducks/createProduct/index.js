@@ -14,14 +14,14 @@ import { saga as designSaga } from './design'
 import { saga as technicalSaga } from './technical'
 import { saga as logisticsSaga } from './logistics'
 
-export const initialState = () => ({
+const initialState = () => ({
   response: false,
   loading: false,
   error: ''
 })
 
 export function requestReducer(state = initialState(), action){
-  const { type, payload } = action
+  const {type, payload} = action
   switch(type){
     case 'CREATE_PRODUCT_REQUEST_START':
       return { ...state, loading: true, error: '' }

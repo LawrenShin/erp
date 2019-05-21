@@ -151,7 +151,7 @@ class PackingListDashboardWidget extends React.Component{
                         fields={FIELDS} 
                         data={this.state.list} 
                         height={600} 
-                        header={(name, title) => <Order name={name} title={title} />}
+                        header={(name, title) => <Order name={title} title={name} />}
                         />
                     : 
                     <Loading/>

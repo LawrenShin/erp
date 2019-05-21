@@ -9,7 +9,7 @@ const getCurrency = (pair) => {
 const getCities = () => {
     return Api.get(`main/city/`);
 }
- const getCountries = () => {
+const getCountries = () => {
     return Api.get(`main/country/`, true, { limit: 1000 });
 }
 //update user profile

@@ -39,11 +39,11 @@ export default ({id, name, edit = false, selected = 0}) => (
                             <i className="icon-auditlog"></i><span className="card-filters__title">Audit Log</span>
                         </Pointer>
                     </div>
-                    <div className="card-filters__item">
+                    {/*<div className="card-filters__item">
                         <Pointer className="card-filters__link">
                             <i className="icon-analytics"></i><span className="card-filters__title">Analytics</span>
                         </Pointer>
-                    </div>
+                    </div>*/}
                 </div>								
                 <div className="card-filters-nav">
                     <Pointer className="card-filters-nav__item card-filters-nav__back" onClick={() => history.goBack()}>
@@ -59,7 +59,7 @@ export default ({id, name, edit = false, selected = 0}) => (
             {
                 TITLES.map( (v, i) => (
                     <div className="card-tabs__item">
-                        <NavLink to={`/suppliers/${edit && 'edit' || 'view'}${LINKS[i]}/${id}`} className={`card-tabs__link${selected == i ? ' selected' : ''}`}>
+                        <NavLink to={`/suppliers/${edit && 'edit' || 'quotationHead.js.js'}${LINKS[i]}/${id}`} className={`card-tabs__link${selected == i ? ' selected' : ''}`}>
                             <i className={ICONS[i]}></i><span className="card-tabs__title">{v}</span>
                         </NavLink>
                     </div>)

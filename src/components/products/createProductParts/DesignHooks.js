@@ -1,4 +1,5 @@
 import React from 'react';
+import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { createAction } from '../../../actions';
 import ConnectedDropdown from '../../controls/ConnectedDropdown';
@@ -11,6 +12,7 @@ const DesignHooks = (props) => {
     for(let [name, options] of map){
       drops.push(
         <ConnectedDropdown 
+          key={uuid()}
           name={name}
           options={options}
           saveToStore={props.saveToStore}

@@ -17,7 +17,7 @@ class SourcingDashboard extends Component{
 
   render(){
     return(
-      <>{console.log('BEFORE AWAITED')}
+      <>
         <Header 
           title='Dashboard' 
           subTitle='SOURCING MANAGER' />

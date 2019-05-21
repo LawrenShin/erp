@@ -4,6 +4,7 @@ import SimpleBarChart from '../charts/SimpleBarChart';
 import RadialChart from '../charts/RadialChart';
 import styled, {keyframes} from 'styled-components';
 import Loading from '../helpers/loading';
+import LoadingTransparent from '../helpers/loadingTransparent';
 
 class InnerRow extends Component{
 
@@ -13,7 +14,7 @@ class InnerRow extends Component{
     return(
       <div className={`inner-details`} className={`${this.props.className} ${this.props.collapse ? 'collapsed' : ''}`} style={{position: "relative", zIndex: 2000, background: "white", width: this.props.width || "100%"}}>
         <div className="inner-details__inner">
-          
+
           {isDetails ? <div className="contacts-details">
             <div className="inner-details__title">
               <div className="inner-details__title_withicon">
@@ -24,13 +25,13 @@ class InnerRow extends Component{
             <div className="contacts-details__list">
               <div className="contacts-details__item">{supplierDetails.contacts_details.name}</div>
               <div className="contacts-details__item">{supplierDetails.contacts_details.person_name}</div>
-              <div className="contacts-details__item">E-mail: 
+              <div className="contacts-details__item">E-mail:
                 <a href={`mailto:${supplierDetails.contacts_details.person_email}`}>
                   {supplierDetails.contacts_details.person_email}
                 </a>
               </div>
 
-              <div className="contacts-details__item">Tel: 
+              <div className="contacts-details__item">Tel:
                 <a href={`tel:${supplierDetails.contacts_details.person_phone}`} className="inner-details__tel">
                   {supplierDetails.contacts_details.person_phone}
                 </a>
@@ -38,8 +39,8 @@ class InnerRow extends Component{
 
               <div className="contacts-details__item">Address: {supplierDetails.contacts_details.address}</div>
             </div>
-          </div> : <Loading />}
-          
+          </div> : <LoadingTransparent />}
+
           {isDetails ? <>
             <div className="order-dynamics">
               <div className="inner-details__title">order dynamycs</div>
@@ -75,7 +76,7 @@ class InnerRow extends Component{
                 })(supplierDetails.product_category) }
               </div>
             </div>
-          </div> : <Loading />}
+          </div> : <LoadingTransparent />}
 
         </div>
       </div>

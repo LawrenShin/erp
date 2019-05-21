@@ -23,7 +23,6 @@ class Modal extends Component{
   }
 
 	componentDidMount(){
-		document.getElementById('search-for-user').focus().select()
 		document.getElementById('app_header').style.zIndex = 0;
 		this.props.lookupUser({query: ''})
 	}
@@ -63,12 +62,7 @@ class Modal extends Component{
 					<div>
 						<div className="search-box">
 							<div className="search-bl">
-								<Input 
-									name='search-for-user'
-									simple={true} 
-									type="text" 
-									className="search-bl__input" 
-									onChange={this.handleSearchChange} />
+								<Input simple={true} type="text" className="search-bl__input" onChange={this.handleSearchChange} />
 								<button type="submit" className="search-bl__btn"><i className="icon-search"></i></button>
 							</div>
 						</div>

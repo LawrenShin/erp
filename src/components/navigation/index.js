@@ -10,24 +10,24 @@ const navLinks = [
         linkName: 'Dashboard',
         iconPosition: { 'objectPosition': '0 0px' }
     }, 
-    {
-        linkName: 'Customers',
-        iconPosition: { 'objectPosition': '0 -21px' },
-        hideForRoles: ['supplier']
-    }, 
+    // {
+    //     linkName: 'Customers',
+    //     iconPosition: { 'objectPosition': '0 -21px' },
+    //     hideForRoles: ['supplier']
+    // }, 
     {
         linkName: 'Suppliers',
         iconPosition: { 'objectPosition': '0 -45px' },
         hideForRoles: ['supplier']
     }, 
-    {
-        linkName: 'Messages',
-        iconPosition: { 'objectPosition': '0 -65px' }
-    }, 
-    {
-        linkName: 'Orders',
-        iconPosition: { 'objectPosition': '0 -87px' }
-    }, 
+    // {
+    //     linkName: 'Messages',
+    //     iconPosition: { 'objectPosition': '0 -65px' }
+    // }, 
+    // {
+    //     linkName: 'Orders',
+    //     iconPosition: { 'objectPosition': '0 -87px' }
+    // }, 
     {
         linkName: 'Products',
         iconPosition: { 'objectPosition': '0 -108px' },
@@ -35,7 +35,7 @@ const navLinks = [
     }, 
     // {
     //     linkName: 'Analytics',
-    //     iconPosition: { 'objectPosition': '0 -137px' }, for future versions
+    //     iconPosition: { 'objectPosition': '0 -137px' },
     //     hideForRoles: ['supplier']
     // }
 ];

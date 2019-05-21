@@ -48,7 +48,14 @@ export default class Dropdown extends React.Component{
         const optionsWithEmptyVal = noEmpty ? options : [{text: "Not selected", value: ""}, ...options];
 
         if(simple)
-            return <Simple className={`fluid multiple special selection`} value={value || ""} key={uuid()} options={optionsWithEmptyVal} placeholder={title} onChange={this.handleChange} onBlur={this.handleBlur}/>
+            return <Simple 
+                key={uuid()} 
+                className={`fluid multiple special selection`} 
+                value={value || ""} 
+                options={optionsWithEmptyVal} 
+                placeholder={title} 
+                onChange={this.handleChange} 
+                onBlur={this.handleBlur} />
 
         return (
             uiType === "form-box" ?

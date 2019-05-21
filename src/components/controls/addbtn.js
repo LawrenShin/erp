@@ -16,30 +16,30 @@ class AddBtn extends React.Component {
     } 
 }
 
-export default styled(AddBtn)`
-    border: 1px solid #74c4df;
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+const styles = `border: 1px solid #74c4df;
+width: 30px;
+height: 30px;
+line-height: 30px;
+border-radius: 50%;
+overflow: hidden;
+display: inline-flex;
+align-items: center;
+justify-content: center;
 
-    &:hover{
-        background: #74c4df;
+&:hover{
+    background: #74c4df;
 
-        .cls-1{
-            color: white;
-        }
+    .cls-1{
+        color: white;
     }
+}
 
-    .cls-1 {
-        font-size: 22px;
-        color: #74c4df;
-        font-weight: bold;
-        font-family: Lato;
-        transform: 0.3s;
-    }
-`;
+.cls-1 {
+    font-size: 22px;
+    color: #74c4df;
+    font-weight: bold;
+    font-family: Lato;
+    transform: 0.3s;
+}`
+
+export default styled(AddBtn)`${styles}`;
