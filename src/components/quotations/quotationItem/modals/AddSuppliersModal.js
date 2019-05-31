@@ -1,20 +1,25 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux'
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux'
 
-import { listExtender } from '../../../common/helperFunctions'
+import {listExtender} from '../../../common/helperFunctions'
 import Loading from '../../../helpers/loading'
 import ModalSemantic from '../../../common/ModalSemantic'
 import CommonButton from '../../../common/CommonButton'
 import QuotationListTable from '../../quotationTable/QuotationListTable'
 import QuotationListFilter from '../../QuotationListFilter'
 import QuotationsApi from '../../../../requestor/quotations'
+import CommonApi from '../../../../requestor/common'
 
-import { createListsSelector, createFiltersSelector, createOptionsSelector } from '../../../../ducks/quotations/index'
+import {createListsSelector, createFiltersSelector, createOptionsSelector} from '../../../../ducks/quotations/index'
 
 class AddSuppliersModal extends PureComponent {
-    state = { added: false }
+    state = { added: false, countries: false }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (!this.state.countries) {
+            const countries = await CommonApi.getCountries().then(res => res.results)
+            this.setState({countries})
+        }
         if (!this.props.list || !this.props.filters) this.props.getModalsData()
         if (!this.state.added || !this.state.added.length) this.setState({ added: this.props.addedSuppliers })
     }
@@ -22,41 +27,36 @@ class AddSuppliersModal extends PureComponent {
     updateOptions = (fName, value) => this.props.setOption({filterName: fName, value})
 
     addSupplierToQuotation = async (id) => {
-        try{
-          const res = await QuotationsApi.addSupplierToQuotation({ supplier: id, quotation: this.props.quotationId })
-          this.manageStateOnAddRemoveSuppliers(res.supplier)
-        }catch(e){
-          console.log(e.message)
+        try {
+            const res = await QuotationsApi.addSupplierToQuotation({ supplier: id, quotation: this.props.quotationId })
+            this.manageStateOnAddRemoveSuppliers(res)
+        } catch (e) {
+            console.log(e.message)
         }
     }
     removeSupplierFromQuotation = async (id) => {
-        try{
-            const res = await QuotationsApi.deleteSupplierFromQuotation({ supplier: id, quotation: this.props.quotationId })
-            this.manageStateOnAddRemoveSuppliers(res.supplier)
-        }catch(e){
+        try {
+            const relation = this.state.added.filter(relation => relation.supplier === id)[0]
+            const res = await QuotationsApi.deleteSupplierFromQuotation(relation.id)
+            this.manageStateOnAddRemoveSuppliers(id)
+        } catch (e) {
             console.log(e.message)
         }
     }
 
-    manageStateOnAddRemoveSuppliers = (id) => {
-        const isPresent = this.findMatch(id)
-        if(!isPresent) this.setState({ added: [...this.state.added, { supplier: id }] })
-        if(isPresent) this.setState({ added: this.state.added.filter(ap => ap.supplier !== id) })
+    manageStateOnAddRemoveSuppliers = (actionResult) => {
+        this.refreshAdded()
+        if (typeof actionResult === 'object' && 'id' in actionResult) this.setState({added: [...this.state.added, actionResult ]})
+        if (typeof actionResult === 'number') this.setState({added: this.state.added.filter(ap => ap.supplier !== actionResult)})
     }
     findMatch = (id) => this.state.added.filter(ap => ap.supplier === id).length
-    handleClose = () => this.props.refreshAddedSuppliersInQuotation()
+    refreshAdded = () => this.props.refreshAddedSuppliersInQuotation()
 
     render() {
-        // const { filters, list } = this.props
-        // if(filters && list) listExtender(this.props.list.results, { 
-        //     theme: filters.theme.extra, 
-        //     category: filters.category.extra,
-        //     color: filters.color.extra,
-        // })
-
         return (
             <ModalSemantic
-                onClose={this.handleClose}
+                size='large'
+                onClose={this.refreshAdded}
                 style={{marginLeft: '0 !important'}}
                 trigger={<CommonButton disabled={this.props.disabled} type="btn2" text="Add suppliers"/>}>
                 <div className="quotation-modal">
@@ -69,13 +69,16 @@ class AddSuppliersModal extends PureComponent {
                             clearAll={this.props.clearOptions}
                             notSplit={true}/> : <Loading/>}
 
-                        {this.props.list ? <QuotationListTable
+                        {(this.props.list && this.state.countries) ? <QuotationListTable
                             checkboxNamePrefix={'addSupplier_'}
                             addedSuppliers={this.state.added}
-                            checkboxHandler={{ add: this.addSupplierToQuotation, remove: this.removeSupplierFromQuotation }}
+                            checkboxHandler={{
+                                add: this.addSupplierToQuotation,
+                                remove: this.removeSupplierFromQuotation
+                            }}
                             findMatch={this.findMatch}
                             heads={['ID', 'Name', 'Status', 'Product group', 'Country']}
-                            selectThese={['id', 'name', 'status', 'categories', 'factory_country']}
+                            selectThese={['id', 'name', 'status', 'categories', 'legal_country']}
                             list={this.props.list.results}/> : <Loading/>}
                     </div>
                 </div>

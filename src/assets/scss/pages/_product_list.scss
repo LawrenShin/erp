@@ -1,27 +1,33 @@
 .unload-link {
-	color: #77848f;
-	margin: 10px 0 5px;
-	a {
-		color: inherit;
-		&:hover {
-			color: $color-active;
-		}
-	}
-	i {
-		display: inline-block;
-		margin-top: -1px;
-		margin-right: 8px;
-		font-size: 20px;
-		vertical-align: middle;
-	}
+  color: #77848f;
+  margin: 10px 0 5px;
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: $color-active;
+    }
+  }
+
+  i {
+    display: inline-block;
+    margin-top: -1px;
+    margin-right: 8px;
+    font-size: 20px;
+    vertical-align: middle;
+  }
 }
+
 .table-products {
-	color: $text-color;
-	.public_fixedDataTableCell_cellContent {
-	    padding: 34px 8px 25px;
-	}
-	.fixedDataTableLayout_header .public_fixedDataTableCell_cellContent {
-		padding-top: 2px;
-		padding-bottom: 9px;
-	}
+  color: $text-color;
+
+  .public_fixedDataTableCell_cellContent {
+    padding: 34px 8px 25px;
+  }
+
+  .fixedDataTableLayout_header .public_fixedDataTableCell_cellContent {
+    padding-top: 2px;
+    padding-bottom: 9px;
+  }
 }

@@ -11,10 +11,9 @@ import products from './products';
 import messages from './messages';
 import dashboard from './dashboard';
 import orders from './orders';
-import createProduct from '../ducks/createProduct/index'
-
-// import quotations from './quotation';
+import createProduct from '../ducks/productSagas/createProduct/index'
 import quotations from '../ducks/quotations'
+import supplierContracts from '../ducks/supplierSaga'
 
 import { connectRouter } from 'connected-react-router';
 import { history } from '../routes/history';
@@ -26,6 +25,7 @@ export default combineReducers({
     errors,
     currencyPair,
     suppliers,
+    supplierContracts,
     createSupplier,
     createCustomer,
     customer,

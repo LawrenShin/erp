@@ -5,7 +5,7 @@ class ModalSemantic extends Component {
     render() {
         return (
             <Modal
-                size="large"
+                size={this.props.size}
                 onClose={this.props.onClose}
                 closeIcon
                 trigger={this.props.trigger}>

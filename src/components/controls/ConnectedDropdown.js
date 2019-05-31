@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import svg from '../../css/svg.module.css'
 
 const irrigateHeader = (name) => `${name[0].toUpperCase()}${name.substr(1).replace("_", " ")}`;
 
@@ -36,8 +37,9 @@ const ConnectedDropdown = ({ name, options, saveToStore, valueFromStore }) => {
             disabled
           />
           <div 
-            className="menu" 
-            style={{ display: visibleMenu ? 'block' : 'none' , zIndex: 9000}}>
+            className='menu'
+            style={{ display: visibleMenu ? 'block' : 'none' , zIndex: 9000}}
+            >
             <div 
               key='not selected'
               className={`item ${(option === 0 && !valueFromStore) ? 'active' : ''}`}

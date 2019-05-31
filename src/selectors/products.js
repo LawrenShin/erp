@@ -23,6 +23,7 @@ export const renamedFilters = createSelector(
                     case 'product_category': 
                         delete Object.assign(filters.data, {['kind']: filters.data[filterName] })[filterName];
                         break;
+                    default: break;
                 }
                 i--;
             }

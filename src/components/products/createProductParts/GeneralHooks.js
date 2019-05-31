@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
+import { Message } from 'semantic-ui-react'
 import Input from '../../controls/input';
 import ConnectedDropdown from '../../controls/ConnectedDropdown';
-import Checkbox from '../../controls/checkbox';
 import { createAction } from '../../../actions';
-import { generalStore } from '../../../ducks/createProduct'
+import { generalStore } from '../../../ducks/productSagas/createProduct'
 
 const GeneralHooks = (props) => {
-  const [trade_mark, setName] = useState( props.store.trade_mark || '' );
-  const [target_price, setTargetPrice] = useState( props.store.target_price || 0 );
-  const [collection, setCollection] = useState( props.store.collection || '' );
-  const [buying_manager, setBuyingManager] = useState( props.store.buying_manager || '' );
-  const [MOQ_range, setMOQ_range] = useState(props.store.MOQ || { from: '', to: '' });
+  const [trade_mark, setName] = useState( props.product.trade_mark || props.store.trade_mark || '' );
+  const [target_price, setTargetPrice] = useState( props.product.target_price || props.store.target_price || 0 );
+  const [collection, setCollection] = useState( props.product.collection || props.store.collection || '' );
+  const [buying_manager, setBuyingManager] = useState( props.product.buying_manager || props.store.buying_manager || '' );
+  const [MOQ_range, setMOQ_range] = useState( props.product.MOQ || props.store.MOQ || { from: '', to: '' });
 
   return (
     <div className="product__item">
@@ -31,6 +31,11 @@ const GeneralHooks = (props) => {
                 name='trade_mark'
                 value={trade_mark}
                 label="Trade mark" />
+              {props.requestErrors.response && <Message 
+                color='red' 
+                size='small'>
+                  { props.requestErrors.response.trade_mark[0] }
+                </Message>}
             </div>
           </div>
           {props.generalMap && <ConnectedDropdown 
@@ -52,7 +57,8 @@ const GeneralHooks = (props) => {
           </div>
           <div className="product-columns__item">
             <div className="select-elem">
-              <label className="box-field__label">Year:</label>
+              {/* need to get it from back */}
+              <label className="box-field__label">Year:</label> 
               <div className="ui fluid selection dropdown">
                 <input type="hidden" />
                 <div className="default text">2019</div>

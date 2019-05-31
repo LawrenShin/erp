@@ -4,9 +4,9 @@ import TableRows from './TableRows';
 import Loading from '../../../helpers/loading';
 
 const warning = () =>(
-    <div class="warning">
-      <i class="warning__icon icon-warning"></i>
-      <div class="warning__text">do not forget to change status after first invoice</div>
+    <div className="warning">
+      <i className="warning__icon icon-warning"></i>
+      <div className="warning__text">do not forget to change status after first invoice</div>
   </div>
 );
 

@@ -1,9 +1,9 @@
 @media screen and (min-width: 768px) {
   .animated {
-      -webkit-animation-duration: .7s;
-      animation-duration: .7s;
-      -webkit-animation-fill-mode: both;
-      animation-fill-mode: both;
+    -webkit-animation-duration: .7s;
+    animation-duration: .7s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
   }
 }
 
@@ -31,6 +31,7 @@
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
+
 @-webkit-keyframes fadeInLeft {
   from {
     opacity: 0;
@@ -165,8 +166,6 @@
 }
 
 
-
-
 @-webkit-keyframes fadeInUp {
   from {
     opacity: 0;
@@ -180,6 +179,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -193,6 +193,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 .fadeInUp {
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
@@ -211,6 +212,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 @keyframes fadeInUpShort {
   from {
     opacity: 0;
@@ -224,6 +226,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 .fadeInUpShort {
   -webkit-animation-name: fadeInUpShort;
   animation-name: fadeInUpShort;
@@ -243,6 +246,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 @keyframes fadeInDown {
   from {
     opacity: 0;
@@ -256,6 +260,7 @@
     transform: translate3d(0, 0, 0);
   }
 }
+
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;

@@ -44,6 +44,12 @@
     text-align: center;
     min-width: 100px;
     flex-basis: 25%;
+    justify-content: center;
+    align-items: center;
+
+    &.data-table__column--factory_country {
+      flex-direction: row;
+    }
 
     &--checkbox {
       min-width: 50px;

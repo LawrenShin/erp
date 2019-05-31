@@ -1,5 +1,5 @@
 import { take, takeEvery, put, call } from 'redux-saga/effects'
-import { createAction } from '../../actions'
+import { createAction } from '../../../actions'
 
 const SET_TRADE_MARK = 'SET_TRADE_MARK'
 const SET_TARGET_PRICE = 'SET_TARGET_PRICE'

@@ -1,13 +1,13 @@
 /* reset */
-$min-width: 250px; 
-$max-width: 1750px; 
-$base-bg: #f8f8fa; 
-$base-font-size: 12px; 
-$base-line-height: 1.25; 
-$base-font-family: Lato, arial, sans-serif; 
-$custom-font-family: 'Myriad Pro', arial, sans-serif; 
-$third-font-family: Avenir, arial, sans-serif; 
-$default-transition:all 0.3s ease-in;
+$min-width: 250px;
+$max-width: 1750px;
+$base-bg: #f8f8fa;
+$base-font-size: 12px;
+$base-line-height: 1.25;
+$base-font-family: Lato, arial, sans-serif;
+$custom-font-family: 'Myriad Pro', arial, sans-serif;
+$third-font-family: Avenir, arial, sans-serif;
+$default-transition: all 0.3s ease-in;
 
 /* main variables */
 
@@ -21,7 +21,7 @@ $color1: #77848f;
 $color2: #bad3db;
 $color3: #41bee8;
 
-$placeholder: rgba(#000,.3);
+$placeholder: rgba(#000, .3);
 
 $font-size-h1: 36px;
 $line-height-h1: 42px;
@@ -44,5 +44,5 @@ $red: #dc5757;
 $black: #161616;
 
 .internet-store {
-	$color-active: #129C8D;
+  $color-active: #129C8D;
 }

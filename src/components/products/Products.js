@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import {connect} from 'react-redux';
 
 import SuppliersHeader from '../suppliers/SuppliersHeader.js';
@@ -9,7 +9,7 @@ import {renamedFilters, renamedProducts} from '../../selectors/products';
 import Pointer from '../controls/pointer';
 import Loading from '../helpers/loading';
 
-class Products extends Component {
+class Products extends PureComponent {
     state = { 
         tableWidth: 0,
         tableHeight: 0
@@ -19,12 +19,6 @@ class Products extends Component {
 
     clickIcon = () => {
         alert('I will definetly do that, but later.');
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot){
-        if(this.props.options !== prevProps.options){
-            this.props.list(this.props.options);
-        }
     }
 
     updateOptions = (filter, value) => {
@@ -51,15 +45,21 @@ class Products extends Component {
                 <SuppliersHeader title='Products' subtitle='LIST OF CURRENT PRODUCTS' products={true} link='/products/create' />
                 {this.props.filters.state === 'loaded' ? 
                 <>
-                    <ProductFilters onResize={this.onResize} filters={this.props.filters.data} updateOptions={this.updateOptions} clearAll={this.clearAll} options={this.props.options} />
+                    <ProductFilters 
+                        onResize={this.onResize} 
+                        filters={this.props.filters.data} 
+                        updateOptions={this.updateOptions} 
+                        clearAll={this.clearAll} 
+                        options={this.props.options} 
+                    />
                     <div className="unload-link">
                         <Pointer><i className="icon-xlsx"></i><span>Export to Excel</span></Pointer>
                     </div>
                     
-                    <Table store={this.props.state}  />                     
+                    <Table store={this.props.state} />
                 </>
                 :
-                <Loading/>}
+                <Loading />}
             </>
         );
     }
@@ -75,7 +75,9 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, 
     (dispatch) => ({
-        list: (options) => dispatch(createRequestAction('product', 'list', [options])),
+        list: (options) => {
+            console.log('REQUEST')
+            dispatch(createRequestAction('product', 'list', [options]))},
         getFilters: () => dispatch(createRequestAction('product', 'getFilters')),
         setOptions: (options) => dispatch(createAction('SET_OPTIONS', {options})),
         clearOptions: () => dispatch(createAction('CLEAR_OPTIONS'))

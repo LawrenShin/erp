@@ -211,6 +211,15 @@ export const getGraphsDetails = (id) => Api.post('suppliers/supplier/details/', 
     })
 }
 
+const uploadContract = ({ supplier, file }) => {
+    let bodyFormData = new FormData();
+    bodyFormData.append('file', file)
+    bodyFormData.append('supplier', supplier)
+    return Api.post('suppliers/contract/', true, bodyFormData, false, false, {'Content-Type': 'multipart/form-data' })
+}
+const getUploadedContract = (id) => Api.get(`suppliers/contract/?supplier=${id}`)
+const deleteUploadedContract = (id) => Api.delete(`suppliers/contract/${id}/`)
+
 export default {
     saveContacts,
     saveAges,
@@ -228,5 +237,8 @@ export default {
     getById,
     edit,
     orderList,
-    getGraphsDetails
+    getGraphsDetails,
+    uploadContract,
+    getUploadedContract,
+    deleteUploadedContract,
 }

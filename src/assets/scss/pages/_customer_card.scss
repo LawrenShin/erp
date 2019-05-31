@@ -1,134 +1,163 @@
 .page-heading_full {
-	margin-top: 8px;
-	margin-bottom: -5px;
-	.page-heading__title {
-		width: 100%
-	}
-	.page-heading__icon_circle {
-		margin-left: 8px
-	}
+  margin-top: 8px;
+  margin-bottom: -5px;
+
+  .page-heading__title {
+    width: 100%
+  }
+
+  .page-heading__icon_circle {
+    margin-left: 8px
+  }
 }
+
 .card-description {
-	color: $color1;
-	max-width: 1110px;
-	&__title {
-		color: $text-color;
-		font-weight: 700;
-		margin-bottom: 6px
-	}
-	p {
-		&:first-child {
-			padding-top: 0;
-		}
-		&:last-child {
-			padding-bottom: 0;
-		}
-	}
+  color: $color1;
+  max-width: 1110px;
+
+  &__title {
+    color: $text-color;
+    font-weight: 700;
+    margin-bottom: 6px
+  }
+
+  p {
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
 }
+
 .card-cols {
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0 -15px;
-	&__col {
-		padding: 0 15px;
-		width: 30%;
-		&_3 {
-			width: 40%
-		}
-	}
-	&__colinside {
-		display: flex;
-		margin: 0 -15px;
-	}
-	&__col-2 {
-		padding: 0 15px;
-		width: 58.5%;
-		&:first-child {
-			padding-left: 3px;
-			width: 41.5%;
-		}
-	}
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+
+  &__col {
+    padding: 0 15px;
+    width: 30%;
+
+    &_3 {
+      width: 40%
+    }
+  }
+
+  &__colinside {
+    display: flex;
+    margin: 0 -15px;
+  }
+
+  &__col-2 {
+    padding: 0 15px;
+    width: 58.5%;
+
+    &:first-child {
+      padding-left: 3px;
+      width: 41.5%;
+    }
+  }
 }
+
 .card-list {
-	list-style: none;
-	&__item {
-		margin-bottom: 30px;
-		&:last-child {
-			margin-bottom: 25px
-		}
-	}
-	&__title {
-		font-weight: 700;
-		margin-right: 7px
-	}
-	&__val {
-		color: $color1;
-		span {
-			color: $text-color;
-		}
-		i {
-			color: $color2;
-			display: inline-block;
-			font-size: 13px;
-			transform: translate(0,2px);
-			margin: 0 0 0 10px;
-		}
-		a {
-			color: $color2;
-			i {
-				color: inherit;
-			}
-			&:hover {
-				color: $text-color
-			}
-		}
-	}
+  list-style: none;
+
+  &__item {
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 25px
+    }
+  }
+
+  &__title {
+    font-weight: 700;
+    margin-right: 7px
+  }
+
+  &__val {
+    color: $color1;
+
+    span {
+      color: $text-color;
+    }
+
+    i {
+      color: $color2;
+      display: inline-block;
+      font-size: 13px;
+      transform: translate(0, 2px);
+      margin: 0 0 0 10px;
+    }
+
+    a {
+      color: $color2;
+
+      i {
+        color: inherit;
+      }
+
+      &:hover {
+        color: $text-color
+      }
+    }
+  }
 }
+
 .card-comment {
-	margin-top: 20px;
-	max-width: 725px;
-	&__title {
-		color: $color-active;
-		margin-bottom: 6px;
-		text-transform: uppercase;
-	}
-	&__description {
-		color: $color1;
-		p {
-			&:first-child {
-				padding-top: 0;
-			}
-			&:last-child {
-				padding-bottom: 0;
-			}
-		}
-	}
+  margin-top: 20px;
+  max-width: 725px;
+
+  &__title {
+    color: $color-active;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  &__description {
+    color: $color1;
+
+    p {
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 1366px) {
-	.card-cols__col-2, .card-cols__col-2:first-child {
-		width: 50%
-	}
+  .card-cols__col-2, .card-cols__col-2:first-child {
+    width: 50%
+  }
 }
+
 @media screen and (max-width: 991px) {
-	.card-cols__colinside {
-		flex-wrap: wrap;
-	}
-	.card-cols__col {
-		width: 50%;
-		&_3 {
-			width: 100%
-		}
-	}
-	.card-cols__col-2:first-child {
-	    padding-left: 15px; 
-	}
+  .card-cols__colinside {
+    flex-wrap: wrap;
+  }
+  .card-cols__col {
+    width: 50%;
+
+    &_3 {
+      width: 100%
+    }
+  }
+  .card-cols__col-2:first-child {
+    padding-left: 15px;
+  }
 }
 
 @media screen and (max-width: 600px) {
-	.card-cols__col, .card-cols__col-2, .card-cols__col-2:first-child {
-		width: 100%;
-	}
+  .card-cols__col, .card-cols__col-2, .card-cols__col-2:first-child {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 420px) {

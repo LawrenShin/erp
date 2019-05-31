@@ -5,6 +5,9 @@ import Loading from '../helpers/loading'
 import QuotationHeader from './QuotationHeader';
 import QuotationListFilter from './QuotationListFilter';
 import QuotationListTable from './quotationTable/QuotationListTable';
+
+import QuotationAcceptSample from './quotationSupplier/QuotationAcceptSample'
+
 import { 
     quotationsFilters, 
     quotationsList, 
@@ -23,6 +26,7 @@ class Quotations extends PureComponent {
     render() {
         return (
             <>
+                {/*<QuotationAcceptSample/>*/}
                 <QuotationHeader title="Quotations" subtitle="List of current quotations"/>
                 {this.props.filters.data && this.renderFilters(this.props.filters)}
                 {this.props.quotations.data && this.renderTable(this.props.quotations.data)}

@@ -12,6 +12,7 @@ const getFilters = () => {
 const list = (options = '') => {
     return Api.get(`products/products/${collectOptions(options)}`);
 }
+const getProduct = (id) => Api.get(`products/products/${id}`)
 // in table
 const getProductColors = () => Api.get(`products/colors/${UNLIM}`)
 const getProductThemes = () => Api.get(`products/themes/${UNLIM}`)
@@ -64,7 +65,8 @@ export default {
     getDesign,
     getGeneral,
     getTechnical,
-    getFabric
+    getFabric,
+    getProduct
 }
 // GENERAL
 //     year - 

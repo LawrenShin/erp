@@ -1,5 +1,5 @@
 import { put} from 'redux-saga/effects'
-import { createAction } from '../../actions'
+import { createAction } from '../../../actions'
 import { nameProperly } from './technical'
 
 export const initialState = () => ({

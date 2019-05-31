@@ -9,10 +9,6 @@ class QuotationListTable extends Component {
         selectThese: this.props.selectThese || [ 'name', 'collection', 'suppliers_amount', 'products_amount', 'status' ]
     }
 
-    componentDidUpdate(){
-        console.log('update table', this.props)
-    }
-
     selectFields = (quot) => {
         const selected = Object.keys(quot)
             .filter(key => this.state.selectThese.includes(key))
@@ -33,16 +29,18 @@ class QuotationListTable extends Component {
                             checkboxHandler={this.props.checkboxHandler} />
                     </div>
                     <div className="data-table__body">
-                        {this.props.list.map(listItem => <QuotationTableRow
-                            checkboxNamePrefix={this.props.checkboxNamePrefix} 
-                            added={this.props.addedProducts || this.props.addedSuppliers}
-                            checkboxHandler={this.props.checkboxHandler}
-                            findMatch={this.props.findMatch}
-                            type={this.props.type}
-                            heads={this.state.heads}
-                            listItem={this.selectFields(listItem)}
-                            id={listItem.id}
-                            key={uuid()} />
+                        {this.props.list.map(listItem => {
+                            return (<QuotationTableRow
+                                countries={this.props.countries}
+                                checkboxNamePrefix={this.props.checkboxNamePrefix} 
+                                added={this.props.addedProducts || this.props.addedSuppliers}
+                                checkboxHandler={this.props.checkboxHandler}
+                                findMatch={this.props.findMatch}
+                                heads={this.state.heads}
+                                listItem={this.selectFields(listItem)}
+                                id={listItem.id}
+                                key={uuid()} />)
+                            }
                         )}
                     </div>
                 </div>
@@ -51,4 +49,4 @@ class QuotationListTable extends Component {
     }
 };
 
-export default QuotationListTable;
+export default React.memo(QuotationListTable);

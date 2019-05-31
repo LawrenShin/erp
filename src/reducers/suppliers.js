@@ -45,7 +45,12 @@ export default (state = {
     needToGetSupplier: true,
     raiting: getDefaultResponse(),
     orderList: getDefaultResponse(),
-    graphDetails: getDefaultResponse()
+    graphDetails: getDefaultResponse(),
+    uploadedContracts: {
+      loading: false,
+      error: '',
+      result: ''
+    },
   }, action) => {
     
     const {payload, type} = action;
@@ -124,6 +129,13 @@ export default (state = {
         return {...state, options: getDefaultOptions()};
       case 'SET_GRAPH_DETAILS_SUPPLIERS':
         return {...state, graphDetails: { data: payload, state: 'loaded'}};
+      case 'UPLOAD_CONTRACT_START':
+        return { ...state, uploadedContracts: { ...state.uploadedContracts, loading: true } }
+      case 'UPLOAD_CONTRACT_DONE':
+        return { ...state, uploadedContracts: { ...state.uploadedContracts, loading: false, results: payload } }
+      case 'UPLOAD_CONTRACT_ERROR':
+        return { ...state, uploadedContracts: { ...state.uploadedContracts, loading: false, error: payload } }
+        
       default:
         return state
     }

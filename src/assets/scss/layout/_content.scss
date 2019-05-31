@@ -187,6 +187,17 @@ input[type=number]::-webkit-outer-spin-button {
     }
   }
 
+  &.-btn-with-wrap {
+    height: auto;
+    line-height: 1.15;
+    padding: 3px 18px;
+    font-size: 12px;
+
+    & + .btn {
+      margin-left: 10px;
+    }
+  }
+
 }
 
 .btn2 {

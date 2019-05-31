@@ -1,11 +1,13 @@
 import React from 'react';
 
 class QuotationInput extends React.PureComponent {
-    state = { value: this.props.value || '' }
+    state = { 
+        value: this.props.value || '',
+        elId: `_last_focus_${this.props.name}`,
+    }
 
     timer = false
-    inputRef = React.createRef();
-
+    
     componentDidUpdate(){
         if(this.timer) {
             clearTimeout(this.timer)
@@ -14,8 +16,7 @@ class QuotationInput extends React.PureComponent {
         
         this.timer = setTimeout(() => {
             console.log('set')
-            this.props.onChange({name: this.props.name, value: this.state.value})
-            this.props.setLastFocus(this.inputRef)
+            this.props.onChange({ name: this.props.name, value: this.state.value, elId: this.state.elId })
         }, 400)
     }
 
@@ -27,7 +28,8 @@ class QuotationInput extends React.PureComponent {
                 <div className="filters-box__item">
                     <div className="input-elem">
                         <input
-                            ref={this.inputRef}
+                            id={this.state.elId}
+                            autoFocus={this.props.focus}
                             className="filters-input"
                             type="text"
                             placeholder={this.props.placeholder}

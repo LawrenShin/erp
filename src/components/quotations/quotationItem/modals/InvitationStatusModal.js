@@ -77,6 +77,7 @@ class InvitationStatusModal extends Component {
     render() {
         return (
             <ModalSemantic
+                size='large'
                 style={{marginLeft: '0 !important'}}
                 trigger={<CommonButton disabled={this.props.disabled} type="btn2" text="Invitation status"/>}>
                 <div className="quotation-modal">
@@ -98,20 +99,20 @@ class InvitationStatusModal extends Component {
                         <div className='data-table__wrapper'>
                             <div className='data-table'>
                                 <div className="data-table__header">
-                                    <QuotationTableHeaderItem heads={this.heads} control={false} buttonRemind={true} />
+                                    <QuotationTableHeaderItem heads={this.heads} control={false} buttonRemind={true}/>
                                 </div>
                                 <div className="data-table__body">
                                     {this.listItems.map(listItem => <QuotationTableRowItem
-                                        show_id={true}
-                                        name={listItem.name}
-                                        group={listItem.group}
-                                        status={listItem.status}
-                                        country={listItem.country}
-                                        invitation_status={listItem.invitation_status}
-                                        confirmed={listItem.confirmed}
-                                        id={listItem.id}
-                                        key={listItem.id}
-                                        buttonRemind={true}
+                                            show_id={true}
+                                            name={listItem.name}
+                                            group={listItem.group}
+                                            status={listItem.status}
+                                            country={listItem.country}
+                                            invitation_status={listItem.invitation_status}
+                                            confirmed={listItem.confirmed}
+                                            id={listItem.id}
+                                            key={listItem.id}
+                                            buttonRemind={true}
                                         />
                                     )}
                                 </div>

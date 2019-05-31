@@ -16,6 +16,7 @@ const QuotationTableHeaderItem = (props) => {
                 </div>
             )}
             {props.buttonRemind ? <div className="data-table__column -flex-grow-1" style={{ minWidth: '250px' }}></div> : ''}
+            {props.enter_price ? <div className="data-table__column -flex-grow-1" style={{ minWidth: '420px' }}></div> : ''}
         </>
     );
 };

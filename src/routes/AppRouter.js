@@ -39,7 +39,6 @@ import ResetPasswordConfirmer from '../components/resetPassword/ResetPasswordCon
 import QuotationsComponent from '../components/quotations'
 import QuotationItem from '../components/quotations/quotationItem/QuotationItem'
 
-
 import { ConnectedRouter } from 'connected-react-router';
 
 const ChooseDashboard = (role) => {

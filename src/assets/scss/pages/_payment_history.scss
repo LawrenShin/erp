@@ -1,17 +1,18 @@
 .page-heading_payment_history {
-	.card-filters-nav__back:first-child  {
-		margin-left: 5px
-	}
-	.card-filters-nav {
-		align-items: center;
-	}
+  .card-filters-nav__back:first-child {
+    margin-left: 5px
+  }
+
+  .card-filters-nav {
+    align-items: center;
+  }
 }
 
 @media screen and (max-width: 767px) {
-	.page-heading_payment_history .card-filters-nav__back:first-child {
-	    margin-left: 20px;
-	}
-	.page-heading__search {
-		margin-bottom: 0
-	}
+  .page-heading_payment_history .card-filters-nav__back:first-child {
+    margin-left: 20px;
+  }
+  .page-heading__search {
+    margin-bottom: 0
+  }
 }

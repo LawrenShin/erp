@@ -1,5 +1,5 @@
 import { take, takeEvery, put, call } from 'redux-saga/effects'
-import { createAction } from '../../actions'
+import { createAction } from '../../../actions'
 
 export const initialState = () => ({
   groups: '',

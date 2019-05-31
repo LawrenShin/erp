@@ -3,22 +3,32 @@ import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { createAction } from '../../../actions';
 import ConnectedDropdown from '../../controls/ConnectedDropdown';
-import { designStore } from '../../../ducks/createProduct';
+import { designStore } from '../../../ducks/productSagas/createProduct';
+import { Message } from 'semantic-ui-react'
+
+export const WrappError = ({ requestErrors, ...rest }) => {
+  return (
+    <>
+      <ConnectedDropdown {...rest} />
+      { (requestErrors && requestErrors.response[rest.name]) && <Message color='red' size='small'>{ requestErrors.response[rest.name] }</Message> }
+    </>
+  )
+}
 
 const DesignHooks = (props) => {
     
   const renderDropdowns = (map) => {
     let drops = []
     for(let [name, options] of map){
-      drops.push(
-        <ConnectedDropdown 
+      // console.log(props.product[name]) // data is raw, some fields missing some of them null. Can't preset data until can create product
+      drops.push(<WrappError
           key={uuid()}
           name={name}
           options={options}
           saveToStore={props.saveToStore}
-          valueFromStore={props.designStore[name]}
-        />
-      )
+          valueFromStore={props.product[name] || props.designStore[name]}
+          requestErrors={props.requestErrors}
+         />)
     }
     return drops.map(d => d)
   }

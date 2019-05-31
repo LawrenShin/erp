@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import Loading from '../../helpers/loading'
-import QuotationHeader from '../QuotationHeader.js'
+import QuotationHeader from '../QuotationHeader'
 import QuotationListFilter from '../QuotationListFilter'
 import QuotationListTable from '../quotationTable/QuotationListTable'
 import QuotationItemEmptyStatic from './QuotationItemEmptyStatic'
@@ -17,7 +17,7 @@ import DistributionModal from './modals/DistributionModal'
 import InvitationStatusModal from './modals/InvitationStatusModal'
 import HistoryModal from './modals/HistoryModal'
 
-import { quotationsList } from '../../../ducks/quotations'
+import { quotationsList, createOptionsSelector } from '../../../ducks/quotations'
 
 import QuotationListTableItem from '../quotationTable/QuotationListTableItem'
 import QuotationsApi from '../../../requestor/quotations'
@@ -43,9 +43,10 @@ class QuotationsItem extends PureComponent {
         if(!this.state.addedProducts) this.refreshAddedProductsInQuotation()
         if(!this.state.addedSuppliers) this.refreshAddedSuppliersInQuotation()
     }
-    componentDidUpdate(){
-        // console.log('update of quotation component', !!this.state.addedProducts)
+    componentWillUnmount(){
+        this.props.refreshQuotationsList(this.props.quotationOptions)
     }
+
     untouched = (what) => {
         if(what === 'products') return !this.state.addedProducts || !this.state.addedProducts.length ? true : false;
         if(what === 'suppliers') return !this.state.addedSuppliers || !this.state.addedSuppliers.length ? true : false;
@@ -53,7 +54,11 @@ class QuotationsItem extends PureComponent {
     render() {
         return (
             <>
-                <QuotationHeader title="Quotations" link={false} subtitle={false}/>
+                {this.props.quotation && <QuotationHeader 
+                    title={this.props.quotation.name}
+                    link={false} 
+                    subtitle={false} />
+                }
                 <div className="quotation-item__head">
                     <div className="quotation-item__head__info">
                         <div className="quotation-item__head__row">
@@ -63,16 +68,30 @@ class QuotationsItem extends PureComponent {
                                 <HistoryModal disabled={this.props.is_available_distribution} />
                             </div>
                         </div>
-                        <div className="quotation-item__head__row">
-                            <QuotationDate text="Quotation starts date:" date="19.05.2019"/>
-                        </div>
-                        <div className="quotation-item__head__row">
-                            <QuotationDate text="Quotation expiry date:" date="06.06.2019"/>
-                        </div>
+                        { this.props.quotation && <>
+                            <div className="quotation-item__head__row">
+                                <QuotationDate 
+                                    text="Quotation starts date:" 
+                                    date={this.props.quotation.start_date} />
+                            </div>
+                            <div className="quotation-item__head__row">
+                                <QuotationDate 
+                                    text="Quotation expiry date:" 
+                                    date={this.props.quotation.expiry_date} />
+                            </div>
+                        </> }
                         <div className="quotation-item__head__row">
                             <div className="quotation-modal__params__item -flex">
-                                <CheckboxComponent className="-noclass" defaultChecked label="Regular"/>
-                                <CheckboxComponent className="-noclass" defaultChecked label="Do not notify supplier"/>
+                                {this.props.quotation && <>
+                                    <CheckboxComponent 
+                                        className="-noclass" 
+                                        defaultChecked={ this.props.quotation.type === 'regular' ? true : false } 
+                                        label="Regular" />
+                                    <CheckboxComponent 
+                                        className="-noclass" 
+                                        defaultChecked={this.props.quotation.do_not_notify_supplier} 
+                                        label="Do not notify supplier" />
+                                </>}
                             </div>
                         </div>
                     </div>
@@ -91,8 +110,14 @@ class QuotationsItem extends PureComponent {
                             </div>
                         </div>
                         <div className="quotation-item__head__row">
-                            <QuotationInfoStroke disabled={false} text="products selected" count="0"/>
-                            <QuotationInfoStroke disabled={true} text="suppliers selected" count="0"/>
+                            <QuotationInfoStroke 
+                                disabled={false} 
+                                text="products selected" 
+                                count={this.untouched('products') ? 0 : this.state.addedProducts.length} />
+                            <QuotationInfoStroke 
+                                disabled={this.untouched('products')} 
+                                text="suppliers selected" 
+                                count={this.untouched('suppliers') ? 0 : this.state.addedSuppliers.length} />
                         </div>
                         <div className="quotation-item__head__row">
                             <div className="options-buttons">
@@ -123,10 +148,12 @@ const getInfo = (list, id) => {
 const mapStateToProps = (state, ownProps) => ({
     quotation: getInfo(quotationsList(state), +ownProps.match.params.id),
     listQ: quotationsList(state),
+    quotationOptions: createOptionsSelector('quotations')(state)
 })
 
 export default connect(mapStateToProps, (dispatch, ownProps) => ({
     loadQuotations: () => dispatch({ type: 'REQUEST_LIST_Q' }),
+    refreshQuotationsList: (payload) => dispatch({ type: 'REQUEST_LIST_Q', payload })
     // getProductsInThisQuotation: () => dispatch({ type: 'GET_PRODUCTS_IN_THIS_QUOTATION', payload: ownProps.match.params.id }),
     // getSuppliersInThisQuotation: () => dispatch({ type: 'GET_SUPPLIERS_IN_THIS_QUOTATION', payload: ownProps.match.params.id }), more likely wont be needed
 }))(QuotationsItem);

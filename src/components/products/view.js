@@ -1,17 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import img from '../../assets/img/examples/img_1.jpg';
 import {NavLink} from 'react-router-dom';
 import Back from '../controls/backbtn';
+import { createRequestAction } from '../../actions'
+import { Message } from 'semantic-ui-react'
 
 class ViewProduct extends React.Component {
+    componentWillMount(){
+        this.props.getProduct(this.props.match.params.id)
+    }
+
     render() {
+        if(this.props.product && this.props.product.state === 'fail') return <Message color='red'>Couldn't load product</Message>
+
         return (
         <>
             <div className="page-heading page-heading_product">	
                 <div className="page-heading__title">
                     <div className="page-heading__top">
                         <h1 className="h1 h1_product">Product # 1235</h1>
-                        <NavLink to={`/products/edit/${this.props.match.params.id}`} className="page-heading__icon page-heading__icon_circle"><i className="icon-edit"></i></NavLink>
+                        <NavLink 
+                            to={`/products/edit/${this.props.match.params.id}`} 
+                            className="page-heading__icon page-heading__icon_circle">
+                                <i className="icon-edit"></i>
+                        </NavLink>
                     </div>
                 </div>
                 <div className="page-heading__navs">								
@@ -680,4 +693,8 @@ class ViewProduct extends React.Component {
     }
 }
 
-export default ViewProduct;
+export default connect(state => ({
+    product: state.products.product
+}), dispatch => ({
+    getProduct: (id) => dispatch(createRequestAction('product', 'getProduct', [id])),
+}))(ViewProduct);

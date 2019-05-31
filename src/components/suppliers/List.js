@@ -63,7 +63,7 @@ class List extends Component{
                 width={width}
                 height={height}
                 >
-                <span class="action-quatation action-quatation_add">Add supplier to quatation</span>
+                <span className="action-quatation action-quatation_add">Add supplier to quatation</span>
               </Cell>
             )}
             width={150}

@@ -50,9 +50,10 @@ export const getDefaultOptions = (listName) => {
           categories: '',
           legal_country: '',
         }
+        default: break;
     }
  }
-const init = () => ({
+export const init = () => ({
   filters: {
     quotations: {
       loading: false,
@@ -187,26 +188,29 @@ export function mainQuotationReducer(state = init(), action){
           }
         }
       case MODALS_DATA_ERROR: 
-        return { ...state, lists: { ...state.lists, 
-          products: { 
-            ...state.lists.products, 
-            loading: false,
-            error: payload
-          },
-          suppliers: { 
-            ...state.lists.suppliers, 
-            loading: false,
-            error: payload
-          },
-          products: { 
-            ...state.filters.products, 
-            loading: false,
-            error: payload
-          },
-          suppliers: { 
-            ...state.filters.suppliers, 
-            loading: false,
-            error: payload
+        return { ...state, 
+          lists: { ...state.lists, 
+            products: { 
+              ...state.lists.products, 
+              loading: false,
+              error: payload
+            },
+            suppliers: { 
+              ...state.lists.suppliers, 
+              loading: false,
+              error: payload
+            },
+          filters: { ...state.filters,
+            products: { 
+              ...state.filters.products, 
+              loading: false,
+              error: payload
+            },
+            suppliers: { 
+              ...state.filters.suppliers, 
+              loading: false,
+              error: payload
+            }
           }
         }}
 
@@ -296,13 +300,17 @@ export function* quotationsListSaga(){
 
 export function* modalsDataSaga(){
   yield put({ type: MODALS_DATA_START })
+  
+  const suppliersOptionsSelector = createOptionsSelector('suppliers')
+  const productsOptionsSelector = createOptionsSelector('products')
   const suppliersOptions = yield select(suppliersOptionsSelector)
   const productsOptions = yield select(productsOptionsSelector)
+  
   try{
     const [ suppliersList, suppliersFilters, productsList, productsFilters ] = yield all([
-      call(SuppliersApi.list, suppliersOptions),
+      call(QuotationsApi.getSuppliersForQuotation, suppliersOptions),
       call(QuotationsApi.introspectFilters, 'suppliers'),
-      call(ProductsApi.list, productsOptions),
+      call(QuotationsApi.getProductsForQuotation, productsOptions),
       call(QuotationsApi.introspectFilters, 'products'),
     ])
     yield put({ type: MODALS_DATA_DONE, payload: { suppliersList, suppliersFilters, productsList, productsFilters } })
@@ -317,6 +325,8 @@ export function* quotationsOptionsSaga({ payload }){
 }
 
 export function* saga(){
+  yield console.log('from quotations saga')
+
   yield takeEvery(REQUEST_FILTERS_Q, quotationsFiltersSaga)
   yield takeEvery(REQUEST_LIST_Q, quotationsListSaga)
   yield takeEvery(QUOTATIONS_OPTION, quotationsOptionsSaga)

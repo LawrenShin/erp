@@ -4,64 +4,80 @@
   justify-content: space-between;
   align-items: center;
   padding: 9px 26px 7px;
+
   .search-bl__input {
     height: 24px;
     line-height: 14px;
     padding-top: 0;
     padding-bottom: 3px;
   }
+
   .search-bl__btn {
     width: 35px;
   }
+
   .search-bl__btn i {
     font-size: 15px;
     margin-right: 4px;
   }
 }
+
 .messages-tabs {
   flex-shrink: 0;
+
   &__item {
     display: inline-block;
     margin-right: 24px;
+
     &:last-child {
       margin-right: 0
     }
   }
+
   &__link {
     color: #b3bec4;
     cursor: pointer;
     white-space: nowrap;
+
     &:hover {
       color: $color-active;
     }
+
     &.selected {
       color: #252525;
       cursor: default;
     }
+
     i {
       font-size: 18px;
       display: inline-block;
       margin-right: 8px;
       vertical-align: middle;
+
       &.icon-forward {
         font-size: 12px;
       }
+
       &.icon-trash {
         margin-top: -4px;
       }
+
       &.icon-inbox {
         margin-top: -2px;
       }
     }
   }
+
   &__title {
     vertical-align: middle;
   }
 }
+
 .messages-search {
-    max-width: 270px;
-    width: 100%
+  max-width: 270px;
+  width: 100%
 }
+
 @media screen and (max-width: 1220px) {
   .messages-head {
     flex-direction: column;
@@ -77,12 +93,14 @@
     justify-content: flex-end;
     max-width: 100%;
     margin-top: 5px;
+
     .search-bl {
       width: 470px;
       max-width: 100%
     }
   }
 }
+
 @media screen and (max-width: 480px) {
 
 }

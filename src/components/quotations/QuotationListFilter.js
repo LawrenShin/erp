@@ -5,9 +5,7 @@ import QuotationInput from './QuotationInput';
 
 
 class QuotationListFilter extends Component {
-    state = {lastFocus: false}
-
-    setLastFocus = (ref) => this.setState({lastFocus: ref})
+    state = { lastFocus: false }
 
     getHeight = () => {
         const height = document.body.clientHeight - this.ref.current.getBoundingClientRect().bottom - 120;
@@ -17,7 +15,6 @@ class QuotationListFilter extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.onResize);
     };
-
     componentWillUnmount() {
         window.removeEventListener("resize", this.onResize);
     };
@@ -31,7 +28,8 @@ class QuotationListFilter extends Component {
         this.props.clearAll();
     };
 
-    handleChange = ({ name, value }) => {
+    handleChange = ({ name, value, elId }) => {
+        this.setState({ lastFocus: elId })
         this.props.updateOptions(this.filterNameTransformer(name, 'toBack'), value);
     };
 
@@ -51,14 +49,14 @@ class QuotationListFilter extends Component {
     };
 
     renderInput = (name, filter) => {
-        const {options} = this.props;
+        const { options } = this.props;
         const placeholder = this.filterNameTransformer(name, 'fromBack');
+        const { lastFocus } = this.state
 
         return (
             <QuotationInput
                 key={uuid()}
-                setLastFocus={this.setLastFocus}
-                lastFocus={this.lastFocus}
+                focus={lastFocus === `_last_focus_${name}` ? true : false}
                 name={name}
                 placeholder={placeholder}
                 value={options[name]}

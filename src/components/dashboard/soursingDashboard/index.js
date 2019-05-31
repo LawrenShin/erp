@@ -25,7 +25,7 @@ class SourcingDashboard extends Component{
           fromServer={this.props.nlgCapacityChart.data} />
         :
         <Loading />}
-        <div class="flex-block sourcing__flex-block">
+        <div className="flex-block sourcing__flex-block">
           <RatingTable 
             tableTitle='TOP 30 SUPPLIERS' 
             list={this.props.top30} />

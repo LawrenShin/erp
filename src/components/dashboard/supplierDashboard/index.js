@@ -10,8 +10,8 @@ export default class SupplierDashboard extends Component{
     return(
       <>
         <Header title='Dashboard' subTitle='PURCHASIGN MANAGER' />
-        <div class="purchasing">
-          <div class="flex-block purchasing__flex-block">
+        <div className="purchasing">
+          <div className="flex-block purchasing__flex-block">
             <PurchasingGraphs />
             <Statuses />
           </div>

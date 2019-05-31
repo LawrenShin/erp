@@ -12,42 +12,42 @@ class PurchasingDashboard extends Component{
       <>
         <Header title='Dashboard' subTitle='PURCHASIGN MANAGER' />
         <div className="purchasing">
-          <div class="flex-block purchasing__flex-block">
-            <div class="statuses">
+          <div className="flex-block purchasing__flex-block">
+            <div className="statuses">
               {this.state.statuses.map(status => <Status title={status} />)}
             </div>
             {/* charts */}
-            <div class="purchasing__graphs">
-              <div class="window">
-                <div class="window-head">
-                  <div class="window-title">
-                    <i class="window-title__icon icon-analytics"></i>
+            <div className="purchasing__graphs">
+              <div className="window">
+                <div className="window-head">
+                  <div className="window-title">
+                    <i className="window-title__icon icon-analytics"></i>
                     NLG capacity
                   </div>
-                  <div class="window-btns">
-                    <a href="#" class="window-btn window-btn_refresh"><i class="icon-refresh"></i></a>
-                    <a href="#" class="window-btn window-btn_hide"><i class="icon-angle-down"></i></a>
-                    <a href="#" class="window-btn window-btn_close"><i class="icon-close"></i></a>
+                  <div className="window-btns">
+                    <a href="#" className="window-btn window-btn_refresh"><i className="icon-refresh"></i></a>
+                    <a href="#" className="window-btn window-btn_hide"><i className="icon-angle-down"></i></a>
+                    <a href="#" className="window-btn window-btn_close"><i className="icon-close"></i></a>
                   </div>
                 </div>
-                <div class="window-content">
-                  <div class="graph purchasing-graph"><img src={graph3} alt=""/></div>
+                <div className="window-content">
+                  <div className="graph purchasing-graph"><img src={graph3} alt=""/></div>
                 </div>
               </div>
-              <div class="window">
-                <div class="window-head">
-                  <div class="window-title">
-                    <i class="window-title__icon icon-analytics"></i>
+              <div className="window">
+                <div className="window-head">
+                  <div className="window-title">
+                    <i className="window-title__icon icon-analytics"></i>
                     Quotation analytics
                   </div>
-                  <div class="window-btns">
-                    <a href="#" class="window-btn window-btn_refresh"><i class="icon-refresh"></i></a>
-                    <a href="#" class="window-btn window-btn_hide"><i class="icon-angle-down"></i></a>
-                    <a href="#" class="window-btn window-btn_close"><i class="icon-close"></i></a>
+                  <div className="window-btns">
+                    <a href="#" className="window-btn window-btn_refresh"><i className="icon-refresh"></i></a>
+                    <a href="#" className="window-btn window-btn_hide"><i className="icon-angle-down"></i></a>
+                    <a href="#" className="window-btn window-btn_close"><i className="icon-close"></i></a>
                   </div>
                 </div>
-                <div class="window-content">
-                  <div class="graph purchasing-graph-2"><img src={graph4} alt=""/></div>
+                <div className="window-content">
+                  <div className="graph purchasing-graph-2"><img src={graph4} alt=""/></div>
                 </div>
               </div>
             </div>

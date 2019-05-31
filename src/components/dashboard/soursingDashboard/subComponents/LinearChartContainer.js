@@ -10,7 +10,7 @@ class LinearChartContainer extends Component {
   renderFilters = (filters) => filters.map(f => <div 
     key={f}
     onClick={ () => this.handleClick(f) }
-    class={ `graph-filter ${this.state.activeChartFilter.includes(f) ? 'active' : ''}` }>{f}</div>);
+    className={ `graph-filter ${this.state.activeChartFilter.includes(f) ? 'active' : ''}` }>{f}</div>);
 
   handleClick = (f) => {
     !this.state.activeChartFilter.includes(f) ? 
@@ -50,21 +50,21 @@ class LinearChartContainer extends Component {
 
   render() {
     return (
-      <div class="window">
-        <div class="window-head">
-            <div class="window-title">
-                <i class="window-title__icon icon-analytics"></i>
+      <div className="window">
+        <div className="window-head">
+            <div className="window-title">
+                <i className="window-title__icon icon-analytics"></i>
                 NLG capacity.
             </div>
-            <div class="window-btns">
-                <span class="window-btn window-btn_refresh"><i class="icon-refresh"></i></span>
-                <span class="window-btn window-btn_hide"><i class="icon-angle-down"></i></span>
-                <span class="window-btn window-btn_close"><i class="icon-close"></i></span>
+            <div className="window-btns">
+                <span className="window-btn window-btn_refresh"><i className="icon-refresh"></i></span>
+                <span className="window-btn window-btn_hide"><i className="icon-angle-down"></i></span>
+                <span className="window-btn window-btn_close"><i className="icon-close"></i></span>
             </div>
         </div>
-        <div class="window-content">
-            <div class="graph sourcing__graph">
-                <div class="graph__filters">
+        <div className="window-content">
+            <div className="graph sourcing__graph">
+                <div className="graph__filters">
                   {this.renderFilters(this.state.chartFilters)}
                 </div>
                 <LineChart 

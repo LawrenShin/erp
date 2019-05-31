@@ -86,6 +86,7 @@ class HistoryModal extends Component {
     render() {
         return (
             <ModalSemantic
+                size='large'
                 style={{marginLeft: '0 !important'}}
                 trigger={<CommonButton disabled={this.props.disabled} type="btn2" text="History"/>}>
                 <div className="quotation-modal">
@@ -102,21 +103,21 @@ class HistoryModal extends Component {
                         <div className='data-table__wrapper'>
                             <div className='data-table'>
                                 <div className="data-table__header">
-                                    <QuotationTableHeaderItem heads={this.heads} />
+                                    <QuotationTableHeaderItem heads={this.heads}/>
                                 </div>
                                 <div className="data-table__body">
                                     {this.listItems.map(listItem => <QuotationTableRowItem
-                                        show_id={true}
-                                        name={listItem.name}
-                                        group={listItem.group}
-                                        id={listItem.id}
-                                        key={listItem.id}
-                                        date={listItem.date}
-                                        color={listItem.color}
-                                        target_price={listItem.target_price}
-                                        price={listItem.price}
-                                        suppliers={true}
-                                        description={listItem.description}
+                                            show_id={true}
+                                            name={listItem.name}
+                                            group={listItem.group}
+                                            id={listItem.id}
+                                            key={listItem.id}
+                                            date={listItem.date}
+                                            color={listItem.color}
+                                            target_price={listItem.target_price}
+                                            price={listItem.price}
+                                            suppliers={true}
+                                            description={listItem.description}
                                         />
                                     )}
                                 </div>

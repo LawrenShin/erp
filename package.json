@@ -25,6 +25,8 @@
     "react-addons-clone-with-props": "^0.14.8",
     "react-country-flag": "^1.0.1",
     "react-dates": "^18.2.2",
+    "react-dnd": "^7.4.5",
+    "react-dnd-html5-backend": "^7.4.4",
     "react-dom": "^16.8.6",
     "react-dropzone": "^9.0.0",
     "react-icons": "^3.2.2",

@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { createSelector } from 'reselect'
 import { call, put, takeEvery } from 'redux-saga/effects'
 
-import ProductApi from '../../requestor/product'
+import ProductApi from '../../../requestor/product'
 
 import generalReducer from './general'
 import designReducer from './design'
@@ -28,7 +28,9 @@ export function requestReducer(state = initialState(), action){
     case 'CREATE_PRODUCT_REQUEST_DONE':
       return { ...state, loading: false, response: { ...payload }, error: '' }
     case 'CREATE_PRODUCT_REQUEST_ERROR':
-      return { ...state, loading: false, error: payload }
+      return { ...state, loading: false, error: { ...payload } }
+    case 'CREATE_PRODUCT_REFRESH':
+        return { ...state, error: '' }
 
     default:
       return state
@@ -87,11 +89,11 @@ export const logisticsStore = createSelector(
   createProductStore,
   (store) => store.logisticsReducer
 )
-export const requestErrors = createSelector(
+export const requestErrorsSelector = createSelector(
   createProductStore,
   (store) => store.requestReducer.error
 )
-export const createProductStoreForRequest = createSelector(
+export const gatherProductPropsForRequest = createSelector(
   generalStore,
   designStore,
   technicalStore,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import uuid from 'uuid'
 import { createAction } from '../../../actions'
-import { logisticsStore } from '../../../ducks/createProduct'
+import { logisticsStore } from '../../../ducks/productSagas/createProduct'
 import { connect } from 'react-redux'
 import Input from '../../controls/input'
 

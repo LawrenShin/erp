@@ -26,7 +26,7 @@ class UserProfile extends React.Component{
         const {first_name, last_name, role, lang = 'ru'} = this.props.user;
 
         return (
-            <div class="box-user-profile">
+            <div className="box-user-profile">
                 <Formik initialValues={{first_name, last_name, role, lang}}
                     onSubmit={async ({first_name, last_name, role, lang}, actions) => {
                         try{
@@ -49,40 +49,40 @@ class UserProfile extends React.Component{
                     }}
                     render={ ({values: {first_name, last_name}, errors, handleSubmit, handleChange, handleBlur, isSubmitting}) => (
                         <form onSubmit={handleSubmit}>
-                            <div class="user-profile-head">
-                                <div class="wrapper">
-                                    <div class="user-profile-avatar">
+                            <div className="user-profile-head">
+                                <div className="wrapper">
+                                    <div className="user-profile-avatar">
                                         <Avatar>{first_name[0] || '?'}{last_name[0] || '?'}</Avatar>
-                                        {role && <div class="avatar-big-post">{role[0].toUpperCase()}{role.substr(1)}</div>}
+                                        {role && <div className="avatar-big-post">{role[0].toUpperCase()}{role.substr(1)}</div>}
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrapper">
-                                <div class="user-profile-form">
-                                    <label class="load-file profile-loader">
-                                        <span class="box-field__input load-file__input">Change picture</span>
-                                        <i class="load-file__icon icon-upload"></i>
-                                        <input type="file" class="load-file__file" />
+                            <div className="wrapper">
+                                <div className="user-profile-form">
+                                    <label className="load-file profile-loader">
+                                        <span className="box-field__input load-file__input">Change picture</span>
+                                        <i className="load-file__icon icon-upload"></i>
+                                        <input type="file" className="load-file__file" />
                                     </label>
-                                    <div class="user-profile-inputs">
-                                        <div class="box-field box-field_profile">
-                                            <label class="box-field__label">First name:</label>
-                                            <input type="text" class="box-field__input" name="first_name" value={first_name} onChange={handleChange}/>
+                                    <div className="user-profile-inputs">
+                                        <div className="box-field box-field_profile">
+                                            <label className="box-field__label">First name:</label>
+                                            <input type="text" className="box-field__input" name="first_name" value={first_name} onChange={handleChange}/>
                                             {errors.first_name && <Message color='red'>{errors.first_name}</Message>}
                                         </div>
-                                        <div class="box-field box-field_profile">
-                                            <label class="box-field__label">Last name:</label>
-                                            <input type="text" class="box-field__input" name="last_name" value={last_name} onChange={handleChange} />
+                                        <div className="box-field box-field_profile">
+                                            <label className="box-field__label">Last name:</label>
+                                            <input type="text" className="box-field__input" name="last_name" value={last_name} onChange={handleChange} />
                                             {errors.last_name && <Message color='red'>{errors.last_name}</Message>}
                                         </div>
-                                        <div class="box-field box-field_profile">
-                                            <label class="box-field__label">Job tital:</label>
-                                            <input type="text" class="box-field__input" name="role" value={role} onChange={handleChange} />
+                                        <div className="box-field box-field_profile">
+                                            <label className="box-field__label">Job tital:</label>
+                                            <input type="text" className="box-field__input" name="role" value={role} onChange={handleChange} />
                                             {errors.role && <Message color='red'>{errors.role}</Message>}
                                         </div>
-                                        <div class="box-field box-field_profile">
-                                            <div class="select-elem">
-												<label class="box-field__label">Language:</label>
+                                        <div className="box-field box-field_profile">
+                                            <div className="select-elem">
+												<label className="box-field__label">Language:</label>
                                                 <Dropdown noEmpty simple name="lang" options={[{text: "Russian", value: "ru"}, {text: "English", value: "en"}]} value={lang} />
                                             </div>
                                         </div>

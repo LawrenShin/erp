@@ -1,0 +1,126 @@
+.upload {
+  &__header {
+    background: $blue;
+    text-align: center;
+    color: $white;
+    padding: 10px;
+    font-size: 18px;
+  }
+
+  &__body {
+    padding: 30px 40px;
+  }
+
+  &__input {
+    border: 2px dashed #bdbebe;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 20px;
+
+    i.icon-upload {
+      font-size: 46px;
+      color: #767a7b;
+    }
+
+    .-title {
+      font-size: 18px;
+      color: #767a7b;
+      margin: 20px 0 10px;
+      padding: 0;
+
+      button {
+        padding: 0;
+        border: none;
+      }
+    }
+
+    .-text {
+      color: #b0b0b0;
+      font-size: 13px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+
+    & + .upload__row {
+      margin-top: 20px;
+    }
+
+    &__label {
+      width: 210px;
+      padding-right: 10px;
+      color: #77848f;
+      font-size: 12px;
+    }
+
+    &__content {
+      width: calc(100% - 210px);
+
+      [class^="icon-"], [class*=" icon-"] {
+        font-size: 16px;
+        margin-right: 20px;
+      }
+
+      button {
+        background: none;
+        border: none;
+        padding: 0;
+        color: $blue;
+      }
+    }
+
+    .download-line {
+      margin-top: 2px;
+    }
+  }
+}
+
+.download-line {
+  position: relative;
+  width: 100%;
+  padding-right: 25px;
+
+  &__bg {
+    height: 9px;
+    background: #ebebeb;
+  }
+
+  &__status {
+    position: absolute;
+    width: 0;
+    height: 9px;
+    background: $blue;
+    left: 0;
+    top: 0;
+  }
+
+  &__stop {
+    border: 1px solid #d9e6eb;
+    color: #d9e6eb;
+    border-radius: 50%;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 16px;
+    height: 16px;
+
+    i {
+      font-size: 7px !important;
+      margin-right: 0 !important;
+    }
+  }
+}
+

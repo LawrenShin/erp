@@ -1,115 +1,135 @@
 .login {
-	display: flex;
-	width: 1062px;
-	max-width: 100%;
-	box-shadow: 0px 39px 84px 0px rgba(0, 0, 0, 0.57);
-	&-box {
-		background: url(../img/bg-login.jpg) center center no-repeat;
-		background-size: cover;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-grow: 12;
-		min-height: 100vh;
-		width: 100%;
-		&:before {
-			content: '';
-			background: rgba(255,255,255,.4);
-			display: block;
-			left: 0;
-			top: 0;
-			right: 0;
-			bottom: 0;
-		}
-	}
-	&__form {
-		background: #fff;
-		padding: 46px 50px 84px;
-		width: 445px;
-	} 
-	&__decor {
-		background: url(../img/login.jpg) center center no-repeat;
-		background-size: cover;
-		width: calc(100% - 445px);
-	}
-	&__logo {
-		text-align: center;
-		&_title {
-			color: $color-active;
-			font-size: 12.5px;
-			margin-top: 16px;
-			text-transform: uppercase;
-		}
-	}
-	&-form {
-		margin-top: 37px;
-		.box-field__input {
-			background: transparent;
-			padding-left: 35px;
-			font-size: 14px;
-			height: 35px;
-			padding-top: 1px;
-		}
-		.box-field {
-			position: relative;
-			margin-bottom: 27px
-		}
-		.btn {
-			font-size: 18px;
-			height: 40px;
-			line-height: 37px;
-			width: 100%
-		}
-	} 
-	&-bottom {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: 25px;
-	}
-	&-icon {
-		color: #d3d3d3;
-		display: inline-block;
-		font-size: 19px;
-		position: absolute;
-		left: 11px;
-		top: 50%;
-		transform: translate(0,-50%);
-		&.icon-lock {
-			font-size: 24px
-		}
-	}
-	.checkbox-label {
-		font-size: 14px;
-		&:before {
-			top: 1px;
-		}
-	}
+  display: flex;
+  width: 1062px;
+  max-width: 100%;
+  box-shadow: 0px 39px 84px 0px rgba(0, 0, 0, 0.57);
+
+  &-box {
+    background: url(../img/bg-login.jpg) center center no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 12;
+    min-height: 100vh;
+    width: 100%;
+
+    &:before {
+      content: '';
+      background: rgba(255, 255, 255, .4);
+      display: block;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  &__form {
+    background: #fff;
+    padding: 46px 50px 84px;
+    width: 445px;
+  }
+
+  &__decor {
+    background: url(../img/login.jpg) center center no-repeat;
+    background-size: cover;
+    width: calc(100% - 445px);
+  }
+
+  &__logo {
+    text-align: center;
+
+    &_title {
+      color: $color-active;
+      font-size: 12.5px;
+      margin-top: 16px;
+      text-transform: uppercase;
+    }
+  }
+
+  &-form {
+    margin-top: 37px;
+
+    .box-field__input {
+      background: transparent;
+      padding-left: 35px;
+      font-size: 14px;
+      height: 35px;
+      padding-top: 1px;
+    }
+
+    .box-field {
+      position: relative;
+      margin-bottom: 27px
+    }
+
+    .btn {
+      font-size: 18px;
+      height: 40px;
+      line-height: 37px;
+      width: 100%
+    }
+  }
+
+  &-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+  }
+
+  &-icon {
+    color: #d3d3d3;
+    display: inline-block;
+    font-size: 19px;
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translate(0, -50%);
+
+    &.icon-lock {
+      font-size: 24px
+    }
+  }
+
+  .checkbox-label {
+    font-size: 14px;
+
+    &:before {
+      top: 1px;
+    }
+  }
 }
 
 .forget__link {
-	color: #000;
-	font-size: 14px;
-	&:hover {
-		color: $color-active
-	}
-	cursor: pointer;
+  color: #000;
+  font-size: 14px;
+
+  &:hover {
+    color: $color-active
+  }
+
+  cursor: pointer;
 }
+
 @media screen and (max-width: 767px) {
-	.login__box {
-		min-height: 100%
-	}
+  .login__box {
+    min-height: 100%
+  }
 }
+
 @media screen and (max-width: 767px) {
-	.login {
-		width: 445px;
-	}
-	.login__decor {
-		display: none;
-	}
+  .login {
+    width: 445px;
+  }
+  .login__decor {
+    display: none;
+  }
 }
+
 @media screen and (max-width: 420px) {
-	.login__form {
-	    padding: 30px 15px;
-	}
+  .login__form {
+    padding: 30px 15px;
+  }
 }

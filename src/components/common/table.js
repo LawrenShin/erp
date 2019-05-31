@@ -54,22 +54,22 @@ class Header extends React.PureComponent {
         <Row className={`data-table__header`}>
               {
                 Object.keys(fields).map( (c, ci) =>
-                  <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignItems="center" justifyContent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }</Col>
+                  <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignitems="center" justifycontent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }</Col>
                 )              
               }
         </Row>   
-        <Col className={`${className} _scrollTop`} absolute left={0} style={{zIndex: 2}} background={background}>
-          <Row className="data-table__header" relative>
+        <Col className={`${className} _scrollTop`} absolute='true' left={0} style={{zIndex: 2}} background={background}>
+          <Row className="data-table__header" relative='true'>
               {
                 Object.keys(fields).map( (c, ci) =>
-                  <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignItems="center" justifyContent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }</Col>  
+                  <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignitems="center" justifycontent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }</Col>  
                 )              
               }
               {fixed ?
-                <Row className="data-table__header _scrollLeft" absolute top={0} style={{zIndex: 2}} background={background}>
+                <Row className="data-table__header _scrollLeft" absolute='true' top={0} style={{zIndex: 2}} background={background}>
                       {
                         Object.keys(fields).slice(0, fixed).map( (c, ci) =>
-                          <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignItems="center" justifyContent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }   </Col>  
+                          <Col className={`data-table__column data-table__column--${ci} data-table__column--${c}`} height={headerHeight} key={ci} alignitems="center" justifycontent="center" background={headerBackground} padding={padding} width={cellWidth}>{ header(fields[c], c, ci) }   </Col>  
                         )              
                       }
                 </Row>
@@ -92,23 +92,23 @@ class Rows extends React.PureComponent {
           {
               data.map( (v, i) => 
                 <>
-                  <Row key={uuid()} className="data-table__row" relative>
+                  <Row key={uuid()} className="data-table__row" relative='true'>
                     {
                       Object.keys(fields).map( (c, ci, arr) => {
                         const cn = fixed > 0 && ci === fixed - 1  || ci == arr.length - 1 ? "hidden" : "";
                         // console.log(v) changing supplier data bug
-                        return <Col className={`data-table__column data-table__column--${ci} data-table__column--${c} ${cn}`} height={cellHeight} key={ci} alignItems="center" justifyContent="center" background={cellBackground} offset={offset} padding={padding} width={cellWidth}>{ cell(v[c], c, i, ci) }</Col> // REST OF THE FIELDS
+                        return <Col className={`data-table__column data-table__column--${ci} data-table__column--${c} ${cn}`} height={cellHeight} key={ci} alignitems="center" justifycontent="center" background={cellBackground} offset={offset} padding={padding} width={cellWidth}>{ cell(v[c], c, i, ci) }</Col> // REST OF THE FIELDS
                       })
                     }
                     {fixed ?
-                      <Row key={uuid()} absolute className="_scrollLeft" top={0} style={{zIndex: 1}}>
+                      <Row key={uuid()} absolute='true' className="_scrollLeft" top={0} style={{zIndex: 1}}>
                         <Col background={background}>
                         {
                             <Row className="data-table__row">
                             {
                                 Object.keys(fields).slice(0, fixed).map( (c, ci) => {
                                     const cn = fixed > 0 && ci === fixed - 1 ? "data-table__column--last" : "";
-                                    return <Col className={`data-table__column data-table__column--${ci} data-table__column--${c} ${cn}`} height={cellHeight} key={ci} alignItems="center" justifyContent="center" background={cellBackground} offset={offset} padding={padding} width={cellWidth}>{cell(data[i][c], c, i, ci)}</Col> //IDS
+                                    return <Col className={`data-table__column data-table__column--${ci} data-table__column--${c} ${cn}`} height={cellHeight} key={ci} alignitems="center" justifycontent="center" background={cellBackground} offset={offset} padding={padding} width={cellWidth}>{cell(data[i][c], c, i, ci)}</Col> //IDS
                                 })
                             }
                             </Row>
@@ -140,9 +140,9 @@ class TableInner extends React.PureComponent {
     const {className, headerHeight, fields, background, headerBackground, padding, cellWidth, header, fixed, data, cellHeight, cellBackground, offset, cell, rowAfter, children} = this.props;
 
     return (
-      <Col className={className} absolute style={{overflow: "hidden"}} >
+      <Col className={className} absolute='true' style={{overflow: "hidden"}} >
         <Header headerHeight={headerHeight} fields={fields} background={background} headerBackground={headerBackground} padding={padding} cellWidth={cellWidth} header={header} fixed={fixed} />          
-        <Rows key={uuid()} data={data} fields={fields} headerHeight={headerHeight} cellHeight={cellHeight} cellBackground={cellBackground} offset={offset} padding={padding} cellWidth={cellWidth} cell={cell} background={background} fixed={fixed} rowAfter={rowAfter} children={children} />
+        <Rows data={data} fields={fields} headerHeight={headerHeight} cellHeight={cellHeight} cellBackground={cellBackground} offset={offset} padding={padding} cellWidth={cellWidth} cell={cell} background={background} fixed={fixed} rowAfter={rowAfter} children={children} />
       </Col>
     )
   }

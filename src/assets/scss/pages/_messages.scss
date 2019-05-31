@@ -1,205 +1,243 @@
 .messages-body {
-	background: #fff;
-	flex-grow: 12;
-	padding-bottom: 20px;
-	.pagination {
-		padding-right: 25px;
-		font-size: 14px;
-		i {
-			font-size: 16px
-		}
-	}
-	.pagination-arrow {
-		border: 0;
-		color: $text-color;
-		margin-left: 10px;
-		&:hover {
-			color: $color-active;
-		}
-		& + .pagination-arrow {
-			margin-left: 19px
-		}
-	}
-	.pagination__text {
-		margin-top: 4px;
-	}
+  background: #fff;
+  flex-grow: 12;
+  padding-bottom: 20px;
+
+  .pagination {
+    padding-right: 25px;
+    font-size: 14px;
+
+    i {
+      font-size: 16px
+    }
+  }
+
+  .pagination-arrow {
+    border: 0;
+    color: $text-color;
+    margin-left: 10px;
+
+    &:hover {
+      color: $color-active;
+    }
+
+    & + .pagination-arrow {
+      margin-left: 19px
+    }
+  }
+
+  .pagination__text {
+    margin-top: 4px;
+  }
 }
+
 .messages-table {
-	font-size: 14px;
-	table {
-		table-layout: fixed;
-		width: 100%;
-		table td {
-			background: #f6f6f6
-		}
-	}
-	td {
-		border-bottom: 1px solid #f0f0f0;
-		cursor: pointer;
-		vertical-align: middle;
-		padding: 16px 10px 14px;
-		&:first-child {
-			padding-left: 0;
-		}
-	}
-	.single-checkbox {
-		margin-right: 10px;
-	}
-	.group {
-		font-size: 12px;
-		display: none;
-		td {
-			padding-top: 17px
-		}
-		& > td {
-			padding: 0
-		}
-		.messages-heading {
-			margin-left: 17px
-		}
-		&.open {
-			display: table-row;
-		}
-	}
+  font-size: 14px;
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+
+    table td {
+      background: #f6f6f6
+    }
+  }
+
+  td {
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    vertical-align: middle;
+    padding: 16px 10px 14px;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+
+  .single-checkbox {
+    margin-right: 10px;
+  }
+
+  .group {
+    font-size: 12px;
+    display: none;
+
+    td {
+      padding-top: 17px
+    }
+
+    & > td {
+      padding: 0
+    }
+
+    .messages-heading {
+      margin-left: 17px
+    }
+
+    &.open {
+      display: table-row;
+    }
+  }
 }
+
 .messages-author {
 
-} 
+}
+
 .important-icon {
-	color: #a7b5bc;
-	display: inline-block;
-	height: 15px;
-	overflow: hidden;
-	width: 32px;
-	transform: translate(0,3px);
-	i {
-		display: inline-block;
-		opacity: 0;
-		font-size: 12px;
-		margin: 0 0 0 -2px;
-	}
+  color: #a7b5bc;
+  display: inline-block;
+  height: 15px;
+  overflow: hidden;
+  width: 32px;
+  transform: translate(0, 3px);
+
+  i {
+    display: inline-block;
+    opacity: 0;
+    font-size: 12px;
+    margin: 0 0 0 -2px;
+  }
 }
+
 .attach-icon {
-	color: #a7b5bc;
-	i {
-	}
+  color: #a7b5bc;
+
+  i {
+  }
 }
+
 .messages-title {
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-top: 4px;
-	white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 4px;
+  white-space: nowrap;
 }
+
 .messages-text {
-	color: #969494;
-	display: block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	padding-top: 4px;
-	white-space: nowrap;
+  color: #969494;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 4px;
+  white-space: nowrap;
 }
+
 .messages-heading {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
+
 .messages-date {
-	text-align: right;
-	font-size: 12px;
-	padding: 0 17px 0 0;
-	color: #73778a;
+  text-align: right;
+  font-size: 12px;
+  padding: 0 17px 0 0;
+  color: #73778a;
 }
+
 .important-message {
-	.important-icon i {
-		color: #c94f4f;
-		opacity: 1
-	}
-	td {
-		background: #faeded
-	}
+  .important-icon i {
+    color: #c94f4f;
+    opacity: 1
+  }
+
+  td {
+    background: #faeded
+  }
 }
+
 .reply-icon {
-	color: #a7b5bc;
-	padding-right: 13px;
-	font-size: 15px
+  color: #a7b5bc;
+  padding-right: 13px;
+  font-size: 15px
 }
+
 .col-1 {
-	width: 58px
+  width: 58px
 }
+
 .col-2 {
-	width: 202px
+  width: 202px
 }
+
 .col-3 {
-	width: 40.8%
+  width: 40.8%
 }
+
 .col-4 {
-	width: calc(59.2% - 340px)
+  width: calc(59.2% - 340px)
 }
+
 .col-5 {
-	width: 80px
+  width: 80px
 }
+
 @media screen and (max-width: 767px) {
-	.messages-table {
-		tr {
-			border-bottom: 1px solid #f0f0f0;
-			display: flex;
-			flex-wrap: wrap;
-			width: 100%;
-			padding-bottom: 10px
-		}
-		td {
-			border: 0;
-			display: block;
-			padding-top: 8px;
-			padding-bottom: 0
-		}
-	}
-	.messages-table .group td td{
-	    padding-top: 10px;
-	}
-	.important-message {
-		background: #faeded;
-		td {
-			background: transparent;
-		}
-	}
-	.col-2 {
-		width: calc(100% - 58px)
-	}
-	.col-4 {
-		width: calc(100% - 80px);
-	}
-	.col-6 {
-		width: calc(100% - 80px);
-	}
-	.messages-table .col-3, .messages-table .col-4, .messages-table .col-6 {
-		padding-left: 70px
-	}
-	.messages-table table table  {
-		tr {
-			background: #f6f6f6
-		}
-		td {
-			background: transparent;
-		}
-	}
+  .messages-table {
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      padding-bottom: 10px
+    }
+
+    td {
+      border: 0;
+      display: block;
+      padding-top: 8px;
+      padding-bottom: 0
+    }
+  }
+  .messages-table .group td td {
+    padding-top: 10px;
+  }
+  .important-message {
+    background: #faeded;
+
+    td {
+      background: transparent;
+    }
+  }
+  .col-2 {
+    width: calc(100% - 58px)
+  }
+  .col-4 {
+    width: calc(100% - 80px);
+  }
+  .col-6 {
+    width: calc(100% - 80px);
+  }
+  .messages-table .col-3, .messages-table .col-4, .messages-table .col-6 {
+    padding-left: 70px
+  }
+  .messages-table table table {
+    tr {
+      background: #f6f6f6
+    }
+
+    td {
+      background: transparent;
+    }
+  }
 }
 
 @media screen and (max-width: 600px) {
 
-	.col-3 {
-		width: 100%;
-	}
-	.messages-table .col-3 {
-		padding-left: 70px
-	}
+  .col-3 {
+    width: 100%;
+  }
+  .messages-table .col-3 {
+    padding-left: 70px
+  }
 }
 
 @media screen and (max-width: 420px) {
 
-	.messages-table .col-4,
-	.messages-table .col-3,
-	.messages-table .col-6 {
-		padding-left: 15px
-	}
+  .messages-table .col-4,
+  .messages-table .col-3,
+  .messages-table .col-6 {
+    padding-left: 15px
+  }
 }

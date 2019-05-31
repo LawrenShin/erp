@@ -1,11 +1,11 @@
 import { take, takeEvery, put, call } from 'redux-saga/effects'
-import { createAction } from '../../actions'
+import { createAction } from '../../../actions'
 
 export const nameProperly = (name) =>  name.replace(/[\/,\s,\-]/g, '_').toUpperCase()
 
 export const initialState = () => ({
   kinds: '',
-  size: '',
+  sizes: '',
   purpose: '',
   category: '',
   length: '',
@@ -23,9 +23,12 @@ export const initialState = () => ({
     weight_1: '',
     weight_2: '',
     weight_3: '',
-    composition_1: '',
-    composition_2: '',
-    composition_3: ''
+    compositions_1: '',
+    compositions_2: '',
+    compositions_3: '',
+    constructions_1: '',
+    constructions_2: '',
+    constructions_3: '',
   },
   checkboxes: {
     drip_dry: false,
@@ -61,8 +64,8 @@ export default function reducer(state = initialState(), action){
   switch(type){
     case 'SET_KINDS': 
       return { ...state, kinds: payload }
-    case 'SET_SIZE': 
-      return { ...state, size: payload }
+    case 'SET_SIZES': 
+      return { ...state, sizes: payload }
     case 'SET_PURPOSE': 
       return { ...state, purpose: payload }
     case 'SET_CATEGORY': 
@@ -95,12 +98,18 @@ export default function reducer(state = initialState(), action){
       return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, weight_2: payload } }
     case 'SET_WEIGHT_3': 
       return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, weight_3: payload } }
-    case 'SET_COMPOSITION_1': 
-      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, composition_1: payload } }
-    case 'SET_COMPOSITION_2': 
-      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, composition_2: payload } }
-    case 'SET_COMPOSITION_3': 
-      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, composition_3: payload } }
+    case 'SET_COMPOSITIONS_1': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, compositions_1: payload } }
+    case 'SET_COMPOSITIONS_2': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, compositions_2: payload } }
+    case 'SET_COMPOSITIONS_3': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, compositions_3: payload } }
+    case 'SET_CONSTRUCTIONS_1': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, constructions_1: payload } }
+    case 'SET_CONSTRUCTIONS_2': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, constructions_2: payload } }
+    case 'SET_CONSTRUCTIONS_3': 
+      return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, constructions_3: payload } }
       case "SET_DRIP_DRY":
         return { ...state, checkboxes:{ ...state.checkboxes, drip_dry: payload.checked } }
       case "SET_DO_NOT_WASH":
@@ -158,12 +167,7 @@ export default function reducer(state = initialState(), action){
 export function* saga({type, payload}){
   const { name, data } = payload
   const rename = nameProperly(name)
-  switch(type){
-    case 'TECHNICAL':
-      yield put(createAction(`SET_${rename}`, data))
-      break
-    case 'TECHNICAL_CHECKBOX': 
-      yield put(createAction(`SET_${rename}`, payload))
-      break
-  }
+
+  if (type === 'TECHNICAL') yield put(createAction(`SET_${rename}`, data))
+  if (type === 'TECHNICAL_CHECKBOX') yield put(createAction(`SET_${rename}`, payload))
 }

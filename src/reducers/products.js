@@ -8,7 +8,8 @@ export default (state = {
     filters: getDefaultResponse(), 
     options: getDefaultOptions(),
     list: getDefaultResponse(),
-    headers: getDefaultHeaders()
+    headers: getDefaultHeaders(),
+    product: getDefaultResponse(),
 },
     action
 ) => {
@@ -27,6 +28,10 @@ export default (state = {
                     .request( (requestState) => ({...state, list: {data: [], state: requestState}}))
                     .ready( (payload, requestState) => ({...state, list: {count: payload.data.count, data: payload.data.results.map( ({id, name, year, theme, department, vendor_code, category, color, gender, age}) => ({id, name, year, theme, department, vendor_code, category, color, gender, age}) ), state: requestState}}))
                     .fail( (payload, requestState) => ({...state, list: {err: payload.err, state: requestState}}))    
+                .define(action, state, 'product', 'getProduct')
+                    .request( (requestState) => ({...state, product: {data: [], state: requestState}}))
+                    .ready( (payload, requestState) => ({...state, product: {data: payload.data, state: requestState}}))
+                    .fail( (payload, requestState) => ({...state, product: {err: payload.err, state: requestState}}))    
                 .run();
         case 'SET_OPTIONS': 
             return ({...state, options: payload.options});

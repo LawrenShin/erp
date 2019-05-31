@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Checkbox from '../../controls/checkbox'
 import uuid from 'uuid'
-import ReactCountryFlag from 'react-country-flag';
+import ReactCountryFlag from 'react-country-flag'
 
 const QuotationTableRow = (props) => {
     if(props.checkboxHandler){
@@ -15,16 +15,20 @@ const QuotationTableRow = (props) => {
                 return ap.supplier === props.id
             }
         })
+
+        const [check, setCheck] = useState(wereAdded.length ? true : false || false)
+
         return (
             <div className="data-table__row">
                 <div className="data-table__column -flex-grow-0 data-table__column--checkbox hidden -bg-color-bgGray" key={uuid()}>
                     <Checkbox 
-                        name={`${props.checkboxNamePrefix}${props.id}`} 
+                        name={`${props.checkboxNamePrefix}${props.id}`}
                         onChange={() => {
+                            setCheck(!check)
                             if(!props.findMatch(props.id)) props.checkboxHandler.add(props.id)
                             if(props.findMatch(props.id)) props.checkboxHandler.remove(props.id)
                         }}
-                        checked={ wereAdded.length ? true : false } /> 
+                        checked={ check } />
                 </div>
                 { props.heads.map(h => {
                     const renamedProp = h.toLowerCase().replace(/ /g, '_')
@@ -32,6 +36,7 @@ const QuotationTableRow = (props) => {
                         className="data-table__column -flex-grow-1" 
                         key={uuid()}
                         onClick={() => {
+                            setCheck(!check)
                             if(!props.findMatch(props.id)) props.checkboxHandler.add(props.id)
                             if(props.findMatch(props.id)) props.checkboxHandler.remove(props.id)
                         }}>
@@ -41,8 +46,8 @@ const QuotationTableRow = (props) => {
                             :
                                 <div className="col-status col-status_inactive">{ props.listItem[renamedProp] }</div>
                         :
-                        renamedProp === 'country' ? 
-                            <ReactCountryFlag code={`${props.listItem.factory_country}`} />
+                        (renamedProp === 'country' && props.listItem.legal_country) ? 
+                            <ReactCountryFlag code={ props.listItem.legal_country.iso } />
                         :
                             props.listItem[renamedProp]
                         }
@@ -64,5 +69,7 @@ const QuotationTableRow = (props) => {
         </>
     );
 }
+
+
 
 export default QuotationTableRow;

@@ -1,79 +1,90 @@
 .user-profile-head {
-	margin-top: -24px;
-	text-align: center;
-	padding: 36px 0 0;
-	position: relative;
-	.wrapper {
-		z-index: 1
-	}
-	&:before {
-		content: '';
-		background: #e2f3f9;
-		display: block;
-		height: 63%;
-		top: 0;
-		left: 0;
-		right: 0;
-		position: absolute;
-	}
+  margin-top: -24px;
+  text-align: center;
+  padding: 36px 0 0;
+  position: relative;
+
+  .wrapper {
+    z-index: 1
+  }
+
+  &:before {
+    content: '';
+    background: #e2f3f9;
+    display: block;
+    height: 63%;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
 }
+
 .avatar-big {
-	background: #fff;
-	border: 5px solid #fff;
-	border-radius: 50%;
-	color: #fff;
-	cursor: pointer;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 72px;
-	font-family: $third-font-family;
-	text-align: center;
-	padding: 0 5px 6px;
-	min-width: 156px;
-	height: 155px;
-	img {
-		max-height: 100%;
-	}
-	&-post {
-		color: $color-active;
-		font-size: 16px;
-		margin-top: 5px;
-	}
-	&.noavatar {
-		background: $color-active;
-	}
+  background: #fff;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 72px;
+  font-family: $third-font-family;
+  text-align: center;
+  padding: 0 5px 6px;
+  min-width: 156px;
+  height: 155px;
+
+  img {
+    max-height: 100%;
+  }
+
+  &-post {
+    color: $color-active;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+
+  &.noavatar {
+    background: $color-active;
+  }
 
 }
+
 .user-profile-inputs {
-	background: #fff;
-	padding: 15px 34px 4px 36px;
-	margin: 23px 0 0
+  background: #fff;
+  padding: 15px 34px 4px 36px;
+  margin: 23px 0 0
 }
+
 .box-field_profile {
-	padding-bottom: 30px;
+  padding-bottom: 30px;
 }
+
 .user-profile-form {
-	margin: 27px auto 0;
-	max-width: 300px;
+  margin: 27px auto 0;
+  max-width: 300px;
 }
+
 .profile-loader {
-	margin-right: -1px;
-	padding-right: 1px;
-	.load-file__icon {
-		margin-left: 11px;
-	}
+  margin-right: -1px;
+  padding-right: 1px;
+
+  .load-file__icon {
+    margin-left: 11px;
+  }
 }
 
 @media screen and (max-width: 480px) {
-	.user-profile-inputs {
-		padding-left: 15px;
-		padding-right: 15px
-	}
-	.avatar-big {
-		font-size: 56px;
-	    min-width: 126px;
-    	height: 125px;
-    	padding-top: 5px;
-	}
+  .user-profile-inputs {
+    padding-left: 15px;
+    padding-right: 15px
+  }
+  .avatar-big {
+    font-size: 56px;
+    min-width: 126px;
+    height: 125px;
+    padding-top: 5px;
+  }
 }

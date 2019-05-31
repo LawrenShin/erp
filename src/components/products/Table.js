@@ -48,7 +48,7 @@ class DynamicTable extends Component {
         const combinedOpt = combineOptions(this.props.store, 'products');
         if(this.state.loading)
         return;
-        console.log('async', valueY / height > 0.85, valueY > this.backY, this.offset < products.count);
+        // console.log('async', valueY / height > 0.85, valueY > this.backY, this.offset < products.count);
         if(valueY / height > 0.9 && valueY > this.backY && this.offset + combinedOpt.limit < this.count) {
           this.setState({loading: true}, async () => {
               this.offset += combinedOpt.limit;
@@ -56,7 +56,7 @@ class DynamicTable extends Component {
                   ...combinedOpt,
                   offset: this.offset
               }).then( data => data.results );
-              console.log("data", data);
+              // console.log("data", data);
               this.setState(({list}) => ({list: list.concat(data), loading: false}));        
           });
         }
