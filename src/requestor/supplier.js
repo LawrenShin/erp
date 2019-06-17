@@ -60,11 +60,12 @@ const getSupplierDetails = (id) => {
 
 //create supplier
 /*export*/ const create = (supplierData) => {
+    console.log(supplierData);
     const data = new FormData();
     for(let prop in supplierData){
         data.append(prop, supplierData[prop]);
     }
-    return Api.post(`suppliers/suppliers/`, null, data);
+    return Api.post(`suppliers/suppliers/`, null, supplierData);
 }
 
 //after create supplier save corresponded data

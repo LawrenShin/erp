@@ -5,7 +5,7 @@ import {history} from '../../../routes/history';
 import ModalSemantic from '../../common/ModalSemantic'
 import UploadModal from '../../common/uploadModal/UploadModal'
 
-const TITLES = ['GENERAL INFORMATION', 'CONTACTS', 'OPTIONS', 'BANK INFORMATION', 'ORDER HISTORY'];
+const TITLES = ['GENERAL INFORMATION', 'CONTACTS', 'OPTIONS', 'BANK INFORMATION', 'SAMPLE REQUEST'];
 const ICONS = ["icon-general-info", "icon-contacts", "icon-options", "icon-accounting", "icon-order-hostory"];
 const LINKS = ["", "/contacts", "/options", "/accounting", "/history"];
 
@@ -24,12 +24,14 @@ export default ({id, name, edit = false, selected = 0}) => (
             <div className="page-heading__navs">
                 <div className="card-filters">
                     <div className="card-filters__item">
-                        <Pointer className="card-filters__link">
-                            <i className="icon-payment-history"></i><span className="card-filters__title">Payment history</span>
-                        </Pointer>
+                        <NavLink to={`/suppliers/view/payment/${id}`}>
+                            <Pointer className="card-filters__link">
+                                <i className="icon-payment-history"></i><span className="card-filters__title">Payment history</span>
+                            </Pointer>
+                        </NavLink>
                     </div>
                     <div className="card-filters__item">
-                        <UploadModal supplier={id} />
+                        <UploadModal supplier={id}/>
                     </div>
                     <div className="card-filters__item">
                         <Pointer className="card-filters__link selected">

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import {Auth, Common, Customer, Product, Supplier, Dashboard, Messages, Quotation, Order} from '../../requestor';
-import store from '../../store/configureStore';
+import { store } from '../../store/createdStore';
 
 class ApiWrapper extends Component {
   static getDefaultOptions(from) {
@@ -108,7 +108,7 @@ class ApiWrapper extends Component {
 
   constructor(props){
     super(props);
-    this.store = store();
+    this.store = store; // this is the cause of duplicates of actions. Crazy Vanya used to create here store, which were duplicating store itself
     this.handle();
   }
 

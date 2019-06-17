@@ -6,17 +6,7 @@ import ReactCountryFlag from 'react-country-flag'
 
 const QuotationTableRow = (props) => {
     if(props.checkboxHandler){
-        const wereAdded = props.added.filter(ap => {
-            if(typeof ap === 'number'){ 
-                return ap === props.id
-            }else if('product' in ap){
-                return ap.product === props.id
-            }else if('supplier' in ap){
-                return ap.supplier === props.id
-            }
-        })
-
-        const [check, setCheck] = useState(wereAdded.length ? true : false || false)
+        const [check, setCheck] = useState(props.wereAdded ? true : false || false)
 
         return (
             <div className="data-table__row">
@@ -24,9 +14,9 @@ const QuotationTableRow = (props) => {
                     <Checkbox 
                         name={`${props.checkboxNamePrefix}${props.id}`}
                         onChange={() => {
+                            if(!check) props.checkboxHandler.add(props.id)
+                            if(check) props.checkboxHandler.remove(props.id)
                             setCheck(!check)
-                            if(!props.findMatch(props.id)) props.checkboxHandler.add(props.id)
-                            if(props.findMatch(props.id)) props.checkboxHandler.remove(props.id)
                         }}
                         checked={ check } />
                 </div>
@@ -36,15 +26,15 @@ const QuotationTableRow = (props) => {
                         className="data-table__column -flex-grow-1" 
                         key={uuid()}
                         onClick={() => {
+                            if(!check) props.checkboxHandler.add(props.id)
+                            if(check) props.checkboxHandler.remove(props.id)
                             setCheck(!check)
-                            if(!props.findMatch(props.id)) props.checkboxHandler.add(props.id)
-                            if(props.findMatch(props.id)) props.checkboxHandler.remove(props.id)
                         }}>
                         {renamedProp === 'status' ? 
                             props.listItem[renamedProp] === 'AC' ? 
-                                <div className="col-status col-status_active">{ props.listItem[renamedProp] }</div>
-                            :
                                 <div className="col-status col-status_inactive">{ props.listItem[renamedProp] }</div>
+                            :
+                                <div className="col-status col-status_active">{ props.listItem[renamedProp] }</div>
                         :
                         (renamedProp === 'country' && props.listItem.legal_country) ? 
                             <ReactCountryFlag code={ props.listItem.legal_country.iso } />
@@ -53,17 +43,35 @@ const QuotationTableRow = (props) => {
                         }
                     </div>)
                 }) }
+                {props.sample_status ?
+                    <div className="data-table__column  sc-gzVnrw zZjqK hidden">
+                        {/* Тут три состояния: Pending(-pending), In progress(-progress), Sent(-receive) */}
+                        <div className="quotation__status -progress">In progress</div>
+                    </div> : '' }
             </div>
         )
     }
     
     return (
         <>
-        <NavLink to={`/quotations/${props.id}`}>
+        <NavLink to={`/quotations/${props.id}${props.decision ? `/${props.decision}` : ''}`}>
             <div className="data-table__row">
-                {props.heads.map(h => <div className="data-table__column -flex-grow-1" key={uuid()}>
-                    {props.listItem[h.toLowerCase().replace(/ /g, '_')]}
-                </div>)}
+                {props.heads.map(h => {
+                    if(h === 'Name' && 'quotation_name' in props.listItem){
+                        return(<div className="data-table__column -flex-grow-1" key={uuid()}>
+                            {props.listItem.quotation_name}
+                        </div>)
+                    }
+                    if(h === 'Collection' && 'collection_name' in props.listItem){
+                        return(<div className="data-table__column -flex-grow-1" key={uuid()}>
+                            {props.listItem.collection_name}
+                        </div>)
+                    }
+
+                    return(<div className="data-table__column -flex-grow-1" key={uuid()}>
+                        {props.listItem[h.toLowerCase().replace(/ /g, '_')]}
+                    </div>)
+                })}
             </div>
         </NavLink>
         </>

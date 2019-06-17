@@ -24,7 +24,7 @@ const QuotationCreateWizard = props => {
   return (
     <div className="quotation-modal">
       <Formik
-      initialValues={{ start_date: startDate, expiry_date: expDate, quotation_name: '', type: 'regular', do_not_notify_supplier: true }}
+      initialValues={{ start_date: startDate, expiry_date: expDate, name: '', type: 'regular', do_not_notify_supplier: true }}
       validate={values => {
         let errors = {};
         return errors;

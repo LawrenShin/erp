@@ -19,6 +19,8 @@
 
   &.modal {
     box-shadow: 0px 29px 35px 0px rgba(0, 0, 0, 0.24);
+    max-height: 80vh;
+    overflow: auto;
 
     &.-lg {
       width: 100%;

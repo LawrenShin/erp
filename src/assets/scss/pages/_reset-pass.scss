@@ -1,0 +1,53 @@
+.reset {
+  &__pass {
+    width: 100%;
+    background: #fff;
+    max-width: 400px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9100;
+    padding: 60px 50px;
+
+    h1 {
+      font-size: 24px;
+      line-height: 28px;
+      font-weight: 400;
+      text-align: center;
+      margin: 0 0 20px;
+    }
+
+    &__subtitle {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 14px;
+      padding: 0;
+      margin: 0 0 10px;
+    }
+
+    form {
+      input {
+        margin: 0 0 20px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+      }
+      
+      button {
+        width: 100%;
+        text-align: center;
+        height: 40px;
+        line-height: 38px;
+        text-transform: uppercase;
+      }
+    }
+
+    &__error {
+      font-size: 14px;
+      line-height: 14px;
+      color: $red;
+      margin: -15px 0px 10px;
+    }
+  }
+}

@@ -188,20 +188,20 @@ class DynamicTable extends React.PureComponent {
 
     return (      
       <div style={{position: "relative"}}>
-        <Table 
+        <Table
             className={this.props.className}
-            fields={fields} 
-            data={this.state.list} 
+            fields={fields}
+            data={this.state.list}
             rowAfter={(row, id) => {
                 if(row === this.state.rowIndex) {
-                  return <InnerRow 
-                    row={ row } 
+                  return <InnerRow
+                    row={ row }
                     graphDetails={ this.props.store.suppliers.graphDetails }
                   />
                 }
                 else if(row === this.state.backRowIndex) {
-                  return <InnerRow 
-                    id={ id } 
+                  return <InnerRow
+                    id={ id }
                     graphDetails={ this.props.store.suppliers.graphDetails }
                     collapse
                   />
@@ -209,11 +209,11 @@ class DynamicTable extends React.PureComponent {
                 else
                     return null;
             }}
-            cell={(value, name, row) => 
-                name === "q" ? <span className="action-quatation action-quatation_add">Add supplier to quotation</span> : 
+            cell={(value, name, row) =>
+                name === "q" ? <span className="action-quatation action-quatation_add">Add supplier to quotation</span> :
                 name === "id" ? (
                     this.props.addToQuotation ?
-                    <>                      
+                    <>
                       <NavLink to={`/suppliers/view/${value}`}>{value}</NavLink>
                     </> :
                     <>
@@ -222,11 +222,11 @@ class DynamicTable extends React.PureComponent {
                         <NavLink to={`/suppliers/view/${value}`}>{value}</NavLink>
                         </div>
                     </>
-                ) : 
-                name === "name" ? <><div className="col-name">{this.state.list[row].name.replace("&nbsp;", " ")}</div><span>{this.state.list[row].type === 'FC' ? 'Factory' : 'Agent'}</span></> : 
-                name === "status" ? 
-                    (this.state.list[row].status !== 'AC' ? 
-                      <div className="col-status col-status_inactive">inactive</div> 
+                ) :
+                name === "name" ? <><div className="col-name">{this.state.list[row].name.replace("&nbsp;", " ")}</div><span>{this.state.list[row].type === 'FC' ? 'Factory' : 'Agent'}</span></> :
+                name === "status" ?
+                    (this.state.list[row].status !== 'AC' ?
+                      <div className="col-status col-status_inactive">inactive</div>
                       :
                       <div className="col-status col-status_active">active</div>
                     ) :
@@ -239,8 +239,8 @@ class DynamicTable extends React.PureComponent {
                     ) :
                 (name === "categories" && "categories" in this.state.list[row] && this.state.list[row].categories.length) ?
                     (
-                      this.state.list[row].categories ? 
-                      
+                      this.state.list[row].categories ?
+
                       <span>
                       {
                         this.state.list[row].categories
@@ -250,16 +250,16 @@ class DynamicTable extends React.PureComponent {
                       }
                       </span> : ''
                     ) :
-                name === "payment_terms_id" ? "TT / / 100--10t postpay" : 
-                name === "delivery_terms" ? "EXW Beijing" : 
-                /rating$/.test(name) ? `${value}%` : 
-                /total/.test(name) ? Math.floor(Math.random() * 10000 + 500) : 
+                name === "payment_terms_id" ? "TT / / 100--10t postpay" :
+                name === "delivery_terms" ? "EXW Beijing" :
+                /rating$/.test(name) ? `${value}%` :
+                /total/.test(name) ? Math.floor(Math.random() * 10000 + 500) :
                 value}
-            header={(title, name) => name !== 'q' ? <Order name={name} title={title} /> : null} 
-            fixed={2} 
-            height={600} 
-            onScroll={this.onScroll} 
-        /> 
+            header={(title, name) => name !== 'q' ? <Order name={name} title={title} /> : null}
+            fixed={2}
+            height={600}
+            onScroll={this.onScroll}
+        />
         {this.state.loading ? <Loading style={{position: "absolute", left: "45%", top: "45%", display: "inline-block", zIndex: 1000}} /> : null}
       </div>
       

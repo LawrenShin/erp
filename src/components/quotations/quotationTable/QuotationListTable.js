@@ -31,14 +31,14 @@ class QuotationListTable extends Component {
                     <div className="data-table__body">
                         {this.props.list.map(listItem => {
                             return (<QuotationTableRow
+                                decision={listItem.status_supplier}
                                 countries={this.props.countries}
                                 checkboxNamePrefix={this.props.checkboxNamePrefix} 
-                                added={this.props.addedProducts || this.props.addedSuppliers}
+                                wereAdded={('added' in this.props && this.props.added) ? this.props.added.has(listItem.id) : null}
                                 checkboxHandler={this.props.checkboxHandler}
-                                findMatch={this.props.findMatch}
                                 heads={this.state.heads}
                                 listItem={this.selectFields(listItem)}
-                                id={listItem.id}
+                                id={listItem.id || listItem.quotation_id}
                                 key={uuid()} />)
                             }
                         )}

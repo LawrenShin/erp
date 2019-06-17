@@ -31,7 +31,7 @@ export default class Input extends React.Component{
     renderInput = (type) => {
         return type === "file" ?
             <div className="box-field">
-                <label className="box-field__label">{this.props.label && `${this.props.label}:`}</label>
+                <label className="box-field__label">{this.props.label && `${this.props.label}`}</label>
                 <div className="term-select">
                     <input type="text" className="box-field__input" defaultValue={this.state.value} readOnly/>
                     <div className="item-upload">
@@ -44,8 +44,8 @@ export default class Input extends React.Component{
             </div>
         :
             <div className="box-field">
-                <label className="box-field__label" htmlFor={this.props.name}>{this.props.label && `${this.props.label}:`}</label>
-                <input readOnly={this.props.readOnly} type={this.props.type || 'text'} className={`box-field__input ${this.props.className}`} id={this.props.name} name={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} maxLength={this.props.maxLength} defaultValue={this.props.defaultValue}/>
+                <label className={`box-field__label ${this.props.required}`} htmlFor={this.props.name}>{this.props.label && `${this.props.label}`}</label>
+                <input required={this.props.required} readOnly={this.props.readOnly} type={this.props.type || 'text'} className={`box-field__input ${this.props.className}`} id={this.props.name} name={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} maxLength={this.props.maxLength} defaultValue={this.props.defaultValue}/>
             </div>
     }
     renderSimple = () => {

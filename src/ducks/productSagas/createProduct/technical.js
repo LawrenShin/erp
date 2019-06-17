@@ -15,7 +15,6 @@ export const initialState = () => ({
   kindfastener: '',
   silhouettes: '',
   kindstrap: '',
-  product_care_recomendation: '',
   shell_fabric_tab: {
     shell_fabric_1: '',
     shell_fabric_2: '',
@@ -84,8 +83,6 @@ export default function reducer(state = initialState(), action){
       return { ...state, silhouettes: payload }
     case 'SET_KINDSTRAP': 
       return { ...state, kindstrap: payload }
-    case 'SET_PRODUCT_CARE_RECOMENDATION': 
-      return { ...state, product_care_recomendation: payload }
     case 'SET_SHELL_FABRIC_1': 
       return { ...state, shell_fabric_tab: { ...state.shell_fabric_tab, shell_fabric_1: payload } }
     case 'SET_SHELL_FABRIC_2': 

@@ -5,17 +5,11 @@ import HTML5Backend from 'react-dnd-html5-backend'
 
 //import './css/base.scss';
 import AppRouter from './routes/AppRouter.js';
-import configureStore from './store/configureStore.js';
 import { Provider, ReactReduxContext  } from 'react-redux';
 import { history } from './routes/history';
-
-const store = configureStore();
+import { store } from './store/createdStore'
 
 class App extends Component {
-  componentDidUpdate(){
-
-    console.log('update of APP')
-  }
   render() {
     return (
       <Provider store={store} context={ReactReduxContext}>

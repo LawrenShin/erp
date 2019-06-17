@@ -14,7 +14,7 @@ Quotation styles
 
       &.-sm {
         padding: 35px 45px;
-        min-height: 325px;
+        min-height: 400px;
         width: 100%;
         max-width: 925px;
       }
@@ -391,8 +391,22 @@ Quotation styles
   Comment
    */
   &__comment {
-    padding: 25px;
+    padding: 0 25px;
     background: $white;
+    height: 0;
+    overflow: hidden;
+    transition-duration: 0.7s;
+    opacity: 0;
+
+    &.none {
+      height: 0;
+    }
+
+    &.block {
+      height: unset;
+      padding: 25px;
+      opacity: 1;
+    }
 
     &.-supplier-page {
       width: calc(100% - 420px);
@@ -417,6 +431,18 @@ Quotation styles
         width: 120px;
         margin-left: 20px;
       }
+
+      &__info {
+        padding: 0 0 0 20px;
+        align-self: center;
+        span {
+          display: block;
+
+          & + span {
+            margin-top: 10px;
+          }
+        }
+      }
     }
 
     &__text {
@@ -440,6 +466,17 @@ Quotation styles
       padding: 0;
     }
 
+    button:not(.btn) {
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+
+    &__price {
+      border: 1px solid #c1c1c1;
+      padding: 0 10px;
+      box-shadow: none;
+    }
   }
 
   /*
@@ -514,4 +551,12 @@ Quotation styles
   .header-notifications__badge {
     top: -6px;
   }
+}
+
+.SingleDatePicker {
+  position: static!important;
+}
+.SingleDatePicker_picker {
+  left: 50% !important;
+  transform: translate(-50%, 0);
 }

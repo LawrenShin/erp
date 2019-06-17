@@ -24,4 +24,4 @@ export const bankFormSubmit = (info, step = 1) => ({
 
 export const stepBack = () => ({
   type: 'STEP_BACK'
-})
+});

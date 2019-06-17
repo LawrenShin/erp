@@ -1,78 +1,28 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
 import Loading from '../../../helpers/loading'
 import ModalSemantic from '../../../common/ModalSemantic'
 import CommonButton from '../../../common/CommonButton'
-import {createListsSelector, createFiltersSelector, createOptionsSelector} from '../../../../ducks/quotations/index'
+import { createFiltersSelector, createOptionsSelector } from '../../../../ducks/quotations/index'
 
 import QuotationTableHeaderItem from '../../quotationTable/QuotationTableHeaderItem'
-import QuotationTableRowItem from '../../quotationTable/QuotationTableRowItem'
+import QuotationTableRowModal from '../../quotationTable/QuotationTableRowModal'
 
-import CheckboxComponent from "../../../CheckboxComponent"
-import QuotationListFilter from "../../QuotationListFilter";
+import QuotationListFilter from "../../QuotationListFilter"
 
 class InvitationStatusModal extends Component {
     componentDidMount() {
-        if (!this.props.list || !this.props.filters) this.props.getModalsData()
+        this.props.getInvitationStatus(this.props.quotationId)
     }
 
     updateOptions = (fName, value) => this.props.setOption({filterName: fName, value})
 
-    heads = ['', 'ID', 'Name', 'Status', 'Product group', 'Country', ''];
-    listItems = [
-        {
-            id: 'prod1',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: false,
-            suppliers: true,
-            technical_documents: '/file.pdf',
-            gender: 'Woman',
-            age: '18',
-            country: 'China',
-            status: 'active',
-            invitation_status: true,
-            confirmed: true
-        },
-        {
-            id: 'prod2',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: false,
-            suppliers: true,
-            technical_documents: '/file.pdf',
-            gender: 'Woman',
-            age: '18',
-            country: 'China',
-            status: 'active',
-            invitation_status: true,
-            confirmed: false
-        },
-        {
-            id: 'prod3',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: false,
-            suppliers: true,
-            technical_documents: '/file.pdf',
-            gender: 'Woman',
-            age: '18',
-            country: 'China',
-            status: 'active',
-            invitation_status: true,
-            confirmed: true
-        }
-    ]
+    heads = ['', 'ID', 'Name', 'Status',  'Country'];
+
+    handleRemindSupplier = (id) => this.props.remindSupplier({ quotation_id: this.props.quotationId, supplier_id: id })
+    handleGetSupplierInQuotation = (id) => this.props.getSupplierInQuotation({ quotation_id: this.props.quotationId, supplier_id: id })
+    countReplied = (invitedSuppliers) => invitedSuppliers.filter(is => is.status === 'accepted').length
 
     render() {
         return (
@@ -85,8 +35,8 @@ class InvitationStatusModal extends Component {
                         <h2>Invitation Status</h2>
 
                         <div className="quotation-modal__count">
-                            <div>Sent: 20</div>
-                            <div>Replied: 3</div>
+                            <div>Sent: {this.props.invitationStatus.data.length}</div>
+                            <div>Replied: {this.props.invitationStatus.data && this.countReplied(this.props.invitationStatus.data)}</div>
                         </div>
 
                         {this.props.filters ? <QuotationListFilter
@@ -101,21 +51,25 @@ class InvitationStatusModal extends Component {
                                 <div className="data-table__header">
                                     <QuotationTableHeaderItem heads={this.heads} control={false} buttonRemind={true}/>
                                 </div>
-                                <div className="data-table__body">
-                                    {this.listItems.map(listItem => <QuotationTableRowItem
+                                {this.props.invitationStatus.data.length ? <div className="data-table__body">
+                                    {this.props.invitationStatus.data.map(listItem => <QuotationTableRowModal
+                                            invitationModal={true}
                                             show_id={true}
-                                            name={listItem.name}
-                                            group={listItem.group}
-                                            status={listItem.status}
-                                            country={listItem.country}
-                                            invitation_status={listItem.invitation_status}
-                                            confirmed={listItem.confirmed}
-                                            id={listItem.id}
+                                            name={listItem.supplier.name}
+                                            status={listItem.supplier.status}
+                                            // group={listItem.group}
+                                            country={listItem.supplier.legal_country && listItem.supplier.legal_country.name}
+                                            invitation_status={listItem.status}
+                                            // confirmed={listItem.confirmed}
+                                            id={listItem.supplier_id}
                                             key={listItem.id}
+
                                             buttonRemind={true}
+                                            handleRemindSupplier={this.handleRemindSupplier}
+                                            handleGetSupplierInQuotation={this.handleGetSupplierInQuotation}
                                         />
                                     )}
-                                </div>
+                                </div> : <Loading />}
                             </div>
                         </div>
                     </div>
@@ -126,11 +80,14 @@ class InvitationStatusModal extends Component {
 }
 
 export default connect(state => ({
-    list: createListsSelector('suppliers')(state),
+    invitationStatus: state.quotations.currentQuotationReducer.invitationStatus,
     filters: createFiltersSelector('suppliers')(state),
     options: createOptionsSelector('suppliers')(state),
 }), dispatch => ({
     getModalsData: () => dispatch({type: 'REQUEST_MODALS_DATA'}),
     clearOptions: () => dispatch({type: 'CLEAR_QUOTATIONS_OPTION_S'}),
     setOption: (payload) => dispatch({type: 'QUOTATIONS_OPTION_S', payload}),
+    getInvitationStatus: (payload) => dispatch({type: 'GET_INVITATION_STATUS', payload}),
+    remindSupplier: (payload) => dispatch({type: 'REMIND_SUPPLIER', payload}),
+    getSupplierInQuotation: (payload) => dispatch({type: 'GET_SUPPLIER_IN_QUOTATION', payload}),
 }))(InvitationStatusModal);

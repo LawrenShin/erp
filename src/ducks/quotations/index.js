@@ -1,16 +1,22 @@
 import { combineReducers } from 'redux'
-import { takeEvery, put, call, all, select } from 'redux-saga/effects'
+import { fork, takeLatest, takeEvery, put, call, all, select } from 'redux-saga/effects'
 import { createSelector } from 'reselect'
 
 import QuotationsApi from '../../requestor/quotations'
-import ProductsApi from '../../requestor/product'
-import SuppliersApi from '../../requestor/supplier'
 
 import { productsModalSaga, SET_QUOTATIONS_OPTION_P, CLEAR_QUOTATIONS_OPTION_P, REFRESH_MODAL_PRODUCTS, REFRESH_MODAL_PRODUCTS_START, REFRESH_MODAL_PRODUCTS_DONE, REFRESH_MODAL_PRODUCTS_ERROR, QUOTATIONS_ADD_PRODUCT } from './productsModal'
 import { createQuotationSaga } from './createQuotation'
+import currentQuotationReducer,
+{ currentQuotationSaga, 
+  historySaga,
+  addedProductsSaga, 
+  addedSuppliersSaga, 
+  distributedRelationsSaga, 
+  invitationStatusSaga, 
+  pauseProductSaga } from './currentQuotation'
 import createQuotationReducer from './createQuotation'
-import { suppliersOptionsSelector } from '../../selectors/suppliers'
-import { productsOptionsSelector } from '../../selectors/products'
+import { commentsSaga, commentsReducer as comments } from './commentsSaga'
+import supplierPart, { saga as supplierQuotationsSaga } from './supplierPart'
 
 //init state
 export const getDefaultOptions = (listName) => { 
@@ -94,6 +100,17 @@ export const init = () => ({
 })
 
 // action types
+const LOAD_Q_HISTORY = 'LOAD_Q_HISTORY'
+const LOAD_COMMENTS = 'LOAD_COMMENTS'
+const POST_COMMENT = 'POST_COMMENT'
+
+const SEND_INVITATION = 'SEND_INVITATION'
+const PAUSE_PRODUCT = 'PAUSE_PRODUCT'
+
+const GET_INVITATION_STATUS = 'GET_INVITATION_STATUS'
+const REMIND_SUPPLIER = 'REMIND_SUPPLIER'
+const GET_SUPPLIER_IN_QUOTATION = 'GET_SUPPLIER_IN_QUOTATION'
+
 const REQUEST_FILTERS_Q = 'REQUEST_FILTERS_Q'
 const REQUEST_FILTERS_Q_START = 'REQUEST_FILTERS_Q_START'
 const REQUEST_FILTERS_Q_ERROR = 'REQUEST_FILTERS_Q_ERROR'
@@ -103,6 +120,11 @@ const REQUEST_LIST_Q = 'REQUEST_LIST_Q'
 const REQUEST_LIST_Q_START = 'REQUEST_LIST_Q_START'
 const REQUEST_LIST_Q_ERROR = 'REQUEST_LIST_Q_ERROR'
 const REQUEST_LIST_Q_DONE = 'REQUEST_LIST_Q_DONE'
+
+const INIT_SINGLE_Q = 'INIT_SINGLE_Q'
+const REFRESH_ADDED_PRODUCTS_Q = 'REFRESH_ADDED_PRODUCTS_Q'
+const REFRESH_ADDED_SUPPLIERS_Q = 'REFRESH_ADDED_SUPPLIERS_Q'
+const REFRESH_DISTRIBUTED_RELATIONS_Q = 'REFRESH_DISTRIBUTED_RELATIONS_Q'
 
 const REQUEST_MODALS_DATA = 'REQUEST_MODALS_DATA'
 const MODALS_DATA_START = 'MODALS_DATA_START'
@@ -119,7 +141,10 @@ const CREATE_QUOTATION = 'CREATE_QUOTATION'
 
 export default combineReducers({
   mainQuotationReducer,
-  createQuotationReducer
+  createQuotationReducer,
+  currentQuotationReducer,
+  comments,
+  supplierPart,
 })
 
 //reducer
@@ -325,8 +350,6 @@ export function* quotationsOptionsSaga({ payload }){
 }
 
 export function* saga(){
-  yield console.log('from quotations saga')
-
   yield takeEvery(REQUEST_FILTERS_Q, quotationsFiltersSaga)
   yield takeEvery(REQUEST_LIST_Q, quotationsListSaga)
   yield takeEvery(QUOTATIONS_OPTION, quotationsOptionsSaga)
@@ -336,4 +359,19 @@ export function* saga(){
     QUOTATIONS_OPTION_P, 
     REFRESH_MODAL_PRODUCTS, 
     QUOTATIONS_ADD_PRODUCT], productsModalSaga)
+  yield takeEvery(INIT_SINGLE_Q, currentQuotationSaga)
+  yield takeEvery(REFRESH_ADDED_PRODUCTS_Q, addedProductsSaga)
+  yield takeEvery(REFRESH_ADDED_SUPPLIERS_Q, addedSuppliersSaga)
+  yield takeEvery(REFRESH_DISTRIBUTED_RELATIONS_Q, distributedRelationsSaga)
+  yield takeEvery([
+    SEND_INVITATION,
+    REMIND_SUPPLIER,
+    GET_INVITATION_STATUS,
+    GET_SUPPLIER_IN_QUOTATION,
+  ], invitationStatusSaga)
+  yield takeEvery(PAUSE_PRODUCT, pauseProductSaga)
+  yield takeEvery(LOAD_COMMENTS, commentsSaga)
+  yield takeEvery(LOAD_Q_HISTORY, historySaga)
+  yield takeLatest(POST_COMMENT, commentsSaga)
+  yield fork(supplierQuotationsSaga)
 }

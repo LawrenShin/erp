@@ -35,7 +35,7 @@ const getGeneral = async () => {
 }
 
 const getTechnical = async () => {
-    const dataTypes = ['kinds', 'sizes', 'purpose', 'category', 'length', 'typepocket', 'levelwaist', 'kindneck', 'kindfastener', 'silhouettes', 'kindstrap', 'product_care_recomendation']
+    const dataTypes = ['kinds', 'sizes', 'purpose', 'category', 'length', 'typepocket', 'levelwaist', 'kindneck', 'kindfastener', 'silhouettes', 'kindstrap']
     
     let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
     results = results.map(r => r.results)
@@ -52,7 +52,8 @@ const getFabric = async () => {
 
 const getOptionsProducts = () => fetch(`https://dev.neurodynamics.info/api/products/products/`, { method: 'OPTIONS' }).then(r => r.json().then(jr => jr)).catch(e => e)
 
-const createProduct = (data) => Api.post(`products/products/`, true, data)
+const createProduct = (data) => Api.post(`products/products/`, true, data);
+const editProduct = (id) => Api.put(`products/products/${id}/`);
 
 export default {
     getOptionsProducts,
@@ -66,7 +67,8 @@ export default {
     getGeneral,
     getTechnical,
     getFabric,
-    getProduct
+    getProduct,
+    editProduct
 }
 // GENERAL
 //     year - 

@@ -68,4 +68,4 @@ class QuotationAcceptSample extends Component {
     }
 }
 
-export default (QuotationAcceptSample);
+export default (QuotationAcceptSample)

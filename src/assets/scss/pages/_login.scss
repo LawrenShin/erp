@@ -100,6 +100,175 @@
       top: 1px;
     }
   }
+
+  &__reset {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: $white;
+    position: relative;
+
+    p {
+      padding: 0;
+      max-width: 400px;
+      text-align: center;
+
+      &.-title {
+        font-size: 24px;
+        line-height: 28px;
+        color: $color4;
+        margin: 0 auto 10px;
+      }
+
+      &.-subtitle {
+        font-size: 14px;
+        line-height: 20px;
+        color: $color1;
+        margin: 0 auto 30px;
+      }
+
+    }
+
+    .login__logo {
+      max-width: 100px;
+      margin: 0 auto 30px;
+    }
+
+
+    .login__form {
+      padding: 0;
+
+      form {
+        display: flex;
+
+        .box-field {
+          width: 100%;
+        }
+
+        input {
+          height: 40px;
+          line-height: 40px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .login__forget {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      font-size: 14px;
+      line-height: 18px;
+      border-bottom: 1px solid $color4;
+
+      &:hover {
+        border-bottom-color: transparent;
+      }
+    }
+  }
+
+  &__login {
+    max-width: 400px;
+  }
+
+  &__sendok {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    &__back {
+      text-align: center;
+
+      span {
+        text-transform: uppercase;
+        color: white;
+        font-size: 14px;
+        display: inline-block;
+        padding: 13px 20px;
+        line-height: 1;
+        background: $blue;
+        border: 1px solid $blue;
+        cursor: pointer;
+
+        &:hover {
+          background: white;
+          color: $blue;
+        }
+      }
+    }
+  }
+
+  &__newpass {
+    max-width: 300px;
+    margin: 0 auto;
+
+
+    input {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      margin-bottom: 20px;
+      font-size: 14px;
+
+      &:focus {
+        border-color: $blue;
+      }
+    }
+
+    button {
+      width: 100%;
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+
+  &__help {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      width: 45%;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: fade_out($color4, 0.4);
+
+      &.-error {
+        color: $red;
+
+        &:before {
+          background: $red;
+        }
+      }
+
+      &.-ok {
+        &:before {
+          background: $blue;
+        }
+      }
+
+      &:before {
+        content: '';
+        margin-right: 5px;
+        width: 10px;
+        height: 10px;
+        background: fade_out(#AEB2B7, 0.3);
+        border-radius: 50%;
+      }
+    }
+  }
 }
 
 .forget__link {

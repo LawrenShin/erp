@@ -1,90 +1,127 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
-import { Message } from 'semantic-ui-react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {Message} from 'semantic-ui-react';
+import {Formik, Field, Form, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+import {stepBack} from "../../actions/createSupplier";
+import className from 'classnames';
 
-const ResetContainer = styled.div`
-  position: absolute;
-  left: 25%;
-  width: 50%;
-  height: fit-content;
-  top: 20%;
-  background: #fff;
-  padding: 5% 10%;
-  z-index: 9100
-  h1{
-    text-align: center;
-    font-size: 21px;
-    font-family: sans-serif;
-    margin-bottom: 20px;
-    font-weight: 100;
-  }
-  h3{
-    font-weight: 100;
-    text-align: center;
-    font-size: 16px;
-    font-family: sans-serif;
-  }
-  form{
-    input{
-      margin: 10px 0;
-      border-color: rgb(192, 192, 192);
+export default class ResetPasswordComponent extends Component {
+    state = {};
+
+    componentDidMount() {
+        document.getElementById('app_header').style.zIndex = 0;
     }
-    button{
-      width: 100%;
+
+    componentWillUnmount() {
+        document.getElementById('app_header').style.zIndex = 2;
     }
-  }
-`
 
-export default class ResetPasswordComponent extends Component{
-  componentDidMount(){
-    document.getElementById('app_header').style.zIndex = 0;
-  }
-  componentWillUnmount(){
-    document.getElementById('app_header').style.zIndex = 2;
-  }
+    //inputFocus = () => this.setState({lowercase: false, uppercase: false, number: false, length: false});
 
-  render(){
-    return(
-      <ResetContainer>
-        <h1>Reset Password</h1>
-        <h3>Please enter new password</h3>
-        <Formik
-          initialValues={{ new: '', confirm: '' }}
-          validateOnChange={false}
-          validateOnBlur={false}
-          errors={this.props.errors || null}
+    render() {
+        return (
+            <div className='reset__pass'>
+                <h1>Change password</h1>
+                <Formik
+                    initialValues={{new: '', confirm: ''}}
+                    validateOnChange={true}
+                    validateOnBlur={true}
+                    errors={this.props.errors || null}
 
-          validate={values => {
-            let errors = {};
-            if(!values.new)
-              errors.new = 'Required';
-            if(!values.confirm)
-              errors.confirm = 'Required';
-            if( (values.confirm !== values.new) && (values.confirm && values.new) )
-              errors.match = 'Passwords don\'t match';
-            return errors;
-          }}
+                    validate={values => {
+                        let errors = {};
+                        if (/[a-z]/.test(values.new)) {
+                            this.setState({lowercase: true});
+                        } else {
+                            errors.new = 'The password does not meet all of the requirements listed below:';
+                            this.setState({lowercase: false});
+                        }
+                        if (/[A-Z]/.test(values.new)) {
+                            this.setState({uppercase: true});
+                         } else {
+                            errors.new = 'The password does not meet all of the requirements listed below:';
+                            this.setState({uppercase: false});
+                        }
+                        if (/[0123456789]/.test(values.new)) {
+                            this.setState({number: true});
+                        } else {
+                            errors.new = 'The password does not meet all of the requirements listed below:';
+                            this.setState({number: false});
+                        }
+                        if (values.new.length >= 8 && values.new.length <= 50) {
+                            this.setState({length: true});
+                        } else {
+                            errors.new = 'The password does not meet all of the requirements listed below:';
+                            this.setState({uppercase: false});
+                        }
+                        if (!values.new)
+                            errors.new = 'This field is required';
+                        if (!values.confirm)
+                            errors.confirm = 'This field is required';
+                        if ((values.confirm !== values.new) && (values.confirm && values.new))
+                            errors.match = 'Passwords don\'t match';
+                        return errors;
+                    }}
 
-          onSubmit={(values, { setSubmitting }) => {
-              const isSet = this.props.InitSetNewPassword(values.confirm);
-              setSubmitting(false);
-          }}>
-          {({ isSubmitting, errors}) => (
-            <Form>
-              <Field className="box-field__input" type="new" name="new" placeholder="New password" />
-              <ErrorMessage name="new" component="div" />
-              <Field className="box-field__input" type="confirm" name="confirm" placeholder="Confirm new password" />
-              <ErrorMessage name="confirm" component="div" />
+                    onSubmit={(values, {setSubmitting}) => {
+                        /*if (/[a-z]/.test(values.new) === false) {
+                            this.setState({lowercase: false});
+                            return false;
+                        }
+                        if (/[A-Z]/.test(values.new) === false) {
+                            this.setState({uppercase: false});
+                            return false;
+                        }
+                        if (/[0123456789]/.test(values.new) === false) {
+                            this.setState({number: false});
+                            return false;
+                        }
+                        if (values.new.length < 8 && values.new.length > 50) {
+                            this.setState({length: false});
+                            return false;
+                        }*/
+                        const isSet = this.props.InitSetNewPassword(values.confirm);
+                        setSubmitting(false);
+                    }}>
+                    {({isSubmitting, errors}) => (
+                        <Form>
+                            <p className="reset__pass__subtitle">Enter new password</p>
+                            <Field className="box-field__input" type="new" name="new"
+                                   placeholder="New password"/>
+                            {errors.new ?
+                                <ErrorMessage name="new" component="div" className='reset__pass__error'/> : ''}
+                            <div className="login__help">
+                                <div
+                                    className={className('login__help__item', {'-error': this.state.lowercase === false}, {'-ok': this.state.lowercase})}>One
+                                    lowercase
+                                </div>
+                                <div
+                                    className={className('login__help__item', {'-error': this.state.number === false}, {'-ok': this.state.number})}>One
+                                    number
+                                </div>
+                                <div
+                                    className={className('login__help__item', {'-error': this.state.uppercase === false}, {'-ok': this.state.uppercase})}>One
+                                    uppercase
+                                </div>
+                                <div
+                                    className={className('login__help__item', {'-error': this.state.length === false}, {'-ok': this.state.length})}>8
+                                    — 50 characters
+                                </div>
+                            </div>
+                            <Field className="box-field__input" type="confirm" name="confirm"
+                                   placeholder="Confirm new password"/>
+                            <ErrorMessage name="confirm" component="div" className='reset__pass__error'/>
 
-              {errors.match && <Message color='red'>{errors.match}</Message>}
-              {this.props.errors && <Message color='red'>{this.props.errors}</Message>}
-              <button className="btn btn2 btn-save" type="submit" disabled={isSubmitting}>RESET PASSWORD</button>
-              {this.props.isSet && <Message info>Password has been changed</Message>}
-            </Form>
-          )}
-        </Formik>
-      </ResetContainer>
-    );
-  }
+                            {errors.match && <Message color='red' className='reset__pass__error'>{errors.match}</Message>}
+                            {this.props.errors && <Message color='red' className='reset__pass__error'>{this.props.errors}</Message>}
+                            <button className="btn btn2 btn-save" type="submit" disabled={isSubmitting}>Change password
+                            </button>
+                            {this.props.isSet && <Message info>Password has been changed</Message>}
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+        );
+    }
 }

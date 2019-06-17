@@ -9,6 +9,30 @@ import connectApi from '../api-wrapper';
 import {combineOptions} from '../../selectors/options';
 import Order from '../common/order';
 import { listExtender } from '../common/helperFunctions';
+import styled from "styled-components";
+import InnerRow from './InnerRow'
+
+class ExpandComponent extends React.PureComponent {
+  static defaultProps = {
+    onClick: () => {}
+  }
+  onClick = () => {
+    this.props.onClick();
+  }
+  render() {
+    const {className, ...rest} = this.props;
+    return <div className={`${className}`} {...rest} onClick={this.onClick}><i className="icon-arrow-down"></i></div>
+  }
+}
+const Expand = styled(ExpandComponent)`
+    color: #40bde8;
+    cursor: pointer;
+    margin-right: 30%;
+    transform: rotateZ(-90deg);
+    transition: 0.3s linear;
+
+    ${({active}) => active && `transform: rotateZ(0);` }
+`;
 
 class DynamicTable extends Component {
 
@@ -48,17 +72,17 @@ class DynamicTable extends Component {
         const combinedOpt = combineOptions(this.props.store, 'products');
         if(this.state.loading)
         return;
-        // console.log('async', valueY / height > 0.85, valueY > this.backY, this.offset < products.count);
-        if(valueY / height > 0.9 && valueY > this.backY && this.offset + combinedOpt.limit < this.count) {
-          this.setState({loading: true}, async () => {
-              this.offset += combinedOpt.limit;
-              const data = await Product.list({
-                  ...combinedOpt,
-                  offset: this.offset
-              }).then( data => data.results );
-              // console.log("data", data);
-              this.setState(({list}) => ({list: list.concat(data), loading: false}));        
-          });
+        //console.log('async', valueY, height, this.offset, this.count, combinedOpt.limit);
+        if(valueY / height > 0.9 && valueY > this.backY && this.offset + combinedOpt.limit > this.count) {
+          (async () => {
+            this.offset += combinedOpt.limit;
+            const data = await Product.list({
+              ...combinedOpt,
+              offset: this.offset
+            }).then( data => data.results );
+            // console.log("data", data);
+            this.setState(({list}) => ({list: list.concat(data)}));
+          })()
         }
       }catch(e){
         console.log(e);
@@ -90,12 +114,7 @@ class DynamicTable extends Component {
     try{
       this.setState({ loading: true });
 
-      const list = await getApi('product').run('list', combineOptions(this.props.store)),
-      themes = await getApi('product').run('getProductThemes'),
-      categories = await getApi('product').run('getProductsCategories'),
-      colors = await getApi('product').run('getProductColors');
-      
-      listExtender(list.results, { theme: themes.results, color: colors.results, category: categories.results });
+      const list = await getApi('product').run('list', combineOptions(this.props.store))
 
       this.setState({ 
         list: list.results,
@@ -115,10 +134,28 @@ class DynamicTable extends Component {
         return (
           <div style={{position: "relative"}}>
             {this.state.errors && <Message color='red'>{this.state.errors}</Message>}
-            <Table 
+            <Table
+                rowAfter={(row, id) => {
+                  if(row === this.state.rowIndex) {
+                    return <InnerRow
+                        row={ row }
+                        value={this.state.list}
+                    />
+                  }
+                  else if(row === this.state.backRowIndex) {
+                    return <InnerRow
+                        id={ id }
+                        row={ row }
+                        value={this.state.list}
+                        collapse
+                    />
+                  }
+                  else
+                    return null;
+                }}
               fields={this.fields} 
               data={this.state.list.length === 0 ? 'No items were found' : this.state.list} 
-              cell={(value, name) => name === "id" ? <NavLink to={`/products/view/${value}`}>{value}</NavLink> : value} 
+              cell={(value, name, row) => name === "id" ? <div className='-flex'><Expand active={row === this.state.rowIndex} onClick={() => {this.setState(({rowIndex}) => rowIndex === row ? ({rowIndex: -1, backRowIndex: row, list: Array.from(this.state.list)}) : ({backRowIndex: rowIndex, rowIndex: row, list: Array.from(this.state.list)}))}}/><NavLink to={`/products/view/${value}`}>{value}</NavLink></div> : value}
               header={(name, title) => <Order name={name} title={title} />} 
               fixed={2} height={600} onScroll={this.onScroll} />
         </div>

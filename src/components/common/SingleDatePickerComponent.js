@@ -38,7 +38,7 @@ import { SingleDatePicker } from 'react-dates';
         <React.Fragment>
           <div className="form-box__item">
             <div className="box-field">
-                <span className="box-field__label"><i className="icon-supplie-history" style={{marginRight: 3}}></i>Select payment start date</span>
+                <span className={`box-field__label ${this.props.required}`}><i className="icon-supplie-history" style={{marginRight: 3}}></i>Select payment start date</span>
                 <SingleDatePicker 
                   date={ moment(date, 'DD/MM/YYYY') } 
                   displayFormat="DD/MM/YYYY"

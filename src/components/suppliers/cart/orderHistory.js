@@ -22,14 +22,14 @@ import Common from '../../../requestor/common';
 import axios from 'axios';
 import Table from './orderTable';
 
-const Submit = styled(({className, ...props}) => 
-    <input type="submit" className={"btn " + className} {...props} value="Save" />)`
+const Submit = styled(({className, ...props}) =>
+    <input type="submit" className={"btn " + className} {...props} value="Save"/>)`
 margin-top: 20px;
 width: fit-content;
 `;
 
 class ViewSuppierOrderHistory extends Component {
-    state = { 
+    state = {
         tableWidth: 0,
         tableHeight: 0
     };
@@ -53,7 +53,7 @@ class ViewSuppierOrderHistory extends Component {
         const height = document.body.clientHeight - this.ref.current.getBoundingClientRect().bottom - 120;
         return height < 600 ? height : 600;
     }
-    
+
     onResize = () => {
         this.setState({tableWidth: this.ref.current.clientWidth - 40, tableHeight: this.getHeight()});
     }
@@ -65,140 +65,155 @@ class ViewSuppierOrderHistory extends Component {
     componentDidMount() {
         window.addEventListener("resize", this.onResize);
         this.onResize();
-        
-        if(this.props.needToGetSupplier)
+
+        if (this.props.needToGetSupplier)
             this.props.getById();
-        this.props.getOrderList();      
+        this.props.getOrderList();
     }
 
     render() {
-        const {readOnly, supplier} = this.props;        
+        const {readOnly, supplier} = this.props;
 
         const {id, name} = supplier.data;
-        
-        return (            
+
+        return (
             <>
                 <Header id={id} name={name} selected="4" edit={!readOnly}/>
 
                 <div className="box-bg-cards" ref={this.ref}>
 
                     {
-                        [supplier.state].includes("loading") ? 
-                            <Loading /> :
-                         supplier.state === "fail" ?
-                            <p>{supplier.message}</p>:    
+                        [supplier.state].includes("loading") ?
+                            <Loading/> :
+                            supplier.state === "fail" ?
+                                <p>{supplier.message}</p> :
 
-                    <>
-                        <div className="cards-back"><a href="#">Show option history</a></div>
+                                <>
+                                    <div className="cards-back"><a href="#">Show option history</a></div>
 
-                        <Formik initialValues={ 
-                                {
-                                
-                                }
+                                    <Formik initialValues={
+                                        {}
 
-                            }
-                            validateOnBlur={false}
-                            onSubmit={(values, actions) => {
-                                actions.setSubmitting(false);
-                            }}
-                            render={ ({values, handleSubmit, handleChange, handleBlur}) => (
-                            
-                                    <form>
-                                        <div className="filters-header">
-                                            <span className="filters-header__title">Filters</span>
-                                            <button type="reset" className="filters-header__reset">Clear all<i className="icon-trash"></i></button>
-                                        </div>
-                                        
-                                        <div className="filters-box filters-box_smallitems filters-box_smallitems-order">
+                                    }
+                                            validateOnBlur={false}
+                                            onSubmit={(values, actions) => {
+                                                actions.setSubmitting(false);
+                                            }}
+                                            render={({values, handleSubmit, handleChange, handleBlur}) => (
 
-                                            <div className="filters-box__item">
-                                                <div className="filters-elem select-elem">
-                                                    <div className="ui fluid selection dropdown">
-                                                        <input type="hidden" />
-                                                        <div className="default text">Year</div>
-                                                        <i className="dropdown icon"></i>
-                                                        <div className="menu">
-                                                            <div className="item" data-value="af">2017</div>
-                                                            <div className="item active" data-value="ax">2019</div>
+                                                <form>
+                                                    <div className="filters-header">
+                                                        <span className="filters-header__title">Filters</span>
+                                                        <button type="reset" className="filters-header__reset">Clear all<i
+                                                            className="icon-trash"></i></button>
+                                                    </div>
+
+                                                    <div
+                                                        className="filters-box filters-box_smallitems filters-box_smallitems-order">
+
+                                                        <div className="filters-box__item">
+                                                            <div className="filters-elem select-elem">
+                                                                <div className="ui fluid selection dropdown">
+                                                                    <input type="hidden"/>
+                                                                    <div className="default text">Year</div>
+                                                                    <i className="dropdown icon"></i>
+                                                                    <div className="menu">
+                                                                        <div className="item" data-value="af">2017</div>
+                                                                        <div className="item active"
+                                                                             data-value="ax">2019
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="input-elem">
+                                                                <input type="text" placeholder="Brand"
+                                                                       className="filters-input"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="filters-elem select-elem">
+                                                                <div className="ui fluid selection dropdown">
+                                                                    <input type="hidden"/>
+                                                                    <div className="default text">Season</div>
+                                                                    <i className="dropdown icon"></i>
+                                                                    <div className="menu">
+                                                                        <div className="item" data-value="af">online
+                                                                        </div>
+                                                                        <div className="item active"
+                                                                             data-value="ax">offline
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="filters-elem select-elem">
+                                                                <div className="ui fluid selection dropdown">
+                                                                    <input type="hidden"/>
+                                                                    <div className="default text">Theme</div>
+                                                                    <i className="dropdown icon"></i>
+                                                                    <div className="menu">
+                                                                        <div className="item" data-value="af">online
+                                                                        </div>
+                                                                        <div className="item" data-value="ax">offline
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="input-elem">
+                                                                <input type="number" placeholder="Order number"
+                                                                       className="filters-input"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="filters-elem select-elem">
+                                                                <div className="ui fluid selection dropdown">
+                                                                    <input type="hidden"/>
+                                                                    <div className="default text">Order currency</div>
+                                                                    <i className="dropdown icon"></i>
+                                                                    <div className="menu">
+                                                                        <div className="item" data-value="af">online
+                                                                        </div>
+                                                                        <div className="item" data-value="ax">offline
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="input-elem">
+                                                                <input type="number" placeholder="Purchaser"
+                                                                       className="filters-input"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="filters-box__item">
+                                                            <div className="filters-elem select-elem">
+                                                                <div className="ui fluid selection dropdown">
+                                                                    <input type="hidden"/>
+                                                                    <div className="default text">Order status</div>
+                                                                    <i className="dropdown icon"></i>
+                                                                    <div className="menu">
+                                                                        <div className="item" data-value="af">online
+                                                                        </div>
+                                                                        <div className="item" data-value="ax">offline
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="input-elem">
-                                                    <input type="text" placeholder="Brand" className="filters-input" />
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="filters-elem select-elem">
-                                                    <div className="ui fluid selection dropdown">
-                                                        <input type="hidden" />
-                                                        <div className="default text">Season</div>
-                                                        <i className="dropdown icon"></i>
-                                                        <div className="menu">
-                                                            <div className="item" data-value="af">online</div>
-                                                            <div className="item active" data-value="ax">offline</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="filters-elem select-elem">
-                                                    <div className="ui fluid selection dropdown">
-                                                        <input type="hidden" />
-                                                        <div className="default text">Theme</div>
-                                                        <i className="dropdown icon"></i>
-                                                        <div className="menu">
-                                                            <div className="item" data-value="af">online</div>
-                                                            <div className="item" data-value="ax">offline</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="input-elem">
-                                                    <input type="number" placeholder="Order number" className="filters-input" />
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="filters-elem select-elem">
-                                                    <div className="ui fluid selection dropdown">
-                                                        <input type="hidden" />
-                                                        <div className="default text">Order currency</div>
-                                                        <i className="dropdown icon"></i>
-                                                        <div className="menu">
-                                                            <div className="item" data-value="af">online</div>
-                                                            <div className="item" data-value="ax">offline</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="input-elem">
-                                                    <input type="number" placeholder="Purchaser" className="filters-input" />
-                                                </div>
-                                            </div>
-                                            <div className="filters-box__item">
-                                                <div className="filters-elem select-elem">
-                                                    <div className="ui fluid selection dropdown">
-                                                        <input type="hidden" />
-                                                        <div className="default text">Order status</div>
-                                                        <i className="dropdown icon"></i>
-                                                        <div className="menu">
-                                                            <div className="item" data-value="af">online</div>
-                                                            <div className="item" data-value="ax">offline</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </form>	
-                            )}/>
-                            
-                            <Table headers={this.headers} list={this.props.orderList} width={this.state.tableWidth} height={this.state.tableHeight} />
-                        </>
-                        }
+                                                </form>
+                                            )}/>
+
+                                    <Table headers={this.headers} list={this.props.orderList}
+                                           width={this.state.tableWidth} height={this.state.tableHeight}/>
+                                </>
+                    }
                 </div>
             </>
         );

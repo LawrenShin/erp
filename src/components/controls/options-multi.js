@@ -22,12 +22,12 @@ export default class Options extends React.Component{
     render(){
         return (
             <div className="options__item">
-				<div className="options__title">{this.props.label}</div>
+				<div className={`options__title ${this.props.required}`}>{this.props.label}</div>
                 <div className="options-list">
                 {
                     this.props.list.map( ({name, value}) => 
                         <label className="options-list__checkbox">
-                            <input disabled={this.props.readOnly} type="checkbox" checked={Array.isArray(this.state.value) && this.state.value.includes(value)} onChange={(e) => this.onChange(e, value, name, this.props.fullOutput)} />
+                            <input name={this.props.name} required={this.props.required} disabled={this.props.readOnly} type="checkbox" checked={Array.isArray(this.state.value) && this.state.value.includes(value)} onChange={(e) => this.onChange(e, value, name, this.props.fullOutput)} />
                             <span className="options-list__title">{name}</span>
                         </label>
                     )

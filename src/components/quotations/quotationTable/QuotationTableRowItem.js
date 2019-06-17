@@ -1,71 +1,84 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
 import uuid from 'uuid'
-import className from 'classnames';
-import Checkbox from "../../controls/checkbox";
+import className from 'classnames'
+import CommentManager from '../comments/manager/CommentManager'
+
+const Empty = () => <div className="data-table__column sc-gzVnrw zZjqK -bg-color-bgGray -flex-grow-1" style={{width: 70}}></div>
+const Selected = ({ price }) => <div className="data-table__column sc-gzVnrw zZjqK -bg-color-blue -flex-grow-1" style={{width: 70}}>${price}</div>
+const Waiting = () => <div className="data-table__column sc-gzVnrw zZjqK -flex-grow-1" style={{width: 70}}><i className="icon-waiting -text-color-yellow"></i></div>
+const Price = ({ price, targetPrice }) => <div className={`data-table__column sc-gzVnrw zZjqK -flex-grow-1 ${+price < +targetPrice ? '-text-color-blue' : null}`} style={{width: 70}}>${price}</div>
+const Declined = () => <div className="data-table__column sc-gzVnrw zZjqK -flex-grow-1" style={{width: 70}}><i className="icon-decline -text-color-gray"></i></div>
+
+const PauseProductComponent = ({ productId, pause, paused }) => {
+    const handlePause = () => pause(productId)
+    return(<>
+        <button onClick={handlePause}>
+            {paused ? <i className="icon-play-button"></i> : <i className="icon-pause-circular-button"></i>}
+        </button> 
+    </>)
+}
 
 const QuotationTableRowItem = (props) => {
+    const [display, setDisplay] = useState('none')
+    const createMapOverview = () => props.addedSuppliers.map( as => {
+            const relation = props.distributedRelations.filter( dr => dr.supplier === as.supplier_id )[0]
+            if(relation) return { ...relation }
+        })
+
     return (
         <>
-            <div className={className('data-table__row', {'-paused-row': props.paused})}>
-                {props.control ? <div className="data-table__column -bg-color-blue -text-color-white -flex-grow-0"
-                                      style={{maxWidth: '65px'}}>
-                    <button>{props.paused ? <i className="icon-play-button"></i> :
-                        <i className="icon-pause-circular-button"></i>}</button>
-                </div> : ''}
-
-                {props.invitation_status ? <div
-                    className={className('data-table__column', ' -flex-grow-0', 'hidden', '-text-color-white', {'-bg-color-green': props.confirmed}, {'-bg-color-yellow': !props.confirmed})}>{props.confirmed ? 'Confirmed' : 'Awaiting Response'}</div> : ''}
-                {props.show_id ? <div className="data-table__column -flex-grow-1">{props.id}</div> : ''}
-
-                {props.date ? <div className="data-table__column -flex-grow-1">{props.date}</div> : ''}
+            <div className={className('data-table__row', {'-paused-row': props.paused})} >
+                {props.control ? <div className="data-table__column -bg-color-blue -text-color-white -flex-grow-0" style={{maxWidth: '65px'}}>
+                    <PauseProductComponent 
+                        productId={props.id}
+                        pause={props.pause}
+                        paused={props.paused} />
+                </div> 
+                    :
+                null}
 
                 <div className="data-table__column -flex-grow-1">
-                    {props.name}
+                    {props.style}
                 </div>
 
-                {props.status ? <div className="data-table__column -flex-grow-1">{props.status}</div> : ''}
+                <div className="data-table__column -flex-grow-1">{props.nomenclature_group}</div>
+                <div className="data-table__column -flex-grow-1">{props.shell_fabric_1}</div>
+                <div className="data-table__column -flex-grow-1">{props.color}</div>
+                <div className="data-table__column -flex-grow-1">{props.target_price}</div>
+                <div className="data-table__column -flex-grow-1 -cursor-pointer" 
+                    onClick={ () => setDisplay(display === 'none' ? 'block' : 'none') }>
+                        <i className="icon-filters-2"></i>
+                </div>
 
-                {props.group ? <div className="data-table__column -flex-grow-1">{props.group}</div> : ''}
+                {
+                    (props.addedSuppliers.length) ? 
+                        createMapOverview().map(o => {
+                            const key = uuid()
+                            if(o){
+                                if(o.is_cancel) return <Declined key={key} />
+                                if(!o.current_price) return <Waiting key={key} />
+                                if(o.is_selected && !!o.current_price) return <Selected key={key} price={o.current_price} />
+                                if(!!o.current_price) return <Price key={key} price={o.current_price} targetPrice={props.target_price} />
+                            }
+                            return <Empty key={key} />
+                        })
+                    :
+                        <div className="data-table__column -flex-grow-1">No supplier added yet!</div>
+                }
 
-                {props.shell_fabric ? <div className="data-table__column -flex-grow-1">{props.shell_fabric}</div> : ''}
-
-                {props.color ? <div className="data-table__column -flex-grow-1">{props.color}</div> : ''}
-
-                {props.target_price ? <div className="data-table__column -flex-grow-1">{props.target_price}</div> : ''}
-
-                {props.change_request ?
-                    <div className="data-table__column -flex-grow-1"><i className="icon-filters-2"></i></div> : ''}
-
-                {props.gender ? <div className="data-table__column -flex-grow-1">{props.gender}</div> : ''}
-
-                {props.age ? <div className="data-table__column -flex-grow-1">{props.age}</div> : ''}
-
-                {props.country ? <div className="data-table__column -flex-grow-1">{props.country}</div> : ''}
-
-                {props.suppliers ? <div className="data-table__column -flex-grow-1"><Checkbox
-                        name={`addProduct_${props.id}`}
-                        onChange={() => props.checkboxHandler(props.id)}
-                        checked={false}/></div> :
-                    <div className="data-table__column -flex-grow-1">No supplier added yet!</div>}
-
-                {props.price ? <div className="data-table__column -flex-grow-1">{props.price}</div> : ''}
-                {props.description ? <div className="data-table__column -flex-grow-1">{props.description}</div> : ''}
-
-                {props.technical_documents ?
-                    <div className="data-table__column -flex-grow-1 -bg-color-green -text-color-white"><a
-                        href={props.technical_documents}>Technical Documents</a></div> : ''}
-
-                {props.buttonRemind ?
-                    <div className="data-table__column -flex-grow-1" style={{minWidth: '250px'}}>
-                        <div className="-flex">
-                            <button className="btn btn1 btn__small">Remind</button>
-                            <button className="btn btn1 btn__small">Get in quotation</button>
-                        </div>
-                    </div> : ''}
-
+                <div className="data-table__column -flex-grow-1 -bg-color-green -text-color-white">
+                    <a href={props.technical_documents}>Technical Documents</a>
+                </div>
             </div>
+            <CommentManager 
+                side='manager'
+                display={display}
+                distributionId={props.id} />
         </>
     );
 };
 
-export default QuotationTableRowItem;
+export default connect(undefined, dispatch => ({
+    pause: (payload) => dispatch({ type: 'PAUSE_PRODUCT', payload }),
+}))(QuotationTableRowItem)

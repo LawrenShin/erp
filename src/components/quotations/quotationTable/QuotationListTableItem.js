@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 import QuotationTableHeaderItem from './QuotationTableHeaderItem'
 import QuotationTableRowItem from './QuotationTableRowItem'
 import uuid from 'uuid'
 
 class QuotationListTableItem extends Component {
-    heads = ['Style name', 'Product group', 'Shell fabric', 'Color', 'Target price', 'Changes request', '', ''];
+    heads = ['Style name', 'Product group', 'Shell fabric', 'Color', 'Target price', 'Changes request'];
 
     selectFields = (quot) => {
-        const selectThese = [ 'name', 'collection', 'suppliers_amount', 'products_amount', 'status' ]
+        const selectThese = [ 'style', 'nomenclature_group', 'shell_fabric_1', 'color' ]
         const selected = Object.keys(quot)
             .filter(key => selectThese.includes(key))
             .reduce((obj, key) => {
@@ -17,41 +18,7 @@ class QuotationListTableItem extends Component {
         return selected
     }
 
-    listItems = [
-        {
-            id: 'prod1',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: true,
-            suppliers: false,
-            technical_documents: '/file.pdf'
-        },
-        {
-            id: 'prod2',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: true,
-            suppliers: false,
-            technical_documents: '/file.pdf'
-        },
-        {
-            id: 'prod3',
-            name: 'Aisha',
-            group: 'Jersy',
-            shell_fabric: 'Cotton',
-            color: 'Black',
-            target_price: '5$',
-            change_request: true,
-            suppliers: false,
-            technical_documents: '/file.pdf'
-        }
-    ]
+    
 
     render() {
         return (
@@ -59,14 +26,20 @@ class QuotationListTableItem extends Component {
                 <div className='data-table'>
                     {/* Тут пока думаю как сделать чтобы ширину ячейки передавать, может у тебя мысли есть */}
                     <div className="data-table__header">
-                        <QuotationTableHeaderItem heads={this.heads} control={true}/>
+                        <QuotationTableHeaderItem 
+                            techDocs={true}
+                            heads={this.heads} 
+                            control={true} 
+                            addedSuppliers={this.props.suppliers.data} />
                     </div>
                     <div className="data-table__body">
-                        {this.listItems.map(listItem => <QuotationTableRowItem
+                        {this.props.products.data.map(listItem => <QuotationTableRowItem
                             key={uuid()}
                             control={true}
-                            paused={false}
-                            {...listItem} />
+                            paused={listItem.pause}
+                            addedSuppliers={this.props.suppliers.data}
+                            distributedRelations={this.props.distributedRelations.data.filter(dr => dr.product === listItem.product.id)}
+                            {...listItem.product} />
                         )}
                     </div>
                 </div>
@@ -75,4 +48,6 @@ class QuotationListTableItem extends Component {
     }
 };
 
-export default QuotationListTableItem;
+export default connect(state => ({
+    distributedRelations: state.quotations.currentQuotationReducer.distributedRelations,
+}))(QuotationListTableItem)

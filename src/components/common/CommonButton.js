@@ -8,7 +8,7 @@ const CommonButton = ({text, type, disabled, ...rest}) => {
                 className={ className('btn', type, {'btn-disabled': disabled }) } 
                 type="button"
                 {...rest} >
-                {text}
+                <span>{text}</span>
             </button>
         );
     }else{
@@ -16,7 +16,7 @@ const CommonButton = ({text, type, disabled, ...rest}) => {
             <button 
                 className={ className('btn', type, {'btn-disabled': disabled }) } 
                 type="button" >
-                {text}
+                <span>{text}</span>
             </button>
         );
     }

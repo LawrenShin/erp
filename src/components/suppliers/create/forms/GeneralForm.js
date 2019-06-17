@@ -37,7 +37,7 @@ class GeneralForm extends Component{
       state.info[name] = value || checked;
       return state;
     }, () => this.proceed(0))
-  }
+  };
   
   saveDate = (date) => {
     this.setState((prev) => {
@@ -45,9 +45,11 @@ class GeneralForm extends Component{
       state.info['payment_terms_date'] = date;
       return state;
     }, () => this.proceed(0))
-  }
+  };
 
-  proceed = (step = 1) => this.props.saveStepInfo(this.state.info, 'general', step);
+  proceed = (step = 1) => {
+    this.props.saveStepInfo(this.state.info, 'general', step)
+  };
 
   componentDidMount() {
     //payment terms data fetching
@@ -82,15 +84,15 @@ class GeneralForm extends Component{
         <form onSubmit={() => this.proceed()}>
           <div className="general-form general-form_supplier">
             <div className="form-box">
-              <Input onChange={this.localSave} label="Company name" name='name' value={'name' in state.info ? state.info.name : ''} />
+              <Input required='required' onChange={this.localSave} label="Company name" name='name' value={'name' in state.info ? state.info.name : ''} />
               <Input onChange={this.localSave} label="Supplier code" name='supplier_code_1c' value={'supplier_code_1c' in state.info ? state.info.supplier_code_1c : ''} />
-              <Input onChange={this.localSave} label="Agreement number" name='agreement_number' value={'agreement_number' in state.info ? state.info.agreement_number : ''} />
-              <Options name="status" label="Status" list={this.state.options.status} onChange={this.localSave} selectedOptions={props.info.status} />
-              <Options name='type' label="Type" list={this.state.options.type} localSave={this.localSave} selectedOptions={props.info.type} />
-              <Input onChange={this.localSave} label="Purchaser" name='purchaser' value={'purchaser' in state.info ? state.info.purchaser : ''} />
-              <Input onChange={this.localSave} label="Consignee" name='consignee' value={'consignee' in state.info ? state.info.consignee : ''} />
+              <Input required='required' onChange={this.localSave} label="Agreement number" name='agreement_number' value={'agreement_number' in state.info ? state.info.agreement_number : ''} />
+              <Options required='required' name="status" label="Status" list={this.state.options.status} onChange={this.localSave} selectedOptions={props.info.status} />
+              <Options required='required' name='type' label="Type" list={this.state.options.type} localSave={this.localSave} selectedOptions={props.info.type} />
+              <Input required='required' onChange={this.localSave} label="Purchaser" name='purchaser' value={'purchaser' in state.info ? state.info.purchaser : ''} />
+              <Input required='required' onChange={this.localSave} label="Consignee" name='consignee' value={'consignee' in state.info ? state.info.consignee : ''} />
               <div className="form-box__item">
-                <label className="box-field__label">Payment terms:</label>
+                <label className="box-field__label">Payment terms</label>
                 <div className="term-select">
                   <div className="select-elem">
                   { this.state.terms.length ? <PaymentTerms localSave={this.localSave} options={this.state.terms} name='payment_terms' />
@@ -109,13 +111,13 @@ class GeneralForm extends Component{
                 </div>                
               </div>
 
-              <SingleDatePickerComponent date={ date } saveDate ={this.saveDate} />	
+              <SingleDatePickerComponent required='required' date={ date } saveDate ={this.saveDate} />
               
               <Input onChange={this.localSave} label="Manufacturer" name='manufacturer' value={'manufacturer' in state.info ? state.info.manufacturer : ''} />
-              <Input onChange={this.localSave} label="Importer" name='importer' value={'importer' in state.info ? state.info.importer : ''} />
+              <Input required='required' onChange={this.localSave} label="Importer" name='importer' value={'importer' in state.info ? state.info.importer : ''} />
               <Input type='number' label="Factory capacity"  onChange={this.localSave} name='factory' value={'factory' in state.info ? state.info.factory : ''} />
               <Input onChange={this.localSave} label="NLG" name='nlg' value={'nlg' in state.info ? state.info.nlg : ''}  type='number' />
-              <MinMaxInput onChange={this.localSave} label="MOQ" minName='moq_min' maxName='moq_max' min={'moq_min' in state.info ? state.info.moq_min : ''} max={'moq_max' in state.info ? state.info.moq_max : ''} />
+              <MinMaxInput required='required' onChange={this.localSave} label="MOQ" minName='moq_min' maxName='moq_max' min={'moq_min' in state.info ? state.info.moq_min : ''} max={'moq_max' in state.info ? state.info.moq_max : ''} />
               <TextArea label="Comment" rows='10' name='comment' onChange={this.localSave} value={'comment' in state.info ? state.info.comment : ''} />
             </div>
             <div className="general-form__aside">

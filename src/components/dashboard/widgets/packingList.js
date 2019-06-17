@@ -79,7 +79,11 @@ class PackingListDashboardWidget extends React.Component{
     }
 
     onResize = () => {
-        this.setState({tableWidth: this.ref.current.clientWidth, tableHeight: this.getTableHeight()});
+        try{
+            this.setState({tableWidth: this.ref.current.clientWidth, tableHeight: this.getTableHeight()});
+        }catch(e){
+            console.log('crap')
+        }
     }
 
     changeOptions = (values) => this.props.setOptions(values);

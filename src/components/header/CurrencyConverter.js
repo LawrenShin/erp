@@ -22,7 +22,7 @@ class CurrencyConverter extends Component{
     return(
       <div className="currency-converter">
         <div className="currency-converter__col">
-          <label className="currency-converter__label">{this.props.pair.currency_dst}</label>
+          <label className="currency-converter__label">{this.props.pair.currency_src}</label>
           <input 
             type="number" 
             className="currency-converter__input" 
@@ -32,7 +32,7 @@ class CurrencyConverter extends Component{
         </div>
         <span className="currency-converter__divider"><a><i className="icon-exchange"></i></a></span>						
         <div className="currency-converter__col">
-          <label className="currency-converter__label">{this.props.pair.currency_src}</label>
+          <label className="currency-converter__label">{this.props.pair.currency_dst}</label>
           <input type="number" className="currency-converter__input" value={this.state.to || this.state.exchange} id='currency_dst_input' disabled />
         </div>
       </div>

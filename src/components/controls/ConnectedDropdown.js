@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import svg from '../../css/svg.module.css'
 
-const irrigateHeader = (name) => `${name[0].toUpperCase()}${name.substr(1).replace("_", " ")}`;
+const irrigateHeader = (name) => `${name[0].toUpperCase()}${name.substr(1).replace("_", " ")}`
 
 const menuField = (opt, state, valueFromStore) => {
   const isActive = (state.option === opt.id || valueFromStore === opt.id) ? 'active' : '';
@@ -14,7 +14,7 @@ const menuField = (opt, state, valueFromStore) => {
   </div>
 }
 
-const ConnectedDropdown = ({ name, options, saveToStore, valueFromStore }) => {
+const ConnectedDropdown = ({ name, options, saveToStore, valueFromStore, required }) => {
   const [option, setOption] = useState(0)
   const [visibleMenu, setVisibleMenu] = useState(false)
 
@@ -28,7 +28,7 @@ const ConnectedDropdown = ({ name, options, saveToStore, valueFromStore }) => {
   return(
     <div className="product-columns__item">
       <div className={`select-elem ${visibleMenu ? '-is-unfolded' : ''}`}>
-        <label className="box-field__label">{irrigateHeader(name)}:</label>
+        <label className={`box-field__label ${required}`}>{irrigateHeader(name)}</label>
         <div className="ui fluid selection dropdown" onClick={() => setVisibleMenu(!visibleMenu)}>
           {selectedOption && selectedOption.name}
           <input 
