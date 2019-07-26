@@ -5,9 +5,14 @@ import { createSelector } from 'reselect'
 import QuotationsApi from '../../requestor/quotations'
 
 import { productsModalSaga, SET_QUOTATIONS_OPTION_P, CLEAR_QUOTATIONS_OPTION_P, REFRESH_MODAL_PRODUCTS, REFRESH_MODAL_PRODUCTS_START, REFRESH_MODAL_PRODUCTS_DONE, REFRESH_MODAL_PRODUCTS_ERROR, QUOTATIONS_ADD_PRODUCT } from './productsModal'
+import { suppliersModalSaga, SET_QUOTATIONS_OPTION_S, CLEAR_QUOTATIONS_OPTION_S, REFRESH_MODAL_SUPPLIERS, REFRESH_MODAL_SUPPLIERS_START, REFRESH_MODAL_SUPPLIERS_DONE, REFRESH_MODAL_SUPPLIERS_ERROR } from './suppliersModal'
+import { genericModalSaga } from './genericModal'
+
 import { createQuotationSaga } from './createQuotation'
 import currentQuotationReducer,
 { currentQuotationSaga, 
+  quotationDetailsSaga,
+  selectSupplierSaga,
   historySaga,
   addedProductsSaga, 
   addedSuppliersSaga, 
@@ -17,12 +22,14 @@ import currentQuotationReducer,
 import createQuotationReducer from './createQuotation'
 import { commentsSaga, commentsReducer as comments } from './commentsSaga'
 import supplierPart, { saga as supplierQuotationsSaga } from './supplierPart'
+import { allTechPackSaga } from './supplierPart/downloadAllTechPack'
 
 //init state
 export const getDefaultOptions = (listName) => { 
     switch(listName){
       case 'quotations': 
         return { 
+          offset: 0,
           collection: '',
           name__icontains: '',
           products_amount: '',
@@ -31,6 +38,8 @@ export const getDefaultOptions = (listName) => {
         }
       case 'products': 
         return { 
+          offset: 0,
+          name__icontains: '',
           year: '',
           trade_mark: '',
           season: '',
@@ -50,11 +59,36 @@ export const getDefaultOptions = (listName) => {
        }
       case 'suppliers': 
         return { 
+          offset: 0,
           name__icontains: '',
           supplier_code_1c__icontains: '',
           status: '',
           categories: '',
           legal_country: '',
+        }
+      case 'invitationStatus': 
+        return {
+          supplier__name__icontains: '',
+          status: '',
+        }
+      case 'history':
+        return {
+          offset: 0,
+          distribution__quotation__id: '',
+          distribution__product__name__icontains: '',
+          distribution__product__style__name: '',
+          distribution__product__color__name: '',
+        }
+      case 'distribution': 
+        return {
+          product__style: '',
+          product__color: '',
+          product__nomenclature_group: '',
+          product__shell_fabric_1: '',
+          product__gender: '',
+          product__age: '',
+          product__country: '',
+          product__target_price: '',
         }
         default: break;
     }
@@ -95,11 +129,33 @@ export const init = () => ({
       data: null,
       options: getDefaultOptions('products'),
       error: ''
+    },
+    invitationStatus: {
+      loading: false,
+      data: null,
+      options: getDefaultOptions('invitationStatus'),
+      error: ''
+    },
+    history: {
+      loading: false,
+      data: null,
+      options: getDefaultOptions('history'),
+      error: ''
+    },
+    distribution: {
+      loading: false,
+      data: null,
+      options: getDefaultOptions('distribution'),
+      error: ''
     }
   }
 })
 
 // action types
+const REFRESH_QUOTATION = 'REFRESH_QUOTATION'
+const ACCEPT_SAMPLES = 'ACCEPT_SAMPLES'
+const REQUEST_SAMPLES = 'REQUEST_SAMPLES'
+const SELECT_SUPPLIER = 'SELECT_SUPPLIER'
 const LOAD_Q_HISTORY = 'LOAD_Q_HISTORY'
 const LOAD_COMMENTS = 'LOAD_COMMENTS'
 const POST_COMMENT = 'POST_COMMENT'
@@ -133,9 +189,12 @@ const MODALS_DATA_ERROR = 'MODALS_DATA_ERROR'
 
 const QUOTATIONS_OPTION = 'QUOTATIONS_OPTION'
 const QUOTATION_SET_OPTION = 'QUOTATION_SET_OPTION'
-const QUOTATION_CLEAR_OPTION = 'QUOTATION_CLEAR_OPTION' // implement this one
 
 export const QUOTATIONS_OPTION_P = 'QUOTATIONS_OPTION_P'
+export const QUOTATIONS_OPTION_S = 'QUOTATIONS_OPTION_S'
+export const QUOTATIONS_OPTION_D = 'QUOTATIONS_OPTION_D'
+export const QUOTATIONS_OPTION_H = 'QUOTATIONS_OPTION_H'
+export const QUOTATIONS_OPTION_I = 'QUOTATIONS_OPTION_I'
 
 const CREATE_QUOTATION = 'CREATE_QUOTATION'
 
@@ -242,8 +301,46 @@ export function mainQuotationReducer(state = init(), action){
       case REFRESH_MODAL_PRODUCTS_START:
         return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: true } } }
       case REFRESH_MODAL_PRODUCTS_DONE:
-        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, data: payload } } }
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, data: {
+          ...state.lists.products.data,
+          results: payload.concat ? [...state.lists.products.data.results, ...payload.list.results] : payload.list.results, 
+        } } } }
       case REFRESH_MODAL_PRODUCTS_ERROR:
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, error: payload } } }
+
+      case REFRESH_MODAL_SUPPLIERS_START:
+        return { ...state, lists: { ...state.lists, suppliers: { ...state.lists.suppliers, loading: true } } }
+      case REFRESH_MODAL_SUPPLIERS_DONE:
+        return { ...state, lists: { ...state.lists, suppliers: { ...state.lists.suppliers, loading: false, data: {
+          ...state.lists.suppliers.data,
+          results: payload.concat ? [...state.lists.suppliers.data.results, ...payload.list.results] : payload.list.results, 
+        } } } }
+      case REFRESH_MODAL_SUPPLIERS_ERROR:
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, error: payload } } }
+      
+      case 'REFRESH_MODAL_DISTRIBUTION_START':
+        return { ...state, lists: { ...state.lists, distribution: { ...state.lists.distribution, loading: true } } }
+      case 'REFRESH_MODAL_DISTRIBUTION_DONE':
+        return { ...state, lists: { ...state.lists, distribution: { ...state.lists.distribution, loading: false, data: 
+          payload.concat ? [...state.lists.distribution.data.results, ...payload.list.results] : payload.list.results, 
+        } } }
+      case 'REFRESH_MODAL_DISTRIBUTION_ERROR':
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, error: payload } } }
+      
+      case 'REFRESH_MODAL_INVITATIONSTATUS_START':
+        return { ...state, lists: { ...state.lists, invitationStatus: { ...state.lists.invitationStatus, loading: true } } }
+      case 'REFRESH_MODAL_INVITATIONSTATUS_DONE':
+        return { ...state, lists: { ...state.lists, invitationStatus: { ...state.lists.invitationStatus, loading: false, data: payload.list.results, 
+        } } }
+      case 'REFRESH_MODAL_INVITATIONSTATUS_ERROR':
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, error: payload } } }
+      
+      case 'REFRESH_MODAL_HISTORY_START':
+        return { ...state, lists: { ...state.lists, history: { ...state.lists.history, loading: true } } }
+      case 'REFRESH_MODAL_HISTORY_DONE':
+        return { ...state, lists: { ...state.lists, history: { ...state.lists.history, loading: false, data: payload.list.results, 
+        } } }
+      case 'REFRESH_MODAL_HISTORY_ERROR':
         return { ...state, lists: { ...state.lists, products: { ...state.lists.products, loading: false, error: payload } } }
       
       case QUOTATION_SET_OPTION:
@@ -254,10 +351,42 @@ export function mainQuotationReducer(state = init(), action){
         newOptions = {...state.lists.products.options}
         newOptions[filterName] = value
         return { ...state, lists: { ...state.lists, products: { ...state.lists.products, options: { ...newOptions } } } }
-      
+      case SET_QUOTATIONS_OPTION_S:
+        newOptions = {...state.lists.suppliers.options}
+        newOptions[filterName] = value
+        return { ...state, lists: { ...state.lists, suppliers: { ...state.lists.suppliers, options: { ...newOptions } } } }
+      case 'SET_QUOTATIONS_OPTION_D':
+        newOptions = {...state.lists.distribution.options}
+        newOptions[filterName] = value
+        return { ...state, lists: { ...state.lists, distribution: { ...state.lists.distribution, options: { ...newOptions } } } }
+      case 'SET_QUOTATIONS_OPTION_I':
+        newOptions = {...state.lists.invitationStatus.options}
+        newOptions[filterName] = value
+        return { ...state, lists: { ...state.lists, invitationStatus: { ...state.lists.invitationStatus, options: { ...newOptions } } } }
+      case 'SET_QUOTATIONS_OPTION_H':
+        newOptions = {...state.lists.history.options}
+        newOptions[filterName] = value
+        return { ...state, lists: { ...state.lists, history: { ...state.lists.history, options: { ...newOptions } } } }
+
       case CLEAR_QUOTATIONS_OPTION_P:
-        const options = getDefaultOptions('products')
-        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, options } } }
+        const optionsP = getDefaultOptions('products')
+        return { ...state, lists: { ...state.lists, products: { ...state.lists.products, options: optionsP } } }
+      case CLEAR_QUOTATIONS_OPTION_S:
+        const optionsS = getDefaultOptions('suppliers')
+        return { ...state, lists: { ...state.lists, suppliers: { ...state.lists.suppliers, options: optionsS } } }
+      case 'CLEAR_QUOTATIONS_OPTION_D':
+        const optionsD = getDefaultOptions('distribution')
+        return { ...state, lists: { ...state.lists, distribution: { ...state.lists.distribution, options: optionsD } } }
+      case 'CLEAR_QUOTATIONS_OPTION_I':
+        const optionsI = getDefaultOptions('invitationStatus')
+        return { ...state, lists: { ...state.lists, invitationStatus: { ...state.lists.invitationStatus, options: optionsI } } }
+      case 'CLEAR_QUOTATIONS_OPTION_H':
+        const optionsH = getDefaultOptions('history')
+        return { ...state, lists: { ...state.lists, history: { ...state.lists.history, options: optionsH } } }
+
+      case 'INIT_SINGLE_Q_DONE':
+          if(!state.lists.distribution.data) return { ...state, lists: { ...state.lists, distribution: { ...state.lists.distribution, data: payload.addedProducts.results } } }
+          return state
 
       default: return state
     }
@@ -278,8 +407,8 @@ export const createOptionsSelector = (fromHere) => createSelector(
 export const createListsSelector = (fromHere) => createSelector(
   mainQuotationState,
   state => state.lists[fromHere].data
-  )
-  export const createFiltersSelector = (fromHere) => createSelector(
+)
+export const createFiltersSelector = (fromHere) => createSelector(
   mainQuotationState,
   state => state.filters[fromHere].data
 )
@@ -359,7 +488,19 @@ export function* saga(){
     QUOTATIONS_OPTION_P, 
     REFRESH_MODAL_PRODUCTS, 
     QUOTATIONS_ADD_PRODUCT], productsModalSaga)
+  yield takeEvery([ 
+      QUOTATIONS_OPTION_S, 
+      REFRESH_MODAL_SUPPLIERS], suppliersModalSaga)
+  yield takeEvery([ 
+      QUOTATIONS_OPTION_D, 
+      QUOTATIONS_OPTION_H, 
+      QUOTATIONS_OPTION_I, 
+      'REFRESH_MODAL_DISTRIBUTION',
+      'REFRESH_MODAL_INVITATIONSTATUS',
+      'REFRESH_MODAL_HISTORY',
+    ], genericModalSaga)
   yield takeEvery(INIT_SINGLE_Q, currentQuotationSaga)
+  yield takeEvery(REFRESH_QUOTATION, quotationDetailsSaga)
   yield takeEvery(REFRESH_ADDED_PRODUCTS_Q, addedProductsSaga)
   yield takeEvery(REFRESH_ADDED_SUPPLIERS_Q, addedSuppliersSaga)
   yield takeEvery(REFRESH_DISTRIBUTED_RELATIONS_Q, distributedRelationsSaga)
@@ -370,8 +511,10 @@ export function* saga(){
     GET_SUPPLIER_IN_QUOTATION,
   ], invitationStatusSaga)
   yield takeEvery(PAUSE_PRODUCT, pauseProductSaga)
+  yield takeEvery('DOWNLOAD_ALL_TECH_PACK', allTechPackSaga)
   yield takeEvery(LOAD_COMMENTS, commentsSaga)
   yield takeEvery(LOAD_Q_HISTORY, historySaga)
+  yield takeEvery(SELECT_SUPPLIER, selectSupplierSaga)
   yield takeLatest(POST_COMMENT, commentsSaga)
   yield fork(supplierQuotationsSaga)
 }

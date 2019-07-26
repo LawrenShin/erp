@@ -1,87 +1,103 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import _ from 'lodash';
+import { NavLink } from 'react-router-dom'
 import SimpleBarChart from '../charts/SimpleBarChart';
 import RadialChart from '../charts/RadialChart';
 import styled, {keyframes} from 'styled-components';
 import Loading from '../helpers/loading';
 import LoadingTransparent from '../helpers/loadingTransparent';
 
-class InnerRow extends Component{
+class InnerRow extends Component {
+    state = {};
 
-  render(){
-    const supplierDetails = this.props.graphDetails.data.filter((d, i) => i === this.props.row)[0];
-    const isDetails = typeof supplierDetails !== 'undefined';
-    return(
-      <div className={`inner-details`} className={`${this.props.className} ${this.props.collapse ? 'collapsed' : ''}`} style={{position: "relative", zIndex: 2000, background: "white", width: this.props.width || "100%"}}>
-        <div className="inner-details__inner">
+    render() {
+        const supplierDetails = this.props.graphDetails.data.filter((d, i) => i === this.props.row)[0];
+        const isDetails = typeof supplierDetails !== 'undefined';
+        return (
+            <div className={`inner-details`}
+                 className={`${this.props.className} ${this.props.collapse ? 'collapsed' : ''}`}
+                 style={{position: "relative", zIndex: 2000, background: "white", width: this.props.width || "100%"}}>
+                <div className="inner-details__inner">
 
-          {isDetails ? <div className="contacts-details">
-            <div className="inner-details__title">
-              <div className="inner-details__title_withicon">
-                Contact details <span className="contacts-details__icon"><i className="icon-clone"></i></span>
-              </div>
-            </div>
+                    {isDetails ? <div className="contacts-details">
+                        <div className="inner-details__title">
+                            <div className="inner-details__title_withicon">
+                                Contact details 
+                                <NavLink 
+                                    style={{ cursor: 'pointer' }} 
+                                    className="contacts-details__icon" 
+                                    to={`/suppliers/view/contacts/${this.props.id}`}>
+                                        <i className="icon-clone"></i>
+                                </NavLink>
+                            </div>
+                        </div>
 
-            <div className="contacts-details__list">
-              <div className="contacts-details__item">{supplierDetails.contacts_details.name}</div>
-              <div className="contacts-details__item">{supplierDetails.contacts_details.person_name}</div>
-              <div className="contacts-details__item">E-mail:
-                <a href={`mailto:${supplierDetails.contacts_details.person_email}`}>
-                  {supplierDetails.contacts_details.person_email}
-                </a>
-              </div>
+                        <div className="contacts-details__list">
+                            <input type="text" style={{height: '0px', padding: '0', border: 'none'}}
+                                   value={supplierDetails.contacts_details.name + (supplierDetails.contacts_details.person_email ? ', email:' + supplierDetails.contacts_details.person_email : '') + (supplierDetails.contacts_details.person_phone ? ', tel: ' + supplierDetails.contacts_details.person_phone : '') + (supplierDetails.contacts_details.address ? ', address: ' + supplierDetails.contacts_details.address : '')}
+                                   id='textCopied'/>
+                            <div className="contacts-details__item">{supplierDetails.contacts_details.name}</div>
+                            <div className="contacts-details__item">{supplierDetails.contacts_details.person_name}</div>
+                            <div className="contacts-details__item">E-mail:
+                                <a href={`mailto:${supplierDetails.contacts_details.person_email}`}>
+                                    {supplierDetails.contacts_details.person_email}
+                                </a>
+                            </div>
 
-              <div className="contacts-details__item">Tel:
-                <a href={`tel:${supplierDetails.contacts_details.person_phone}`} className="inner-details__tel">
-                  {supplierDetails.contacts_details.person_phone}
-                </a>
-              </div>
+                            <div className="contacts-details__item">Tel:
+                                <a href={`tel:${supplierDetails.contacts_details.person_phone}`}
+                                   className="inner-details__tel">
+                                    {supplierDetails.contacts_details.person_phone}
+                                </a>
+                            </div>
 
-              <div className="contacts-details__item">Address: {supplierDetails.contacts_details.address}</div>
-            </div>
-          </div> : <LoadingTransparent />}
+                            <div
+                                className="contacts-details__item">Address: {supplierDetails.contacts_details.address}</div>
+                        </div>
+                    </div> : <LoadingTransparent/>}
 
-          {isDetails ? <>
-            <div className="order-dynamics">
-              <div className="inner-details__title">order dynamycs</div>
-              <SimpleBarChart width={400} height={200} data={supplierDetails.order_dynamics} />
-            </div>
-            <div className="order-dynamics-charts">
-              <div className="order-dynamics__pie">
-                <RadialChart width={200} height={200} data={supplierDetails.chart} />
-              </div>
-            </div>
-          </> : <Loading />}
+                    {isDetails ? <>
+                        <div className="order-dynamics">
+                            <div className="inner-details__title">order dynamycs</div>
+                            <SimpleBarChart width={400} height={200} data={supplierDetails.order_dynamics}/>
+                        </div>
+                        <div className="order-dynamics-charts">
+                            <div className="order-dynamics__pie">
+                                <RadialChart width={200} height={200} data={supplierDetails.chart}/>
+                            </div>
+                        </div>
+                    </> : <Loading/>}
 
-          {isDetails ? <div className="counts">
-            <div className="counts__item">
-              <div className="counts__title">Reliability rating</div>
-              <div className="counts__val counts__val_percent">{`${supplierDetails.reliability_rating} %`}</div>
-            </div>
-            <div className="counts__item">
-              <div className="counts__title">Total amount, usd</div>
-              <div className="counts__val">{supplierDetails.total_amount_usd}</div>
-            </div>
-            <div className="counts__item">
-              <div className="counts__title">Total amount, pieces</div>
-              <div className="counts__val">{supplierDetails.total_amount_pieces}</div>
-            </div>
-            <div className="counts__item">
-              <div className="counts__title">Product category</div>
-              <div className="counts__val counts__val_category">
-                { ((cats) => {
-                  if(cats.length){
-                    return cats.join(', ');
-                  }
-                })(supplierDetails.product_category) }
-              </div>
-            </div>
-          </div> : <LoadingTransparent />}
+                    {isDetails ? <div className="counts">
+                        <div className="counts__item">
+                            <div className="counts__title">Reliability rating</div>
+                            <div
+                                className="counts__val counts__val_percent">{`${supplierDetails.reliability_rating} %`}</div>
+                        </div>
+                        <div className="counts__item">
+                            <div className="counts__title">Total amount, usd</div>
+                            <div className="counts__val">{supplierDetails.total_amount_usd}</div>
+                        </div>
+                        <div className="counts__item">
+                            <div className="counts__title">Total amount, pieces</div>
+                            <div className="counts__val">{supplierDetails.total_amount_pieces}</div>
+                        </div>
+                        <div className="counts__item">
+                            <div className="counts__title">Product category</div>
+                            <div className="counts__val counts__val_category">
+                                {((cats) => {
+                                    if (cats.length) {
+                                        return cats.join(', ');
+                                    }
+                                })(supplierDetails.product_category)}
+                            </div>
+                        </div>
+                    </div> : <LoadingTransparent/>}
 
-        </div>
-      </div>
-    )
-  }
+                </div>
+            </div>
+        )
+    }
 }
 
 const down = keyframes`

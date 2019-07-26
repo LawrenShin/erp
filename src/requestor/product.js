@@ -8,52 +8,76 @@ const UNLIM = '?limit=1000&offset=0';
 //products
 const getFilters = () => {
     return Api.get(`products/get_products_filters/`);
-}
+};
 const list = (options = '') => {
     return Api.get(`products/products/${collectOptions(options)}`);
-}
-const getProduct = (id) => Api.get(`products/products/${id}`)
+};
+const getProduct = (id) => Api.get(`products/products/${id}`);
+
 // in table
-const getProductColors = () => Api.get(`products/colors/${UNLIM}`)
-const getProductThemes = () => Api.get(`products/themes/${UNLIM}`)
-const getProductsCategories = () => Api.get(`products/category/${UNLIM}`)
+const getProductColors = () => Api.get(`products/colors/${UNLIM}`);
+const getProductThemes = () => Api.get(`products/themes/${UNLIM}`);
+const getProductsCategories = () => Api.get(`products/category/${UNLIM}`);
+
 // in create page
 const getDesign = async () => {
-    const dataTypes = ['groups', 'colors', 'decors', 'styles', 'wearing_occasion', 'print_mood']
+    const dataTypes = ['groups', 'colors', 'decors', 'styles', 'wearing_occasion', 'print_mood', 'ages', 'gender', 'wearing_occasion', 'print_mood', 'designers'];
     
-    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products');
     results = results.map(r => r.results)
     return Swisskit.mapOver({ dataTypes, results })
-}
+};
 
 const getGeneral = async () => {
-    const dataTypes = ['collections']
+    const dataTypes = ['collections', 'themes', 'trademark'];
 
-    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
-    results = results.map(r => r.results)
-    return Swisskit.mapOver({ dataTypes, results })
-}
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products');
+    results = results.map(r => r.results);
+    return Swisskit.mapOver({ dataTypes, results });
+};
 
 const getTechnical = async () => {
-    const dataTypes = ['kinds', 'sizes', 'purpose', 'category', 'length', 'typepocket', 'levelwaist', 'kindneck', 'kindfastener', 'silhouettes', 'kindstrap']
+    const dataTypes = ['kinds', 'sizes', 'purpose', 'category', 'length', 'typepocket', 'levelwaist', 'kindneck', 'kindfastener', 'silhouettes', 'kindstrap', 'sleeve'];
     
-    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
-    results = results.map(r => r.results)
-    return Swisskit.mapOver({ dataTypes, results })
-}
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products');
+    results = results.map(r => r.results);
+    return Swisskit.mapOver({ dataTypes, results });
+};
+
+const getTechnicalFiles = (id) => Api.get(`products/tech_file/?product=${id}`);
 
 const getFabric = async () => {
-    const dataTypes = ['shell_fabric', 'weight', 'compositions', 'constructions']
+    const dataTypes = ['shell_fabric', 'weight', 'compositions', 'constructions'];
     
-    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products')
-    results = results.map(r => r.results)
-    return Swisskit.mapOver({ dataTypes, results })
-}
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products');
+    results = results.map(r => r.results);
+    return Swisskit.mapOver({ dataTypes, results });
+};
+
+const getLogistics = async () => {
+    const dataTypes = ['code_tnved'];
+
+    let results = await Swisskit.makeRequests(dataTypes, UNLIM, 'products');
+    results = results.map(r => r.results);
+    return Swisskit.mapOver({ dataTypes, results });
+};
 
 const getOptionsProducts = () => fetch(`https://dev.neurodynamics.info/api/products/products/`, { method: 'OPTIONS' }).then(r => r.json().then(jr => jr)).catch(e => e)
 
 const createProduct = (data) => Api.post(`products/products/`, true, data);
-const editProduct = (id) => Api.put(`products/products/${id}/`);
+const uploadFilesProduct = (data, id, type) => {
+    let bodyFormData = new FormData();
+    bodyFormData.append('file', data[0]);
+    bodyFormData.append('product', id);
+    bodyFormData.append('type_file', type);
+    return Api.post('products/tech_file/', true, bodyFormData, false, false, {'Content-Type': 'multipart/form-data' });
+};
+const uploadMainImage = (data, id) => {
+    let bodyFormData = new FormData();
+    bodyFormData.append('main_image', data[0]);
+    return Api.put(`products/products/${id}/`, true, bodyFormData, false, false, {'Content-Type': 'multipart/form-data' });
+};
+const editProduct = (id, data) => Api.put(`products/products/${id}/`, true, data);
 
 export default {
     getOptionsProducts,
@@ -68,7 +92,11 @@ export default {
     getTechnical,
     getFabric,
     getProduct,
-    editProduct
+    editProduct,
+    uploadFilesProduct,
+    uploadMainImage,
+    getTechnicalFiles,
+    getLogistics
 }
 // GENERAL
 //     year - 

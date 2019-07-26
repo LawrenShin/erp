@@ -9,6 +9,10 @@ import List from './List'
 class UploadModal extends PureComponent {
     state = { files: [], error: '' }
 
+    componentDidMount(){
+        if(!this.props.uploadedFiles.status ) this.props.getUploadedContract()
+    }
+
     onDrop = (stage) => {
         if (stage.length === 0) {
             this.setState({ ...this.state, error: 'We accept pdf only' })
@@ -30,24 +34,18 @@ class UploadModal extends PureComponent {
     }
     unstageFile = (name) => this.setState({ files: this.state.files.filter(f => f.name !== name) })
 
-    uploadContract = (file) => {
-        const { supplier } = this.props
-        this.props.initUploadContract({ supplier, payload: file }) 
-    }
-
     componentWillUnmount(){ this.props.refreshSupplierContracts() }
-    componentDidUpdate(){
-        console.log('update')
-    }
-
+    
     render() {
         return (
             <>
                 <ModalSemantic
                     size="mini"
                     style={{marginLeft: '0 !important'}}
-                    trigger={<Pointer className="card-filters__link"><i className="icon-upload"></i><span
-                        className="card-filters__title">Upload contract</span></Pointer>}>
+                    trigger={<Pointer className={`card-filters__link -text-color${this.props.uploadedFiles.data.length ? '-green' : '-red'}`}>
+                            <i className="icon-upload"></i>
+                            <span className="card-filters__title">Upload contract</span>
+                        </Pointer>}>
 
                     <div className="upload__modal">
                        <div className="upload__header">
@@ -80,6 +78,7 @@ class UploadModal extends PureComponent {
                                 type='upload' />
                             <List 
                                 supplier={this.props.supplier}
+                                uploadedFiles={this.props.uploadedFiles}
                                 type='uploaded' />
                         </div>
                     </div>
@@ -90,7 +89,10 @@ class UploadModal extends PureComponent {
     }
 }
 
-export default connect(undefined, dispatch => ({
+export default connect(state => ({
+    uploadedFiles: state.supplierContracts.uploaded,
+}), (dispatch, ownProps) => ({
     refreshSupplierContracts: payload => dispatch({ type: 'REFRESH_CONTRACT' }),
     initUploadContract: payload => dispatch({ type: 'UPLOAD_CONTRACT', payload }),
+    getUploadedContract: () => dispatch({ type: 'GET_UPLOADED_CONTRACT', payload: ownProps.supplier }),
 }))(UploadModal);

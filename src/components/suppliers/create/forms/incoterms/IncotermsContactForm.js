@@ -53,12 +53,18 @@ class AdditionalContactForm extends Component{
           
           {this.state.incoterms ? this.state.incoterms.map((incoterm, index) => 
           <div className="table-add__row">
-            <Incoterm inputNames={incoterm} index={index} saveIncotermData={this.saveIncotermData} removeIncoterm={this.removeIncoterm} />
+            <Incoterm 
+              onChangeFormik={this.props.onChangeFormik}
+              readOnly={this.props.readOnly} 
+              inputNames={incoterm} 
+              index={index} 
+              saveIncotermData={this.saveIncotermData} 
+              removeIncoterm={this.removeIncoterm} />
           </div>) : <h1>Loading incoterms...</h1>
         }
           
         </div>
-        <div className="port-add">
+        <div className="port-add" style={{ display: this.props.edit ? 'none' : 'block' }}>
           <span style={{cursor: "pointer"}} onClick={this.addIncoterm}>
             <i className="icon-add-button"></i>
             <span className="port-add__text">Add another Incoterm plus port</span>

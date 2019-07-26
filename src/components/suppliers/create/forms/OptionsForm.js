@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 
 import Options from '../../../controls/options-multi';
 import DeliveryTerms from './DeliveryTerms.js';
@@ -8,37 +8,39 @@ import Supplier from '../../../../requestor/supplier';
 import styles from '../../../../css/suppliers/create/forms/forms.module.css';
 import OptionsFormStyles from '../../../../css/suppliers/create/forms/optionsForm.module.css';
 
-class OptionsForm extends Component {
+class OptionsForm extends PureComponent {
     state = {
         Categories: '',
         Genders: '',
         Ages: '',
-        info: {},
         categories: this.props.options_info.categories || [],
         genders: this.props.options_info.genders || [],
-        ages: this.props.options_info.ages || []
+        ages: this.props.options_info.ages || [],
+        incoterm: null,
+        port: null,
     };
 
-    localSave = (e, name, value, checked) => {
-        switch (e.target.name) {
+    localSave = ({ name, value }) => {
+        switch (name) {
             case 'categories':
             case 'genders':
             case 'ages':
-                let arr = this.state[e.target.name];
-                const i = arr.indexOf(e.target.value);
-                if (i < 0) {
-                    arr.push(e.target.value);
-                } else {
-                    arr.splice(i, 1);
+                const arr = this.state[name]
+                let newArr = []
+                for(let v of value){
+                    if(arr.indexOf(value[v]) === -1){
+                        newArr.push(v)
+                    }
                 }
-                this.setState({[name]: arr}, () => this.proceed(0));
+                this.setState({ [name]: newArr }, () => this.proceed(0));
                 break;
+            case 'incoterm':
+                this.setState({ incoterm: value }, () => this.proceed(0))
+                break;
+            case 'port':
+                this.setState({ port: value }, () => this.proceed(0))
+                break
             default:
-                this.setState((prev) => {
-                    let state = prev;
-                    state.info[e.target.name] = e.target.value || e.target.checked;
-                    return state;
-                }, () => this.proceed(0));
                 break;
         }
     };
@@ -58,9 +60,11 @@ class OptionsForm extends Component {
     proceed = (step = 1) => {
         const state = this.state;
         let info = {};
-        if (state.categories.length) info.categories = state.categories;
-        if (state.genders.length) info.genders = state.genders;
-        if (state.ages.length) info.ages = state.ages;
+        if (state.categories) info.categories = state.categories;
+        if (state.genders) info.genders = state.genders;
+        if (state.ages) info.ages = state.ages;
+        if (state.incoterm) info.incoterm = state.incoterm;
+        if (state.port) info.port = state.port;
 
         this.props.saveStepInfo({...info}, 'options', step);
     }
@@ -87,31 +91,42 @@ class OptionsForm extends Component {
                         <div className="options">
                             <div className="options__col">
                                 <Options
+                                    readOnly={this.props.readOnly}
                                     required='required'
                                     label='Categories'
                                     name='categories'
                                     list={this.state.Categories}
+                                    value={this.props.options_info && this.props.options_info.categories}
                                     onChange={this.localSave}/>
                             </div>
 
                             <div className="options__col">
                                 <Options
+                                    readOnly={this.props.readOnly}
                                     required='required'
                                     name='genders'
                                     label='Genders'
                                     list={this.state.Genders}
+                                    value={this.props.options_info && this.props.options_info.genders}
                                     onChange={this.localSave}/>
 
                                 <Options
+                                    readOnly={this.props.readOnly}
                                     required='required'
                                     multi
                                     name='ages'
                                     label='Ages'
                                     list={this.state.Ages}
+                                    value={this.props.options_info && this.props.options_info.ages}
                                     onChange={this.localSave}/>
                             </div>
                         </div>
-                        <DeliveryTerms localSave={this.localSave}/>
+                        <DeliveryTerms 
+                            defaultValues={this.props.defaultValues}
+                            editMode={this.props.editMode} 
+                            supplier={this.props.supplier} 
+                            readOnly={this.props.readOnly} 
+                            localSave={this.localSave}  />
                     </form>
                 </div>
             );

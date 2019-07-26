@@ -1,4 +1,13 @@
 /*
+Border color
+ */
+.-border-color {
+  &-gray {
+    border-color: $gray !important;
+  }
+}
+
+/*
 Background
  */
 .-bg-color {
@@ -39,7 +48,7 @@ Background
   }
 
   &-red {
-    background: $red;
+    background: $red!important;
     color: $white;
   }
 }
@@ -157,6 +166,20 @@ Flex
     }
   }
 }
+/* 
+Display
+*/
+.-display{
+  &-block{
+    display: block
+  }
+  &-flex{
+    display: flex
+  }
+  &-none{
+    display: none
+  }
+}
 
 /* Состояния */
 .-error {
@@ -167,3 +190,23 @@ Flex
 .-cursor-pointer {
   cursor: pointer;
 }
+
+/* Text transform */
+
+.-text-uppercase {
+  text-transform: uppercase;
+}
+
+.-text-capitalize {
+  text-transform: capitalize;
+}
+
+/*
+  hover
+*/
+  .hover-none{
+    pointer-events: none;
+  }
+
+/*
+*/

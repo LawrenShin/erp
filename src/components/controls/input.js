@@ -33,7 +33,7 @@ export default class Input extends React.Component{
             <div className="box-field">
                 <label className="box-field__label">{this.props.label && `${this.props.label}`}</label>
                 <div className="term-select">
-                    <input type="text" className="box-field__input" defaultValue={this.state.value} readOnly/>
+                    <input type="text" className="box-field__input" defaultValue={this.state.value} disabled={this.props.readOnly} />
                     <div className="item-upload">
                         <div className="item-upload-input"><i className="icon-upload"></i><input type="file" onChange={this.onChange} onBlur={this.onBlur}/></div>
                     </div>
@@ -45,7 +45,7 @@ export default class Input extends React.Component{
         :
             <div className="box-field">
                 <label className={`box-field__label ${this.props.required}`} htmlFor={this.props.name}>{this.props.label && `${this.props.label}`}</label>
-                <input required={this.props.required} readOnly={this.props.readOnly} type={this.props.type || 'text'} className={`box-field__input ${this.props.className}`} id={this.props.name} name={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} maxLength={this.props.maxLength} defaultValue={this.props.defaultValue}/>
+                <input required={this.props.required} disabled={this.props.readOnly} type={this.props.type || 'text'} className={`box-field__input ${this.props.className}`} id={this.props.name} name={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} maxLength={this.props.maxLength} defaultValue={this.props.defaultValue}/>
             </div>
     }
     renderSimple = () => {
@@ -64,7 +64,7 @@ export default class Input extends React.Component{
             this.props.uiType === "tableInside" ?
                 <div className="table-add__td">
                     <label className="box-field__label">{this.props.label && `${this.props.label}:`}</label>
-                    <input readOnly={this.props.readOnly} type={this.props.type || 'text'} className="table-add__input" id={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} defaultValue={this.props.defaultValue} maxLength={this.props.maxLength} />
+                    <input disabled={this.props.readOnly} type={this.props.type || 'text'} className="table-add__input" id={this.props.name} onChange={this.onChange} onBlur={this.onBlur} value={this.props.value} defaultValue={this.props.defaultValue} maxLength={this.props.maxLength} />
                 </div>
             :
             this.props.simple ?

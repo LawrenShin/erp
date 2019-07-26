@@ -8,8 +8,8 @@ import Customers from '../components/customers/Customers';
 
 import StuffDashboard from '../components/dashboard/StuffDashboard';
 import PurchasingDashboard from '../components/dashboard/purchasingDashboard';
-import SourcingDashboard from '../components/dashboard/soursingDashboard';
-import SupplierDashboard from '../components/dashboard/supplierDashboard';
+// import SourcingDashboard from '../components/dashboard/soursingDashboard';
+// import SupplierDashboard from '../components/dashboard/supplierDashboard';
 
 import MessagesComponent from '../components/messages/MessagesComponent';
 import Orders from '../components/orders/Orders';
@@ -48,15 +48,15 @@ import QuotationBaseList from '../components/quotations/quotationSupplier/Quotat
 
 import { ConnectedRouter } from 'connected-react-router';
 
-const ChooseDashboard = (role) => {
-    switch(role){
-        case 'superadmin' || 'stuff' || 'manager': return StuffDashboard;
-        case 'supplier': return SupplierDashboard;
-        case 'purchasing_manager': return PurchasingDashboard;
-        case 'sourcing_manager': return SourcingDashboard;
-        default: return StuffDashboard;
-    }
-}
+// const ChooseDashboard = (role) => {
+//     switch(role){
+//         case 'superadmin' || 'stuff' || 'manager': return StuffDashboard;
+//         case 'supplier': return SupplierDashboard;
+//         case 'purchasing_manager': return PurchasingDashboard;
+//         case 'sourcing_manager': return SourcingDashboard;
+//         default: return StuffDashboard;
+//     }
+// }
 
 const chooseQuotationList = (role) => {
     if(role){
@@ -83,7 +83,7 @@ const AppRouter = ({ history, context, role }) => (
                 <PublicRoute exact path='/reset_passwd_confirm/:token' component={ResetPasswordConfirmer} />
                 <PrivateRoute exact path='/reset' component={ResetPassword} />
 
-                <PrivateRoute path='/dashboard' component={ChooseDashboard(role)} />
+                {/* <PrivateRoute path='/dashboard' component={ChooseDashboard(role)} /> */}
 
                 <PrivateRoute path='/user' component={UserProfile} />
 

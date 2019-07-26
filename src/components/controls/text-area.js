@@ -20,9 +20,15 @@ export default class TextArea extends React.Component {
                 <div className={this.props.className}>
                     <label className="box-field__label"
                            htmlFor={this.props.name}>{this.props.label && `${this.props.label}`}</label>
-                    <textarea rows={this.props.rows} cols={this.props.cols} className="box-field__input"
-                              id={this.props.name} onChange={this.onChange} value={this.props.value}
-                              defaultValue={this.props.defaultValue}></textarea>
+                    <textarea 
+                        disabled={this.props.readOnly}
+                        rows={this.props.rows} 
+                        cols={this.props.cols} 
+                        className="box-field__input"
+                        id={this.props.name} 
+                        onChange={this.onChange} 
+                        value={this.props.value ? this.props.value : ''}
+                        defaultValue={this.props.defaultValue}></textarea>
                 </div>
                 {
                     this.props.error ?

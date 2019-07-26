@@ -3,6 +3,23 @@ import uuid from 'uuid';
 import Dropdown from '../controls/dropdown';
 
 class ProductFilters extends Component{
+  state = {
+    includeList: [
+      'age',
+      'trade_mark',
+      'gender',
+      'color',
+      'style_name',
+      'buying_manager',
+      'department',
+      'theme',
+      'season',
+      'year',
+      'trade_mark',
+      'kind',
+      'nomenclature_group',
+    ]
+  };
 
   ref = React.createRef();
 
@@ -42,7 +59,7 @@ class ProductFilters extends Component{
     const placeholder = this.filterNameTransformer(name, 'fromBack');
 
     return (
-      <Dropdown value={options[name]} key={uuid()} name={name} options={filters} placeholder={placeholder} onChange={this.handleChange} />
+      <Dropdown value={options[name]} key={uuid()} name={name} options={filters} placeholder={placeholder === 'Nomenclature group' ? 'Product type' : placeholder} onChange={this.handleChange} />
     )
   };
 
@@ -55,7 +72,10 @@ class ProductFilters extends Component{
         </div>
         
         <div className="filters-box filters-box-without-decor">
-          {Object.keys(this.props.filters).map((f) => this.renderDropdown(f, this.props.filters[f]))}
+          {Object.keys(this.props.filters).map((f) => {
+            if(this.state.includeList.indexOf(f) === -1) return null
+            return this.renderDropdown(f, this.props.filters[f])
+          })}
         </div>  
       </div>
     );

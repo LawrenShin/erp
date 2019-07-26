@@ -159,9 +159,10 @@
       top: 0;
       left: 0;
       right: 0;
+      width: 100%;
 
       &.visible {
-        width: 241px;
+        //width: 241px;
         min-width: 100%;
         left: auto;
       }
@@ -171,7 +172,7 @@
       > .text {
         background: $color-active;
         color: #fff;
-        padding: 8px 22px 6px;
+        padding: 8px 10px 6px;
         border-radius: 5px 5px 0 0;
         margin: 0;
         display: none
@@ -200,7 +201,7 @@
   .ui.selection.dropdown .menu > .item {
     color: #32394d;
     font-size: 12px;
-    padding: 7px 24px !important;
+    padding: 7px 10px !important;
   }
 
   .ui.disabled.dropdown {
@@ -251,4 +252,10 @@
 
 .ui.dropdown > input.select-elem__toggler {
   display: block !important;
+}
+
+.connected__dropdown__name {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
 }

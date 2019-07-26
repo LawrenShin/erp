@@ -4,8 +4,8 @@ class CheckboxComponent extends Component{
   state = { checked: this.props.checked || false };
 
   handleClick = (e) => {
-    const data = { name: e.target.name, checked: e.target.checked, target: {...e.target} };
-    this.props.onChange(e, data);
+    const data = { placeholder: e.target.name, value: e.target.checked};
+    this.props.onChange(data);
     this.setState({ checked: !this.state.checked });
   }
 
@@ -13,7 +13,14 @@ class CheckboxComponent extends Component{
       return(
         <div className={this.props.className || `filters-box__item`}>
           <div className="checkbox-elem">
-            <input type="checkbox" id={this.props.name} name={this.props.name} onClick={this.handleChange} defaultChecked={this.props.defaultChecked || false} />
+            <input 
+              disabled={this.props.readOnly} 
+              value={true} 
+              type="checkbox" 
+              id={this.props.name} 
+              name={this.props.name} 
+              onClick={this.handleClick} 
+              defaultChecked={this.props.defaultChecked || false} />
             <label className="checkbox-label" htmlFor={this.props.name}>{this.props.label}</label>
           </div>
         </div>

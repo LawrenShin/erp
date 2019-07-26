@@ -50,4 +50,15 @@
       margin: -15px 0px 10px;
     }
   }
+
+  &__succesful {
+    text-align: center;
+    text-transform: uppercase!important;
+    border-radius: 0!important;
+    background: transparent!important;
+    border: 1px solid $green!important;
+    box-shadow: none!important;
+    background: $green!important;
+    color: $white!important;
+  }
 }

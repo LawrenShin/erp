@@ -59,11 +59,12 @@ class UserProfile extends React.Component{
                             </div>
                             <div className="wrapper">
                                 <div className="user-profile-form">
-                                    <label className="load-file profile-loader">
+                                    {/* Change avatar */}
+                                    {/*<label className="load-file profile-loader">
                                         <span className="box-field__input load-file__input">Change picture</span>
                                         <i className="load-file__icon icon-upload"></i>
                                         <input type="file" className="load-file__file" />
-                                    </label>
+                                    </label>*/}
                                     <div className="user-profile-inputs">
                                         <div className="box-field box-field_profile">
                                             <label className="box-field__label">First name:</label>
@@ -76,16 +77,16 @@ class UserProfile extends React.Component{
                                             {errors.last_name && <Message color='red'>{errors.last_name}</Message>}
                                         </div>
                                         <div className="box-field box-field_profile">
-                                            <label className="box-field__label">Job tital:</label>
+                                            <label className="box-field__label">Job title:</label>
                                             <input type="text" className="box-field__input" name="role" value={role} onChange={handleChange} />
                                             {errors.role && <Message color='red'>{errors.role}</Message>}
                                         </div>
-                                        <div className="box-field box-field_profile">
+                                        {/*<div className="box-field box-field_profile">
                                             <div className="select-elem">
-												<label className="box-field__label">Language:</label>
+												<label className="box-field__label">Language of interface:</label>
                                                 <Dropdown noEmpty simple name="lang" options={[{text: "Russian", value: "ru"}, {text: "English", value: "en"}]} value={lang} />
                                             </div>
-                                        </div>
+                                        </div>*/}
                                     </div>
                                     <input type="submit" className="btn" style={{ width: '100%' }} value="Save" disabled={isSubmitting}></input>
                                 </div>

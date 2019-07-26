@@ -20,9 +20,6 @@ export const renamedFilters = createSelector(
                     case 'product_group': 
                         delete Object.assign(filters.data, {['nomenclature_group']: filters.data[filterName] })[filterName];
                         break;
-                    case 'product_category': 
-                        delete Object.assign(filters.data, {['kind']: filters.data[filterName] })[filterName];
-                        break;
                     default: break;
                 }
                 i--;

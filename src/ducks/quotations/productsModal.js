@@ -18,18 +18,29 @@ export const QUOTATIONS_ADD_PRODUCT = 'QUOTATIONS_ADD_PRODUCT'
 
 export function* productsModalSaga({ type, payload }){
   if(type === QUOTATIONS_OPTION_P){
-    if(payload) yield put({ type: SET_QUOTATIONS_OPTION_P, payload })
+    if(payload) {
+      yield put({ type: SET_QUOTATIONS_OPTION_P, payload })
+      if(payload.filterName !== 'offset') yield put({ type: SET_QUOTATIONS_OPTION_P, payload: {
+          filterName: 'offset',
+          value: '',
+        } })
+    }
     if(!payload) yield put({ type: CLEAR_QUOTATIONS_OPTION_P, payload: getDefaultOptions('products') })
     
-    yield put({ type: REFRESH_MODAL_PRODUCTS })
+    if(payload && 'filterName' in payload && payload.filterName === 'offset'){
+      yield put({ type: REFRESH_MODAL_PRODUCTS, payload: 'concat' })
+    }else{
+      yield put({ type: REFRESH_MODAL_PRODUCTS })
+    }
   }
 
   if(type === REFRESH_MODAL_PRODUCTS){
+    const concat = yield payload === 'concat' ? true : false
     yield put({ type: REFRESH_MODAL_PRODUCTS_START })
     try{
       const options = yield select(createOptionsSelector('products'))
-      const list = yield call(ProductsApi.list, options)
-      yield put({ type: REFRESH_MODAL_PRODUCTS_DONE, payload: list })
+      const list = yield call(QuotationsApi.getProductsForQuotation, options)
+      yield put({ type: REFRESH_MODAL_PRODUCTS_DONE, payload: {list, concat} })
     }catch(e){
       yield put({ type: REFRESH_MODAL_PRODUCTS_ERROR, payload: e.message })
     }

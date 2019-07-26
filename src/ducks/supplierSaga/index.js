@@ -17,7 +17,7 @@ const init = () => ({
   loading: {
     status: '',
     error: '',
-    bar: '',
+    progress: {},
   }
 })
 
@@ -27,6 +27,9 @@ export default function filesReducer(state = init(), action){
     switch(type){
       case 'REFRESH_CONTRACT':
         return init()
+      case 'SUPPLIER_CONTRACT_UPLOAD_PERCENTAGE':
+        const progress = Object.assign(state.loading.progress, { [payload.name]: payload.percentCompleted })
+        return { ...state, loading: { ...state.loading, progress } }
 
       case 'GET_UPLOADED_CONTRACT_START': 
         return { ...state, uploaded: { ...state.uploaded, status: 'loading', supplier: payload } }
@@ -49,9 +52,7 @@ export default function filesReducer(state = init(), action){
 }
 
 export function* saga(action){
-  yield console.log('from supplier index saga', action)
   yield takeEvery(UPLOAD_CONTRACT, uploadContractSaga)
   yield takeEvery('GET_UPLOADED_CONTRACT', getSaga)
   yield takeEvery('DELETE_UPLOADED_CONTRACT', deleteSaga)
-  // yield fork(uploadedContractSaga)
 }

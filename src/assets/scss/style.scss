@@ -1,4 +1,5 @@
 @import "base/_reset";
+@import "base/_animate";
 @import "layout/_content";
 @import "layout/_aside";
 @import "layout/_animate";
@@ -13,6 +14,7 @@
 @import "components/_rc-slider";
 @import "components/_fixed-data-table";
 @import "components/_datepicker";
+@import "components/_popup-callback";
 @import "pages/_supplier_list_filters";
 @import "pages/_card_contacts";
 @import "pages/_card_option_history";

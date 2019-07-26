@@ -1,5 +1,6 @@
 import axios from 'axios';
 import AxiosError from 'axios-error';
+import * as Sentry from '@sentry/browser';
 
 const HOST = process.env.REACT_APP_HOST;
 
@@ -7,16 +8,21 @@ const HEADERS = {
     'Content-Type': 'application/json'
 }
 
+const AUTH_BASIC = () => !!process.env.REACT_APP_BASIC_AUTH ? {'Authorization': 'Basic ZXJwX3Byb2Q6ZXJwX3Byb2Q=,'} : {};
+const BEARER = (token) => ({
+  'Authorization': `${!!process.env.REACT_APP_BASIC_AUTH ? `Basic ZXJwX3Byb2Q6ZXJwX3Byb2Q=,` : ''}Bearer ${token}`
+});
+
 export default class Api {
     static getHeaders(token = false, providedHeader = false){
         if(token === true)
             token = sessionStorage.getItem("access_token");
 
-        return Object.assign({}, HEADERS, token ? {'Authorization': `Bearer ${token}`} : {}, providedHeader ? providedHeader : {});
+        return Object.assign({}, HEADERS, token ? BEARER(token) : AUTH_BASIC(), providedHeader ? {...providedHeader} : {});
     }
 
-    static post(url, token = true, data = {}, fullResponse = false, noCheck = false, providedHeader = false){
-        return axios.post(`${HOST}/api/${url}`, data, {headers: this.getHeaders(token, providedHeader)})
+    static post(url, token = true, data = {}, fullResponse = false, noCheck = false, providedHeader = false, config){
+        return axios.post(`${HOST}/api/${url}`, data, { headers: this.getHeaders(token, providedHeader), ...config})
                     .then(res => fullResponse ? res : res.data)
                     .catch(e => {
                         const error = new AxiosError(e);
@@ -29,6 +35,8 @@ export default class Api {
                             }).catch( e => {
                                 return Promise.reject("bad_token");
                             })
+                        }else{
+                            Sentry.captureException(e);
                         }
                         return Promise.reject(error);
                     });
@@ -48,13 +56,15 @@ export default class Api {
                             }).catch( e => {
                                 return Promise.reject("bad_token");
                             });
+                        }else{
+                            Sentry.captureException(e);
                         }
                         return Promise.reject(error);
                     });
     }
 
-    static get(url, token = true, params = undefined, fullResponse = false, noCheck = false){
-        return axios.get(`${HOST}/api/${url}`, {headers: this.getHeaders(token), params})
+    static get(url, token = true, params = undefined, fullResponse = false, noCheck = false, providedHeader = false){
+        return axios.get(`${HOST}/api/${url}`, {headers: this.getHeaders(token, providedHeader), params})
                     .then(res => fullResponse ? res : res.data)
                     .catch(e => {
                         const error = new AxiosError(e);
@@ -67,6 +77,8 @@ export default class Api {
                             }).catch( e => {
                                 return Promise.reject("bad_token");
                             });
+                        }else{
+                            Sentry.captureException(e);
                         }
                         return Promise.reject(error);
                     });
@@ -90,6 +102,8 @@ export default class Api {
                             }).catch( e => {
                                 return Promise.reject("bad_token");
                             })
+                        }else{
+                            Sentry.captureException(e);
                         }
                         return Promise.reject(error);
                     });
@@ -108,8 +122,8 @@ export const Swisskit = {
         return map
     },
 
-    gatherParameters: (options) => {
-        let arr = ['?']
+    gatherParameters: (options, questionMark = true) => {
+        let arr = questionMark ? ['?'] : []
         for(let o in options){
             arr = [...arr, `${o}=${options[o]}&`]
         }

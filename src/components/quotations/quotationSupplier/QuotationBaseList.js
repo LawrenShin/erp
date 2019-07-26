@@ -41,7 +41,7 @@ class QuotationBaseList extends Component {
             quotations.data ?
                 <QuotationListTable
                     heads={['Name', 'Collection', 'Product amount', 'Quotation status', 'Sample status']}
-                    selectThese={[ 'quotation_name', 'collection_name', 'sample_status', 'product_amount', 'status', 'quotation_id' ]}
+                    selectThese={[ 'quotation_name', 'collection_name', 'samples_status', 'product_amount', 'status_quotation', 'quotation_id' ]}
                     list={quotations.data} />
                 :
                 <div className="quotation-item__empty">

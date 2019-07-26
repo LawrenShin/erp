@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Input from '../../controls/input';
 import Header from './header';
 import {Dropdown} from 'semantic-ui-react';
@@ -13,6 +13,7 @@ import Api from '../../../requestor/api';
 import Common from '../../../requestor/common';
 import axios from 'axios';
 import Supplier from '../../../requestor/supplier';
+import {history} from '../../../routes/history'
 
 const Submit = styled(({className, ...rest}) => 
     <input {...rest} type="submit" className={"btn " + className} value="Save" />)`
@@ -20,7 +21,7 @@ margin-top: 20px;
 width: fit-content;
 `;
 
-class ViewSuppierContacts extends Component {
+class ViewSuppierContacts extends PureComponent {
     state = {
         legalFields: [
             {name: 'Address', inputName: 'legal_address'}, 
@@ -82,7 +83,7 @@ class ViewSuppierContacts extends Component {
                 <div className="select-elem">
                     <label className="box-field__label">{field.name}:</label>
                     <Dropdown 
-                        readOnly={readOnly}
+                        disabled={readOnly}
                         value={value}
                         onChange={(e, {value}) => onChange({target: {name: field.inputName, value}})} 
                         search selection 
@@ -104,7 +105,7 @@ class ViewSuppierContacts extends Component {
                 <div className="select-elem">
                     <label className="box-field__label">{field.name}:</label>
                     <Dropdown    
-                      readOnly={readOnly}                     
+                      disabled={readOnly}                     
                       value={value}
                       onChange={(e, {value}) => onChange({target: {name: field.inputName, value}})} 
                       search selection 
@@ -144,14 +145,10 @@ class ViewSuppierContacts extends Component {
                     validateOnBlur={false}
                     onSubmit={(values, actions) => {
                         actions.setSubmitting(false);
-
-                        console.log(values);
-                        
-                        actions.setSubmitting(false);
-
                         Supplier.edit(values).then( (res) => {
                             if(res.status === 200){
-                                this.props.getById();                            
+                                this.props.getById();
+                                history.replace(`/suppliers/view/contacts/${this.props.match.params.id}`)
                             }
                         }).catch(res => {
                             if(res.status === 400){
@@ -164,13 +161,16 @@ class ViewSuppierContacts extends Component {
                             <form onSubmit={handleSubmit}>      
                                 <div className="form-box">
                                     {this.state.legalFields.map((field, index) => this.renderFields(field, index, values[field.inputName], errors[field.inputName], handleChange))}
-                                    <CheckboxComponent readOnly={readOnly} className="form-box__item checkbox-card" onChange={handleChange} label=' factory address is the same' name='factory_address_same' />
+                                    {/* <CheckboxComponent readOnly={readOnly} className="form-box__item checkbox-card" onChange={handleChange} label=' factory address is the same' name='factory_address_same' /> */}
                                 </div>                                      
                             </form>
-                            <IncotermsContactForm 
+                            {/* <IncotermsContactForm 
+                                edit={true}
+                                onChangeFormik={handleChange}
+                                readOnly={this.props.readOnly}
                                 removeIncoterm={this.removeIncoterm}
                                 prevIncoterms={''}
-                            />    
+                            />     */}
                             {!readOnly && <Submit onClick={handleSubmit} />}                  
                         </div>
                 )}/>

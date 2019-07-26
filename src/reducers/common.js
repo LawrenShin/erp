@@ -2,13 +2,17 @@ export default (
   state = {
     showGallery: false, 
     showOrdersMenu: false, 
-    ordering: []
+    ordering: [],
+    popupMessage: { error: '', text: '', time: 0 },
   }, action) => {
   
   const {payload, type} = action;
-  const {ordering} = state;
 
   switch (type) {
+    case 'POPUP_DONE':
+        return { ...state, popupMessage: { error: '', text: '', time: 0 } }
+    case 'POPUP_MODAL':
+        return { ...state, popupMessage: {...state.popupMessage, ...payload} }
     case 'SHOW_GALLERY':
       return {...state, showGallery: true};
     case 'HIDE_GALLERY':
@@ -17,11 +21,7 @@ export default (
       return {...state, showOrdersMenu: true};
     case 'HIDE_ORDERS_MENU':
       return {...state, showOrdersMenu: false};
-    case 'ADD_ORDERIGN': 
-      return { ...state, ordering: ordering.length ? [ordering.includes(payload) ? `-${payload}` : ordering.includes(`-${payload}`) ? `${payload}` : `-${payload}`] : [`-${payload}`]};
-    case 'SET_FILTER_NAME':
-      return { ...state, filterName: payload };
-
+    
     default:
       return state;
   }

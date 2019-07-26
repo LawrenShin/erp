@@ -58,7 +58,7 @@ const CommentManager = ({ sendPrice, side, display, product_item, comments, adde
                         return wereResponded(mc.id, matchedRequestedChanges) ? <div className={`quotation__comment -supplier-page ${display}`} key={uuid()}>
                             <CommentTitle text='Changes request' />
                             <CommentAnswer comment={mc} index={i} />
-                            <CommentFormSupplier 
+                            <CommentFormSupplier
                                 commentId={mc.id}
                                 distributionId={distributionId}
                                 sendPrice={sendPrice} />

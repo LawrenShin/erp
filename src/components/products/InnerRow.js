@@ -9,10 +9,13 @@ import img from "../../assets/img/examples/noimg.jpg";
 import uuid from 'uuid'
 
 class InnerRow extends Component {
-
+    finder = (heap, needle) => {
+        const match = heap.filter(h => h.value === needle)[0];
+        if (match && 'text' in match) return match.text;
+        return null
+    };
     render() {
         const productDetails = this.props.value.filter((d, i) => i === this.props.row)[0];
-        const filters = ['shell_fabric_1', 'shell_fabric_1_composition', 'shell_fabric_1_weight', 'lining', 'category', 'additional_nomenclature_description'];
         return (
             <div className={`inner-details`}
                  className={`${this.props.className} ${this.props.collapse ? 'collapsed' : ''}`}
@@ -24,17 +27,30 @@ class InnerRow extends Component {
                         </div>
                     </div>
                     <div className="product__preview__list">
-                        {console.log(productDetails)}
-                        {productDetails && Object.keys(productDetails).map(d => {
-                            const req = filters.filter(word => word === d)[0];
-                            if (productDetails[d] && req) {
-                                return (
-                                    <div key={uuid()} className="product__preview__list__item"><span
-                                        className="product__preview__item__title">{d}:</span><span
-                                        className="product__preview__item__value">{productDetails[d]}</span></div>
-                                )
-                            }
-                        })}
+                        {productDetails.shell_fabric_1 && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Shell fabric 1</span>
+                            <span className='product__preview__item__value'>{this.finder(this.props.filters.data.shell_fabric, productDetails.shell_fabric_1)}</span>
+                        </div>}
+                        {productDetails.shell_fabric_1_weight && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Shell fabric weight 1</span>
+                            <span className='product__preview__item__value'>{this.finder(this.props.filters.data.weight, +productDetails.shell_fabric_1_weight)}</span>
+                        </div>}
+                        {productDetails.shell_fabric_1_composition && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Shell fabric composition 1</span>
+                            <span className='product__preview__item__value'>{this.finder(this.props.filters.data.composition, productDetails.shell_fabric_1_composition)}</span>
+                        </div>}
+                        {productDetails.shell_fabric_1_construction && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Shell fabric construction 1</span>
+                            <span className='product__preview__item__value'>{this.finder(this.props.filters.data.construction, productDetails.shell_fabric_1_construction)}</span>
+                        </div>}
+                        {productDetails.lining && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Lining</span>
+                            <span className='product__preview__item__value'>{productDetails.lining}</span>
+                        </div>}
+                        {productDetails.category && <div className="product__preview__list__item">
+                            <span className='product__preview__item__title'>Category</span>
+                            <span className='product__preview__item__value'>{productDetails.category}</span>
+                        </div>}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import { createAction } from '../../actions';
+import { createAction, createRequestAction } from '../../actions';
 
 import SuppliersHeader from './SuppliersHeader.js';
 import Filters from './Filters.js';
@@ -24,6 +24,7 @@ class Suppliers extends Component {
 
     componentDidMount(){
         this.props.fetchFiltersReq();
+        this.props.getPaymentTerms();
     }
 
     filterOutByRating = (e, data) => { console.log(data) };
@@ -46,12 +47,12 @@ class Suppliers extends Component {
                     activeSettings={showFilters} 
                     onClickSettings={this.toggleFilters} 
                     filterOutByRating={this.filterOutByRating} 
-                    link='suppliers/create' />
+                    link='/suppliers/create' />
                 {state === "loaded" ? 
                     <>
                         {showFilters ? <Filters onResize={this.onResize} filters={this.props.filters.data} checkBoxesToRender={this.state.checkBoxes} /> : null}
-                        {<Table 
-                            list={this.props} 
+                        {<Table
+                            list={this.props.list} 
                             store={this.props.store} 
                             graphDetailsToStore={this.props.graphDetailsToStore}
                         />}
@@ -80,6 +81,7 @@ export default connect(
     mapStateToProps,
     (dispatch) => ({
         graphDetailsToStore: (details) => dispatch(createAction('SET_GRAPH_DETAILS_SUPPLIERS', details)),
-        fetchFiltersReq: () => dispatch(fetchFilters())
+        fetchFiltersReq: () => dispatch(fetchFilters()),
+        getPaymentTerms: () => dispatch(createRequestAction("supplier", "getPaymentTerms")),
     })
     )(Suppliers);

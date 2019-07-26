@@ -12,5 +12,5 @@ const mapStateToProps = ({router, common}) => ({
 });
 
 export default connect(mapStateToProps, (dispatch) => ({
-  addOrdering: (orderParams) => dispatch(createAction('ADD_ORDERIGN', orderParams))
+  addOrdering: (orderParams) => dispatch(createAction('ADD_ORDERING', orderParams))
 }))(Order);

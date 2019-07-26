@@ -4,7 +4,11 @@ import Input from '../../../../controls/input';
 class Incoterm extends Component{  
   state = { inputNames: '' };
 
-  handleChange = (e, {name, value}) => this.props.saveIncotermData(name, value, this.props.index);
+  handleChange = (e) => {
+    const { name, value } = e
+    if(this.props.onChangeFormik) this.props.onChangeFormik(e)
+    this.props.saveIncotermData(name, value, this.props.index)
+  }
 
   handleDelete = () => this.props.removeIncoterm(this.props.index);
 
@@ -12,15 +16,12 @@ class Incoterm extends Component{
     let prevVal = this.state.inputNames[name];
 
     return(
-      <Input onChange={this.handleChange} name={name} value={prevVal} uiType="tableInside"/>
+      <Input readOnly={this.props.readOnly} onChange={this.handleChange} name={name} value={prevVal} uiType="tableInside" />
     );
   }
 
   componentDidMount(){
     this.setState({ inputNames: this.props.inputNames });
-  }
-  componentDidUpdate(){
-    console.log('updated inc'+this.props.index)
   }
   
   render(){

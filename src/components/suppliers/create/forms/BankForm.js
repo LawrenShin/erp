@@ -1,10 +1,24 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
+import * as yup from 'yup'
 
 import Input from '../../../controls/input';
 import Checkbox from '../../../controls/checkbox';
 
-class BankForm extends Component {
-    state = {info: {}};
+import PopupCallback from '../../../common/PopupCallback'
+
+class BankForm extends PureComponent {
+    state = {
+        info: {},
+        bankInfoSchema: yup.object().shape({
+            swift: yup.string().max(11).required(),
+            iban: yup.string().required(),
+            beneficiary_account_number: yup.string().required(),
+            beneficiary_bank: yup.string().required(),
+            beneficiary_name: yup.string().required(),
+            bank_address: yup.string().required(),
+        }),
+        errors: [],
+    };
 
     localSave = ({name, value, checked}) => {
         this.setState((prev) => {
@@ -15,9 +29,14 @@ class BankForm extends Component {
     }
 
     proceed = () => this.props.saveStepInfo(this.state.info, 'bank', 0);
-
+    
     handleSave = () => {
-        this.props.createSupplier(this.state.info);
+        this.state.bankInfoSchema.validate(this.state.info, {abortEarly: false})
+            .then(valid => this.props.createSupplier(this.state.info), this.setState({ errors: [] }))
+            .catch(err => {
+                this.setState({errors: err.errors})
+                return
+            });
     }
 
     componentDidMount() {
@@ -45,9 +64,10 @@ class BankForm extends Component {
                     </div>
                     <input type="button" className="btn" value="Save" onClick={this.handleSave}></input>
                 </form>
+                {this.state.errors.map(e => <span color='red'>{e}</span>)}
             </div>
         );
     }
 }
 
-export default BankForm;
+export default (BankForm);

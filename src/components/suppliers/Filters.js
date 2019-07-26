@@ -40,25 +40,36 @@ class Filters extends Component {
   }
   handleClickClearAll = () => {
     this.props.clearOptions();
+    document.getElementById('nameSearcher').value = ''
   }
-  handleClickCheckbox = (e, data) => {
-    data.placeholder = data.name; data.value = data.checked;
-    this.props.addOptions(data);
-  }
+  
+  handleClickCheckbox = (data) => this.props.addOptions(data)
+
   componentDidUpdate(){
-    console.log('update', this.props.options);
     this.props.getList(this.props.options);
   }
   
 
   renderDropdown = (name, filters) => {
     const {options} = this.props;
+    if(!name.match(/supplier_names|incoterms/gm))
     return (
-      <Dropdown value={options[name]} key={name} name={name} options={filters} placeholder={irrigateHeader(name)} onChange={this.handleChange} />
+      <Dropdown 
+        key={name} 
+        name={name} 
+        options={filters} 
+        value={name === 'Countries' ? options['factory_country'] : options[name]} 
+        placeholder={irrigateHeader(name)} 
+        onChange={this.handleChange} />
     )
   };
 
-  renderCheckboxes = (box) => <CheckboxComponent onChange={this.handleClickCheckbox} label={box.inReact} name={box.inUrl} key={box.inUrl} defaultChecked={true}/>;
+  renderCheckboxes = (box) => <CheckboxComponent 
+    onChange={this.handleClickCheckbox} 
+    label={box.inReact} 
+    name={box.inUrl} 
+    key={box.inUrl} 
+    defaultChecked={true} />;
 
   render(){
     const ratings = ['general_rating', 'financial_rating', 'reliability_rating'];
@@ -72,8 +83,8 @@ class Filters extends Component {
         </div>
         
         <div className="filters-box filters-box-without-decor">
-          {Object.keys(filters).map((f) => this.renderDropdown(f, filters[f]))}
-          {ratings.map((rating) => <RatingDropdown key={rating} type={rating} /> )}
+          {Object.keys(filters).map((f) => !f.match(/incoterms|names/gm) ? this.renderDropdown(f, filters[f]) : null)}
+          {/* {ratings.map((rating) => <RatingDropdown key={rating} type={rating} /> )} */}
           {this.props.checkBoxesToRender && this.props.checkBoxesToRender.map((box) => this.renderCheckboxes(box))}
         </div>  
       </div>

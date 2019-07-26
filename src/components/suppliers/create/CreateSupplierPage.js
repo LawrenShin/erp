@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import moment from 'moment';
+import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
+import {history} from '../../../routes/history'
 import {
     generalFormSubmit,
     contactFormSubmit,
@@ -16,12 +16,48 @@ import OptionsForm from './forms/OptionsForm.js';
 import BankForm from './forms/BankForm.js';
 import Supplier from '../../../requestor/supplier';
 import {NavLink} from 'react-router-dom';
+import * as yup from 'yup'
 
-class CreateSupplierPage extends Component {
-    state = {generalInfo: {}, errors: false, modified: false, created: false, supId: false};
+class CreateSupplierPage extends PureComponent {
+    state = {
+        generalInfoSchema: yup.object().shape({
+            name: yup.string().required(),
+            importer: yup.string().required(),
+            agreement_number: yup.string().required(),
+            status: yup.string().required(),
+            type: yup.string().required(),
+            purchaser: yup.string().required(),
+            consignee: yup.string().required(),
+            payment_terms_date: yup.string().required(),
+            moq_max: yup.number().required().integer(),
+            moq_min: yup.number().required().integer(),
+        }),
+        contactsInfoSchema: yup.object().shape({
+            legal_address: yup.string().required(),
+            legal_city: yup.string().required(),
+            legal_country: yup.string().required(),
+            legal_contact_person: yup.string().required(),
+            legal_email: yup.string().email().required(),
+            legal_tel1: yup.number().required(),
+            incoterms: yup.array().of(
+                yup.object().shape({
+                    email: yup.string().email(),
+                    person: yup.string(),
+                    purpose: yup.string(),
+                    tele1: yup.string(),
+                    tele2: yup.string(),
+                })
+            )
+        }),
+        optionsInfoSchema: yup.object().shape({
+            categories: yup.string().required(),
+            ages: yup.string().required(),
+            genders: yup.string().required(),
+        }),
+        errors: [], modified: false, created: false, supId: false
+    };
 
     saveStepInfo = (info, form, step = 1) => {
-        console.log('_____savestep', info, form);
         switch (form) {
             case 'general':
                 this.props.dispatch(generalFormSubmit(info, step));
@@ -38,8 +74,7 @@ class CreateSupplierPage extends Component {
             default:
                 console.log('not binded');
         }
-        if (!step)
-            this.setState({modified: true});
+        if (!step) this.setState({modified: true});
     };
 
     stepBack = () => this.props.dispatch(stepBack());
@@ -97,7 +132,8 @@ class CreateSupplierPage extends Component {
                 })
             }
             //inform user of success
-
+            history.push(`/suppliers/view/${supplierId}`)
+            this.props.dispatch({ type: 'SUPPLIER_WERE_CREATED' })
         }).catch((err) => {
             console.log(err);
             if ('response' in err) {
@@ -107,7 +143,29 @@ class CreateSupplierPage extends Component {
         });
     };
 
-    next = () => this.props.dispatch(generalFormSubmit({}));
+    next = () => {
+        if (this.props.createSupplier.step === 0) {
+            this.state.generalInfoSchema.validate(this.props.createSupplier.general_info, {abortEarly: false})
+                .then(valid => this.props.dispatch(generalFormSubmit({}), this.setState({ errors: [] })))
+                .catch(err => {
+                    this.setState({errors: err.errors})
+                });
+        }
+        if (this.props.createSupplier.step === 1) {
+            this.state.contactsInfoSchema.validate(this.props.createSupplier.contact_info, {abortEarly: false})
+                .then(valid => this.props.dispatch(contactFormSubmit({}), this.setState({ errors: [] })))
+                .catch(err => {
+                    this.setState({errors: err.errors})
+                });
+        }
+        if (this.props.createSupplier.step === 2) {
+            this.state.optionsInfoSchema.validate(this.props.createSupplier.options_info, {abortEarly: false, recursive: true})
+                .then(valid => this.props.dispatch(optionsFormSubmit({}), this.setState({ errors: [] })))
+                .catch(err => {
+                    this.setState({errors: err.errors})
+                });
+        }
+    };
 
     render() {
         const promiseTerms = Supplier.getPaymentTerms();
@@ -116,7 +174,7 @@ class CreateSupplierPage extends Component {
         return (
             <>
                 <Prompt
-                    when={this.state.modified}
+                    when={this.state.modified && !this.state.created}
                     message={location => `Are you sure you want to skip changes?`}
                 />
                 <Steps currentStep={this.props.createSupplier.step} next={step < 3 ? this.next : null}/>
@@ -130,7 +188,7 @@ class CreateSupplierPage extends Component {
                                  stepBack={this.stepBack}/> : null}
                 {step === 3 ? <BankForm info={this.props.createSupplier.bank_info} createSupplier={this.createSupplier}
                                         saveStepInfo={this.saveStepInfo} stepBack={this.stepBack}/> : null}
-                {Object.keys(this.state.errors).length > 0 && <div className='create__errors'>
+                {this.state.errors.length > 0 && <div className='create__errors'>
                     {Object.keys(this.state.errors).map((error) =>
                         <span>{`${error === 'name' ? 'Company name' : error} - ${this.state.errors[error]}`}</span>)}
                 </div>}

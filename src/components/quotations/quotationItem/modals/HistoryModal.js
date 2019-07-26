@@ -15,7 +15,7 @@ import QuotationListFilter from "../../QuotationListFilter";
 class HistoryModal extends Component {
     updateOptions = (fName, value) => this.props.setOption({filterName: fName, value})
 
-    heads = ['ID', 'Date', 'Style name', 'Product group', 'Color', 'Target price', 'Supplier', 'Price', 'Description'];
+    heads = ['ID', 'Date', 'Style name', 'Product group', 'Color', 'Target price', 'Supplier', 'Price', 'Description', 'Author'];
 
     render() {
         return (
@@ -28,8 +28,13 @@ class HistoryModal extends Component {
                         <h2>History</h2>
 
                         {this.props.filters ? <QuotationListFilter
+                            valueAsName={true}
                             search={false}
-                            filters={this.props.filters}
+                            filters={{
+                                color: {...this.props.filters.color, altName: 'distribution__product__style__name'}, 
+                                style: this.props.filters.style, 
+                                name: this.props.filters.name__icontains
+                            }}
                             options={this.props.options}
                             updateOptions={this.updateOptions}
                             clearAll={this.props.clearOptions}
@@ -40,12 +45,13 @@ class HistoryModal extends Component {
                                     <QuotationTableHeaderItem heads={this.heads}/>
                                 </div>
                                 <div className="data-table__body">
-                                    {this.props.history.data.results && this.props.history.data.results.map(historyItem => <QuotationTableRowModal
+                                    {Array.isArray(this.props.history) && this.props.history.map(historyItem => <QuotationTableRowModal
                                         show_id={true}
                                         suppliers={false}
                                         invitationModal={true}
                                         {...historyItem} />
                                     )}
+                                    {(Array.isArray(this.props.history) && this.props.history.length === 0) && <h1>No comments were found</h1>}
                                 </div>
                             </div>
                         </div>
@@ -62,11 +68,17 @@ class HistoryModal extends Component {
 
 export default connect(state => ({
     list: createListsSelector('suppliers')(state),
-    filters: createFiltersSelector('suppliers')(state),
-    options: createOptionsSelector('suppliers')(state),
-    history: state.quotations.currentQuotationReducer.history,
+    filters: createFiltersSelector('products')(state),
+    options: createOptionsSelector('history')(state),
+    history: createListsSelector('history')(state),
 }), dispatch => ({
     getModalsData: () => dispatch({type: 'REQUEST_MODALS_DATA'}),
-    clearOptions: () => dispatch({type: 'CLEAR_QUOTATIONS_OPTION_S'}),
-    setOption: (payload) => dispatch({type: 'QUOTATIONS_OPTION_S', payload}),
+    clearOptions: () => dispatch({type: 'QUOTATIONS_OPTION_H'}),
+    setOption: (payload) => {
+        let {value, filterName} = payload
+        if(filterName === 'style') filterName = 'distribution__product__style__name'
+        if(filterName === 'color') filterName = 'distribution__product__color__name'
+        if(filterName === 'name') filterName = 'distribution__product__name__icontains'
+        return dispatch({ type: 'QUOTATIONS_OPTION_H', payload: {value, filterName} })
+    },
 }))(HistoryModal);

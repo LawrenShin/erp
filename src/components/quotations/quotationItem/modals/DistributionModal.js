@@ -21,7 +21,6 @@ class DistributionModal extends PureComponent {
     }
 
     componentDidMount() {
-        // if (!this.props.suppliersFilters || !this.props.productsFilters) this.props.getModalsData()
         this.props.getDistributedRelations(this.props.quotationId)
     }
 
@@ -67,22 +66,24 @@ class DistributionModal extends PureComponent {
 
                         <div className="filters-header">
                             <CheckboxComponent className="-noclass" defaultChecked label="Show only unpicked items"/>
-                            <div className="filters-box__item" style={{marginLeft: 'auto', minWidth: '45%'}}>
+                            {/* SEARCHBAR */}
+                            {/* <div className="filters-box__item" style={{marginLeft: 'auto', minWidth: '45%'}}>
                                 <div className="filters-elem">
                                     <div className="search-bl">
                                         <input className="search-bl__input" type="text"/>
                                         <button className="search-bl__btn"><i className="icon-search"></i></button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         {this.props.productFilters ? <QuotationListFilter
+                                prefix='product__'
                                 filters={this.selectFilters()}
-                                options={this.props.productOptions}
+                                options={this.props.distributionOptions}
                                 updateOptions={this.updateOptions}
                                 clearAll={this.props.clearOptions}
-                                notSplit={true}/>
+                                notSplit={true} />
                             :
                             <Loading/>}
 
@@ -112,7 +113,7 @@ class DistributionModal extends PureComponent {
                                 </div>
                             </div>
                             :
-                            <Loading/>}
+                            this.props.addedProducts.data.length === 0 ? <h1>No products were found</h1> : <Loading/>}
                     </div>
                 </div>
             </ModalSemantic>
@@ -123,12 +124,10 @@ class DistributionModal extends PureComponent {
 export default connect((state) => ({
     distributedRelations: state.quotations.currentQuotationReducer.distributedRelations,
     productFilters: createFiltersSelector('products')(state),
-    productOptions: createOptionsSelector('products')(state),
-    suppliersFilters: createFiltersSelector('suppliers')(state),
-    suppliersOptions: createOptionsSelector('suppliers')(state),
+    distributionOptions: createOptionsSelector('distribution')(state),
 }), dispatch => ({
     getModalsData: () => dispatch({type: 'REQUEST_MODALS_DATA'}),
-    clearOptions: () => dispatch({type: 'QUOTATIONS_OPTION_P'}),
-    setOption: (payload) => dispatch({type: 'QUOTATIONS_OPTION_P', payload}),
+    clearOptions: () => dispatch({type: 'QUOTATIONS_OPTION_D'}),
+    setOption: (payload) => dispatch({type: 'QUOTATIONS_OPTION_D', payload}),
     getDistributedRelations: (payload) => dispatch({type: 'REFRESH_DISTRIBUTED_RELATIONS_Q', payload}),
 }))(DistributionModal);

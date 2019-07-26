@@ -125,6 +125,15 @@
   }
 }
 
+.data-table__row .data-table__column--name.data-table__column {
+  font-weight: 700;
+}
 .data-table__column--id, .data-table__column--name, .data-table__column--supplier_name.data-table__column--0 {
   flex-grow: 1;
+}
+
+.-hover-none-row {
+  .data-table__column:not(.-none-hover-row-decline) {
+    pointer-events: none;
+  }
 }

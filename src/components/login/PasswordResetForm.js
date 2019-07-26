@@ -42,7 +42,7 @@ class PasswordResetForm extends Component {
             handleChange
           }) => (
           <>
-            <form onSubmit={handleSubmit}>						
+            <form method='post' onSubmit={handleSubmit}>
               <div className="box-field">
                 <input value={values.email} 
                   onChange={handleChange} 

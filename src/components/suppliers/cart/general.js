@@ -10,10 +10,12 @@ import {connect} from 'react-redux';
 import {createRequestAction} from '../../../actions/index';
 import {Loading, Error} from '../../helpers';
 import Slider from '../../controls/slider';
-import PaymentTerms from '../create/forms/PaymentTerms';
 import styled from 'styled-components';
 import {Formik} from 'formik';
+import PaymentTerms from '../create/forms/PaymentTerms';
 import Supplier from '../../../requestor/supplier';
+import {history} from '../../../routes/history';
+import {Dropdown} from 'semantic-ui-react';
 
 const Raiting = styled(({value, className}) => {
     const r = 50;    
@@ -79,6 +81,7 @@ class ViewSuppierGeneral extends Component {
     state = {
         error: null
     }
+
     render() {
         const {supplier, readOnly} = this.props;
         if(supplier.state === "loading")
@@ -86,7 +89,7 @@ class ViewSuppierGeneral extends Component {
         if(supplier.state === "fail")
             return <Error error={supplier.err} />;            
         
-        const {id, name, status, type, moq_min, moq_max, manufacturer, importer, consignee, nlg, supplier_code_1c, get_reliability_rating, get_financial_rating, comment, get_rating, factory, is_timely_response_to_letters, is_cost_break_down, is_efficiency_work_with_orders, is_discount_reject_delay, is_no_spam_any_work_questions, contract_number} = supplier.data;
+        const {id, name, status, type, moq_min, moq_max, manufacturer, importer, consignee, nlg, supplier_code_1c, get_reliability_rating, get_financial_rating, comment, get_rating, factory, is_timely_response_to_letters, is_cost_break_down, is_efficiency_work_with_orders, is_discount_reject_delay, is_no_spam_any_work_questions, contract_number, purchaser, payment_terms} = supplier.data;
 
         if(this.state.error) 
             return <Error>{this.state.error}</Error>
@@ -96,13 +99,14 @@ class ViewSuppierGeneral extends Component {
                 <Header id={id} name={name} edit={!readOnly}/>
 
                 <div className="bg-box box-card-general">
-                    <Formik initialValues={{ id, name, status, type, moq_min, moq_max, manufacturer, importer, consignee, nlg, supplier_code_1c, comment, factory, is_timely_response_to_letters, is_cost_break_down, is_efficiency_work_with_orders, is_discount_reject_delay, is_no_spam_any_work_questions, contract_number }}
+                    <Formik initialValues={{ 
+                        id, name, status, type, moq_min, moq_max, manufacturer, importer, consignee, nlg, supplier_code_1c, comment, factory, is_timely_response_to_letters, is_cost_break_down, is_efficiency_work_with_orders, is_discount_reject_delay, is_no_spam_any_work_questions, contract_number, purchaser, payment_terms }}
                     onSubmit={(values, actions) => {
                         actions.setSubmitting(false);
-
                         Supplier.edit(values).then( (res) => {
                             if(res.status === 200){
-                                this.props.getById();                            
+                                this.props.getById();
+                                history.replace(`/suppliers/view/${this.props.match.params.id}`)                         
                             }
                         }).catch(res => {
                             if(res.status === 400){
@@ -113,14 +117,15 @@ class ViewSuppierGeneral extends Component {
                             }
                         })
                     }}
+
                     validateOnBlur={false}
-                    render={ ({values, errors, handleSubmit, handleChange, handleBlur}) => (
+                    render={ ({values, errors, handleSubmit, handleChange, handleBlur, setFieldValue}) => (
                         <form onSubmit={handleSubmit}>
                             <div className="general-form">
                                 <div className="form-box">            
                                     <Input readOnly={readOnly} label="Name" error={errors.name} name="name" value={values.name} onChange={handleChange} />
                                     <Input readOnly={readOnly} label="Contract number" error={errors.contract_number} name="contract_number" value={values.contract_number} onChange={handleChange} />
-                                    <Input readOnly={readOnly} label="Factory capacity" error={errors.factory} name="factory" value={values.factory} onChange={handleChange} />
+                                    <Input type='number' readOnly={readOnly} label="Factory capacity" error={errors.factory} name="factory" value={values.factory} onChange={handleChange} />
                                     <Options readOnly={readOnly} value={values.status} label="Status" onChange={handleChange} name="status" list={ [{name: "Inactive", value: 'IN'}, {name: "Асtive", value: 'AC'}, {name: "Test", value: 'TS'}] } />	
                                     <Input readOnly={readOnly} label="NLG" error={errors.nlg} value={values.nlg} name="nlg" onChange={handleChange} />
                                     <Options error={errors.type} readOnly={readOnly} value={values.type} label="Type" onChange={handleChange} name="type" list={ [{name: "Agent", value: 'AG'}, {name: "Factory", value: 'FC'}] }>
@@ -137,11 +142,18 @@ class ViewSuppierGeneral extends Component {
                                         <div className="select-elem">
                                         { 
                                             this.props.paymentTerms.state === "loaded" ? 
-                                            <PaymentTerms readOnly={readOnly} onChange={() => {}} options={this.props.paymentTerms.data} name='payment_terms' />
+                                            <Dropdown 
+                                                options={this.props.paymentTerms.data}
+                                                defaultValue={values.payment_terms}
+                                                disabled={readOnly} 
+                                                onChange={(e, {name, value}) => setFieldValue(name, value)}
+                                                placeholder='payment_terms' 
+                                                name='payment_terms' 
+                                                search selection />
                                             : <Loading />
                                             }
                                         </div>
-                                        <div className="item-add">
+                                        {/* <div className="item-add">
                                             <Pointer>
                                                 <i className="icon-plus"></i>
                                             </Pointer>
@@ -150,7 +162,7 @@ class ViewSuppierGeneral extends Component {
                                             <Pointer>
                                                 <i className="icon-trash"></i>
                                             </Pointer>
-                                        </div>
+                                        </div> */}
                                         </div>                
                                     </div>
                                     <Input readOnly={readOnly} label="1C Code" error={errors.supplier_code_1c} maxLength={8} name="supplier_code_1c" value={values.supplier_code_1c} onChange={handleChange} />

@@ -7,6 +7,11 @@ import './assets/css/fixed-semantic.scss';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import * as Sentry from '@sentry/browser';
+
+if(typeof process.env.REACT_APP_SENTRY_DSN === 'string'){
+  Sentry.init({ dsn: process.env.REACT_APP_SENTRY_DSN })
+}
 
 ReactDOM.render(<App />, document.querySelector('.main-wrapper'));
 

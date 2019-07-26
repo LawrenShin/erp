@@ -16,7 +16,7 @@ class UserProfile extends React.Component {
                     <div role="listbox" aria-expanded="true" className="ui dropdown">
                         <div className="header-profile__content"
                              onClick={() => this.setState(({show}) => ({show: !show}))}>
-                            <span className="header-profile__text">Hello {user.first_name}</span>
+                            <span className="header-profile__text">{user.first_name}</span>
                             <span className="header-profile__noavatar">{user.first_name[0]}{user.last_name[0]}</span>
                             <i className="caret"></i>
                         </div>
@@ -24,6 +24,9 @@ class UserProfile extends React.Component {
                             <div className="menu transition" style={{display: "block"}}>
                                 <div role="option" className="item">
                                     <NavLink to="/user" className="text">Profile settings</NavLink>
+                                </div>
+                                <div role="option" className="item">
+                                    <NavLink to="/reset" className="text">Change password</NavLink>
                                 </div>
                                 <div role="option" className="item" onClick={() => this.props.logout()}>
                                     <a href="javascript:void(0)" className="text">Logout</a>

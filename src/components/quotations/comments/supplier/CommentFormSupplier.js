@@ -16,7 +16,7 @@ const CommentFormSupplier = ({ commentId, distributionId, sendPrice }) => {
                     onClick={() => sendPrice({ distributionId: distributionId, commentId: commentId, price })}
                     text='Send new price' className="btn btn2 -btn-with-wrap" />
                 <CommonButton
-                    onClick={() => sendPrice({ distributionId: distributionId, price })}
+                    onClick={() => sendPrice({ distributionId: distributionId, commentId: commentId })}
                     text={`Decline change & keep previous price`} className="btn btn2 -btn-with-wrap" />
             </form>
         </>

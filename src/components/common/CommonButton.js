@@ -1,7 +1,7 @@
 import React from 'react';
 import className from 'classnames'
 
-const CommonButton = ({text, type, disabled, ...rest}) => {
+const CommonButton = ({text, type, disabled, noclick, ...rest}) => {
     if(!disabled) {
         return (
             <button 
@@ -14,7 +14,7 @@ const CommonButton = ({text, type, disabled, ...rest}) => {
     }else{
         return (
             <button 
-                className={ className('btn', type, {'btn-disabled': disabled }) } 
+                className={ className('btn', type, {'btn-disabled': disabled }) }
                 type="button" >
                 <span>{text}</span>
             </button>

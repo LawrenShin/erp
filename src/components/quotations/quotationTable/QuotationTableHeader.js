@@ -13,7 +13,7 @@ const QuotationTableHeader = (props) => {
             </div>}
             {props.heads.map((head) =>
                 <div className="data-table__column -flex-grow-1" key={head}>
-                    <i className="icon-arrow-dowble"></i>{head}
+                    {head}
                 </div>
             )}
         </>

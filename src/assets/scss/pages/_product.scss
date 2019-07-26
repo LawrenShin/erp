@@ -514,3 +514,87 @@
   color: $blue;
   font-size: 18px;
 }
+
+.product-details__load_item {
+  .product-columns__item {
+    width: 100%;
+  }
+}
+
+.tech_files {
+  position: relative;
+
+  button {
+    font-size: 12px;
+    border: 1px solid #bad3db;
+    color: #77848f;
+    height: 29px;
+    line-height: 24px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 0;
+    width: 100%;
+    background: transparent;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+  }
+
+  &:before {
+    height: 100%;
+    width: 0;
+    background: $blue;
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition-duration: 2s;
+  }
+
+  &:after {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: none;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  &.-downloaded {
+    &:before {
+      width: 100%;
+    }
+
+    &:after {
+      transition-delay: 2s;
+      content: 'File was uploaded';
+      color: $white;
+      display: block;
+    }
+
+    button {
+      color: $white;
+      border-color: $blue;
+    }
+  }
+
+  &.-error {
+    &:after {
+      content: 'Choose another file';
+      color: $red;
+      display: block;
+    }
+    button {
+      color: $red;
+      border-color: $red;
+    }
+  }
+}
+
+.product-details__item {
+  .product-columns__item {
+    width: 100%;
+  }
+}

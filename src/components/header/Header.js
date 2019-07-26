@@ -24,13 +24,14 @@ class Header extends Component {
                     {avatarPath ? <UserProfile uiLocation='header' {...this.props.auth} /> :
                         <UserProfile uiLocation='header' {...this.props.auth} />}
 
-                    <div className="header__lang">
+                    {/* Language change was here */}
+                    {/*<div className="header__lang">
                         <Dropdown icon={<ReactCountryFlag code='us' />}>
                             <Dropdown.Menu>
                                 <Dropdown.Item icon={<ReactCountryFlag code='ru' />} />
                             </Dropdown.Menu>
                         </Dropdown>
-                    </div>
+                    </div>*/}
 
                 </div>
             </div>

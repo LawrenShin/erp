@@ -7,7 +7,8 @@ import { createRequestAction } from '../../actions'
 
 class EditProduct extends React.Component {
     componentWillMount(){
-        if (!this.props.product || Array.isArray(this.props.product.data)) this.props.getProduct(this.props.match.params.id)
+        // if (!this.props.product || Array.isArray(this.props.product.data)) 
+        this.props.getProduct(this.props.match.params.id)
         this.props.refresh()
     }
     

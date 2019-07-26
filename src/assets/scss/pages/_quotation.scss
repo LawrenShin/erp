@@ -9,8 +9,22 @@ Quotation styles
   &-modal {
     /*max-height: 55vh;*/
 
+    &.-select-supplier {
+      height: 100%;
+
+      .quotation-modal__content {
+        height: 100%;
+      }
+
+      .data-table__wrapper {
+        overflow: auto;
+        height: calc(100% - 165px);
+      }
+    }
+
     &__content {
       background: #fff;
+      position: relative;
 
       &.-sm {
         padding: 35px 45px;
@@ -45,6 +59,10 @@ Quotation styles
 
       .quotation-filters {
         margin-top: 0;
+
+        .ui.selection.dropdown .menu {
+          max-height: 10.68571429rem;
+        }
       }
 
       .filters-box {
@@ -225,6 +243,10 @@ Quotation styles
       &__row {
         margin: 0 0 17px;
         display: flex;
+
+        .btn {
+          white-space: nowrap;
+        }
       }
 
       &__info, &__btn {
@@ -242,7 +264,7 @@ Quotation styles
 
         .btn {
           margin: 0 15px 0 0;
-          width: 120px;
+          width: 135px;
 
           &:last-child {
             margin-right: 0;
@@ -261,7 +283,7 @@ Quotation styles
         padding: 0;
 
         &.-fix-width {
-          width: 120px;
+          width: 135px;
           text-align: center;
 
           & + .-fix-width {
@@ -423,6 +445,14 @@ Quotation styles
       align-items: flex-end;
       margin-bottom: 10px;
 
+      &.none {
+        display: none;
+      }
+
+      &.block {
+        display: flex;
+      }
+
       textarea {
         height: 58px;
       }
@@ -433,8 +463,9 @@ Quotation styles
       }
 
       &__info {
-        padding: 0 0 0 20px;
+        padding: 10px 0 20px;
         align-self: center;
+
         span {
           display: block;
 
@@ -518,8 +549,10 @@ Quotation styles
 
 .-bg-color-blue, .-bg-color-gray, .-bg-color-green, .-bg-color-lightGray, .-bg-color-yellow {
   &.data-table__column {
-    &:after {
-      visibility: hidden;
+    &:not(.-show-after) {
+      &:after {
+        visibility: hidden;
+      }
     }
   }
 
@@ -531,6 +564,17 @@ Quotation styles
 .data-table__row {
   &.-paused-row {
     .data-table__column:not(:first-child) {
+      opacity: 0.5;
+
+      &.-bg-color-yellow, &.-bg-color-blue, &.-bg-color-green, &.-bg-color-lightGray {
+        background: $gray !important;
+        color: $black !important;
+      }
+    }
+  }
+
+  &.-paused-with-first {
+    .data-table__column {
       opacity: 0.5;
 
       &.-bg-color-yellow, &.-bg-color-blue, &.-bg-color-green, &.-bg-color-lightGray {
@@ -554,9 +598,16 @@ Quotation styles
 }
 
 .SingleDatePicker {
-  position: static!important;
+  position: static !important;
 }
+
 .SingleDatePicker_picker {
   left: 50% !important;
   transform: translate(-50%, 0);
+}
+
+.-cell-span {
+  & + .-cell-span {
+
+  }
 }

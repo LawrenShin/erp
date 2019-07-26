@@ -32,7 +32,7 @@ class Aside extends Component{
             <aside className={`aside js-scroll ${this.props.className}`} id="aside">
                 <SystemTitle />
                 <Navigation />
-                <ShowGallery onClick={this.props.showGallery} />
+                {/*<ShowGallery onClick={this.props.showGallery} />*/}
             </aside>
         );
     }

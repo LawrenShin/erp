@@ -59,11 +59,17 @@ export default class Dropdown extends React.Component{
 
         return (
             uiType === "form-box" ?
-            <div className="form-box__item">									
+            <div className="form-box__item">
                 <div className="box-field">
                     <div className="select-elem">
                         <label className="box-field__label">{title ? title : options.find( o => o.value === value).text}:</label>
-                        <DropdownSemantic className={`fluid selection`} value={value} key={uuid()} options={options} placeholder="" onChange={this.handleChange} />
+                        <DropdownSemantic 
+                            key={uuid()} 
+                            className={`fluid selection`} 
+                            value={value} 
+                            options={options} 
+                            placeholder="" 
+                            onChange={this.handleChange} />
                     </div>
                 </div>
             </div>
@@ -71,7 +77,13 @@ export default class Dropdown extends React.Component{
             <div className="filters-box__item">
                 <div className="filters-elem select-elem select-elem_multiple">
                     <div className="select-elem__text">{value ? options.find( o => o.value === value).text : title}</div>
-                    <DropdownSemantic className={`fluid multiple special selection`} value={value || ""} key={uuid()} options={optionsWithEmptyVal} placeholder={title} onChange={this.handleChange} />
+                    <DropdownSemantic 
+                        key={uuid()} 
+                        className={`fluid multiple special selection`} 
+                        value={value || ""} 
+                        options={optionsWithEmptyVal} 
+                        placeholder={title} 
+                        onChange={this.handleChange} />
                 </div>
             </div>);
     }

@@ -8,6 +8,7 @@ import {createRequestAction, createAction} from '../../actions';
 import {renamedFilters, renamedProducts} from '../../selectors/products';
 import Pointer from '../controls/pointer';
 import Loading from '../helpers/loading';
+import { getFilters } from '../sanki/products'
 
 class Products extends PureComponent {
     state = {
@@ -15,7 +16,10 @@ class Products extends PureComponent {
         tableHeight: 0
     };
 
-    clearAll = () => this.props.clearOptions();
+    clearAll = () => {
+        document.getElementById('nameSearcher').value = ''
+        this.props.clearOptions()
+    };
 
     clickIcon = () => {
         alert('I will definetly do that, but later.');
@@ -34,12 +38,11 @@ class Products extends PureComponent {
 
     componentDidMount() {
         this.props.clearOptions();
-        this.props.getFilters();
+        this.props.getFiltersHandle();
         this.props.list();
     }
 
     render() {
-        const offset = this.props.options.offset, limit = this.props.options.limit;
         return (
             <>
                 <SuppliersHeader title='Products' subtitle='LIST OF CURRENT PRODUCTS' products={true}
@@ -53,11 +56,11 @@ class Products extends PureComponent {
                             clearAll={this.clearAll}
                             options={this.props.options}
                         />
-                        <div className="unload-link">
+                        {/*<div className="unload-link">
                             <Pointer><i className="icon-xlsx"></i><span>Export to Excel</span></Pointer>
-                        </div>
+                        </div>*/}
 
-                        <Table store={this.props.state}/>
+                        <Table filters={this.props.filters} store={this.props.state}/>
                     </>
                     :
                     <Loading/>}
@@ -77,10 +80,10 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps,
     (dispatch) => ({
         list: (options) => {
-            console.log('REQUEST')
             dispatch(createRequestAction('product', 'list', [options]))
         },
         getFilters: () => dispatch(createRequestAction('product', 'getFilters')),
         setOptions: (options) => dispatch(createAction('SET_OPTIONS', {options})),
-        clearOptions: () => dispatch(createAction('CLEAR_OPTIONS'))
+        clearOptions: () => dispatch(createAction('CLEAR_OPTIONS')),
+        getFiltersHandle: () => getFilters(dispatch)
     }))(Products);

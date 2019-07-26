@@ -157,6 +157,10 @@
   &_inactive {
     background: #dc5757
   }
+
+  &_test {
+    background: $yellow;
+  }
 }
 
 .col-country {
@@ -231,4 +235,19 @@
   padding: 20px;
   background: white;
   margin: 20px 0 0;
+}
+
+.supplier__history {
+  thead {
+    td {
+      font-weight: 700;
+    }
+  }
+  td {
+    padding: 10px;
+    font-size: 14px;
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
 }

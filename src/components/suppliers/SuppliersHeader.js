@@ -8,6 +8,42 @@ import {createAction} from '../../actions'
 import ModalSemantic from '../common/ModalSemantic'
 import QuotationCreateWizard from '../quotations/quotationWizard/QuotationCreateWizard'
 
+export const SearchBar = ({ storeVal, name, setFilterName, title }) => {
+  let filterNameTimeout = null;
+  
+  const handleChange = (e) => {
+    const filterName = e.target.value
+    
+    if(filterNameTimeout !== null){
+      clearInterval(filterNameTimeout)
+    }
+    
+    filterNameTimeout = setTimeout(() => {
+      title ? setFilterName(filterName, title) : setFilterName(name, filterName)
+    }, 500)
+  }
+  return (
+    <div className="page-heading__navs">
+      <form className="page-heading__form" onSubmit={(e) => e.preventDefault()}>
+        <div className="page-heading__search">
+          <div className="search-bl">
+            <input
+              id='nameSearcher' 
+              type="text" 
+              className="search-bl__input" 
+              placeholder='Search...' 
+              onChange={handleChange} 
+              defaultValue={storeVal} />
+            <button type="button" className="search-bl__btn" onClick={handleChange}><i className="icon-search"></i></button>
+          </div>
+        </div>
+        {/* <SettingsBtn active={this.props.activeSettings} onClick={this.props.onClickSettings}/>
+        <Spans filterOutByRating={this.props.filterOutByRating} /> */}
+      </form>
+    </div>
+  )
+}
+
 const SettingsBtn = styled( ({className, onClick}) => {
   return <></> /* Return for future use *//*<span className={`page-heading__settings ${className}`} onClick={onClick}><i className="icon-settings"></i></span>*/
 })`
@@ -34,10 +70,8 @@ class SuppliersHeader extends Component{
       asset: false,
       add: false,
       settings: false
-    }
+    },
   };
-
-  filterNameTimeout = null;
 
   static defaultProps = {
     onClickSettings: () => {}
@@ -50,19 +84,7 @@ class SuppliersHeader extends Component{
       return state;
     })
   }
-
-  handleChange = (e) => {
-    const filterName = e.target.value;
-    if(this.filterNameTimeout !== null){
-      clearInterval(this.filterNameTimeout);
-    }
-    if(filterName){
-      this.filterNameTimeout = setTimeout(() => {
-        this.props.setFilterName(filterName);
-      }, 500);
-    }
-
-  }
+  
   render(){
     return(
       <div className="page-heading">
@@ -82,23 +104,17 @@ class SuppliersHeader extends Component{
           </div>
           <h2 className={"page-subtitle"}>{this.state.subtitle}</h2>
         </div>
-        <div className="page-heading__navs">
-          <form className="page-heading__form">
-            <div className="page-heading__search">
-              <div className="search-bl">
-                <input type="text" className="search-bl__input" placeholder='Search...' onChange={this.handleChange} />
-                <button type="button" className="search-bl__btn" onClick={this.handleChange}><i className="icon-search"></i></button>
-              </div>
-            </div>
-            <SettingsBtn active={this.props.activeSettings} onClick={this.props.onClickSettings}/>
-            <Spans filterOutByRating={this.props.filterOutByRating} />
-          </form>
-        </div>
+          <SearchBar
+            storeVal={this.props.name}
+            setFilterName={this.props.setFilterName}
+            title={this.state.title} />
       </div>
     );
   }
 }
 
-export default connect(undefined, (dispatch) => ({
-  setFilterName: (filterName) => dispatch(createAction('SET_FILTER_NAME', filterName))
+export default connect(state => ({
+  name: state.suppliers.options.name__icontains
+}), (dispatch) => ({
+  setFilterName: (filterName, title) => dispatch(createAction(`SET_FILTER_NAME_${title.toUpperCase().substr(0, title.length - 1)}`, filterName))
 }))(SuppliersHeader);

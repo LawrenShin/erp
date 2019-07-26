@@ -1,6 +1,6 @@
-import { combineReducers } from 'redux'
-import { createSelector } from 'reselect'
-import { call, put, takeEvery } from 'redux-saga/effects'
+import {combineReducers} from 'redux'
+import {createSelector} from 'reselect'
+import {call, put, takeEvery} from 'redux-saga/effects'
 
 import ProductApi from '../../../requestor/product'
 
@@ -9,99 +9,105 @@ import designReducer from './design'
 import technicalReducer from './technical'
 import logisticsReducer from './logistics'
 
-import { saga as generalSaga } from './general'
-import { saga as designSaga } from './design'
-import { saga as technicalSaga } from './technical'
-import { saga as logisticsSaga } from './logistics'
+import {saga as generalSaga} from './general'
+import {saga as designSaga} from './design'
+import {saga as technicalSaga} from './technical'
+import {saga as logisticsSaga} from './logistics'
 
 const initialState = () => ({
-  response: false,
-  loading: false,
-  error: ''
-})
+    response: false,
+    loading: false,
+    error: ''
+});
 
-export function requestReducer(state = initialState(), action){
-  const {type, payload} = action
-  switch(type){
-    case 'CREATE_PRODUCT_REQUEST_START':
-      return { ...state, loading: true, error: '' }
-    case 'CREATE_PRODUCT_REQUEST_DONE':
-      return { ...state, loading: false, response: { ...payload }, error: '' }
-    case 'CREATE_PRODUCT_REQUEST_ERROR':
-      return { ...state, loading: false, error: { ...payload } }
-    case 'CREATE_PRODUCT_REFRESH':
-        return { ...state, error: '' }
+export function requestReducer(state = initialState(), action) {
+    const {type, payload} = action;
+    switch (type) {
+        case 'CREATE_PRODUCT_REQUEST_START':
+            return {...state, loading: true, error: ''};
+        case 'CREATE_PRODUCT_REQUEST_DONE':
+            return {...state, loading: false, response: {...payload}, error: ''};
+        case 'CREATE_PRODUCT_REQUEST_ERROR':
+            return {...state, loading: false, error: {...payload}};
+        case 'CREATE_PRODUCT_REFRESH':
+            return {...state, error: '', response: false};
 
-    default:
-      return state
-  }
+        default:
+            return state
+    }
 }
 
 export default combineReducers({
-  requestReducer,
-  generalReducer,
-  designReducer,
-  technicalReducer,
-  logisticsReducer
+    requestReducer,
+    generalReducer,
+    designReducer,
+    technicalReducer,
+    logisticsReducer
 })
 
- //sagas
+//sagas
 
-export function* createProductRequestSaga({ payload }){
-  yield put({ type: 'CREATE_PRODUCT_REQUEST_START' })
-  
-  try{
-    const createResponse = yield call(ProductApi.createProduct, payload)
-    yield put({ type: 'CREATE_PRODUCT_REQUEST_DONE', payload: createResponse })
-  }catch(e){
-    const { response, message } = e
-    yield put({ type: 'CREATE_PRODUCT_REQUEST_ERROR', payload: {message, response: response.data} })
-  }
+export function* createProductRequestSaga({payload}) {
+    yield put({type: 'CREATE_PRODUCT_REQUEST_START'});
+
+    try {
+        const createResponse = yield call(ProductApi.createProduct, payload);
+        yield put({type: 'CREATE_PRODUCT_REQUEST_DONE', payload: createResponse})
+    } catch (e) {
+        const {response, message} = e;
+        yield put({type: 'CREATE_PRODUCT_REQUEST_ERROR', payload: {message, response: response.data}})
+    }
 }
 
-export function* saga(){
-  yield takeEvery('GENERAL', generalSaga)
-  yield takeEvery('DESIGN', designSaga)
-  yield takeEvery('TECHNICAL', technicalSaga)
-  yield takeEvery('TECHNICAL_CHECKBOX', technicalSaga)
-  yield takeEvery('LOGISTICS', logisticsSaga)
-  yield takeEvery('CREATE_PRODUCT_REQUEST', createProductRequestSaga)
+export function* saga() {
+    yield takeEvery('GENERAL', generalSaga);
+    yield takeEvery('DESIGN', designSaga);
+    yield takeEvery('TECHNICAL', technicalSaga);
+    yield takeEvery('TECHNICAL_CHECKBOX', technicalSaga);
+    yield takeEvery('LOGISTICS', logisticsSaga);
+    yield takeEvery('CREATE_PRODUCT_REQUEST', createProductRequestSaga);
 }
 
 /**
  * Selectors
  * */
 
-export const createProductStore = (state) => state.createProduct
+export const createProductStore = (state) => state.createProduct;
+
+export const createProductIdSelector = createSelector(
+    createProductStore,
+    (store) => 'response' in store.requestReducer ? store.requestReducer.response.id : null
+);
+
 export const generalStore = createSelector(
-  createProductStore,
-  (store) => store.generalReducer
-)
+    createProductStore,
+    (store) => store.generalReducer
+);
 export const designStore = createSelector(
-  createProductStore,
-  (store) => store.designReducer
-)
+    createProductStore,
+    (store) => store.designReducer
+);
 export const technicalStore = createSelector(
-  createProductStore,
-  (store) => store.technicalReducer
-)
+    createProductStore,
+    (store) => store.technicalReducer
+);
 export const logisticsStore = createSelector(
-  createProductStore,
-  (store) => store.logisticsReducer
-)
+    createProductStore,
+    (store) => store.logisticsReducer
+);
 export const requestErrorsSelector = createSelector(
-  createProductStore,
-  (store) => store.requestReducer.error
-)
+    createProductStore,
+    (store) => store.requestReducer.error
+);
 export const gatherProductPropsForRequest = createSelector(
-  generalStore,
-  designStore,
-  technicalStore,
-  logisticsStore,
-  (general, design, technical, logistics) => ({
-    ...general,
-    ...design, 
-    ...technical,
-    ...logistics
-  })
-)
+    generalStore,
+    designStore,
+    technicalStore,
+    logisticsStore,
+    (general, design, technical, logistics) => ({
+        ...general,
+        ...design,
+        ...technical,
+        ...logistics
+    })
+);

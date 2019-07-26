@@ -9,10 +9,10 @@ const CommentSended = (props) => {
         <>
             <div className="quotation__comment__form">
                 <textarea placeholder="Comment" disabled value={props.comment.text}></textarea>
-                <div className="quotation__comment__form__info">
-                    {props.comment.author && <span><b>From: </b>{props.comment.author}</span>}
-                    {props.comment.created_at && <span><b>Created at: </b>{date} - {time}</span>}
-                </div>
+            </div>
+            <div className="quotation__comment__form__info">
+                {props.comment.author && <span><b>From: </b>{props.comment.author}</span>}
+                {props.comment.created_at && <span><b>Created at: </b>{date} - {time}</span>}
             </div>
         </>
     );

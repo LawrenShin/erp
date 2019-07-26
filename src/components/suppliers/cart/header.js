@@ -23,17 +23,18 @@ export default ({id, name, edit = false, selected = 0}) => (
             </div>
             <div className="page-heading__navs">
                 <div className="card-filters">
-                    <div className="card-filters__item">
+                    {/* Payment history */}
+                    {/*<div className="card-filters__item">
                         <NavLink to={`/suppliers/view/payment/${id}`}>
                             <Pointer className="card-filters__link">
                                 <i className="icon-payment-history"></i><span className="card-filters__title">Payment history</span>
                             </Pointer>
                         </NavLink>
-                    </div>
+                    </div>*/}
                     <div className="card-filters__item">
                         <UploadModal supplier={id}/>
                     </div>
-                    <div className="card-filters__item">
+                    {/* <div className="card-filters__item">
                         <Pointer className="card-filters__link selected">
                             <i className="icon-supplie-history"></i><span className="card-filters__title">Supplier history</span>
                         </Pointer>
@@ -42,12 +43,7 @@ export default ({id, name, edit = false, selected = 0}) => (
                         <Pointer className="card-filters__link">
                             <i className="icon-auditlog"></i><span className="card-filters__title">Audit Log</span>
                         </Pointer>
-                    </div>
-                    {/*<div className="card-filters__item">
-                        <Pointer className="card-filters__link">
-                            <i className="icon-analytics"></i><span className="card-filters__title">Analytics</span>
-                        </Pointer>
-                    </div>*/}
+                    </div> */}
                 </div>
                 <div className="card-filters-nav">
                     <Pointer className="card-filters-nav__item card-filters-nav__back" onClick={() => history.goBack()}>

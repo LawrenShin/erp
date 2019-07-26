@@ -5,6 +5,9 @@ class ModalSemantic extends Component {
     render() {
         return (
             <Modal
+                id={this.props.id}
+                onScroll={this.props.onScroll}
+                className={this.props.className}
                 size={this.props.size}
                 onClose={this.props.onClose}
                 closeIcon

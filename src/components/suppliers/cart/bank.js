@@ -5,7 +5,7 @@ import Checkbox from '../../controls/checkbox';
 import {connect} from 'react-redux';
 import {createRequestAction} from '../../../actions/index';
 import Loading from '../../helpers/loading';
-import styled from 'styled-components';
+import {history} from '../../../routes/history'
 import {Formik} from 'formik';
 import Supplier from '../../../requestor/supplier';
 
@@ -55,7 +55,8 @@ class ViewSuppierBank extends Component {
 
                         Supplier.edit(values).then( (res) => {
                             if(res.status === 200){
-                                this.props.getById();                            
+                                this.props.getById();
+                                history.replace(`/suppliers/view/accounting/${this.props.match.params.id}`)
                             }
                         }).catch(res => {
                             if(res.status === 400){

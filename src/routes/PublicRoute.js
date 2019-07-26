@@ -14,7 +14,7 @@ export const PublicRoute = ({
                             }) => (
     <Route {...rest} component={(props) => (
         isAuthenticated ? (<Redirect
-            to={role === 'manager' || role === 'stuff' || role === 'superadmin' ? '/suppliers/' : '/quotations/'}/>) : (
+            to={role !== 'supplier' ? '/suppliers/' : '/quotations/'}/>) : (
             <Component {...props} />)
     )}/>
 );

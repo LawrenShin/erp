@@ -25,6 +25,8 @@ export default (state = {general_info: {}, contact_info: {}, options_info: {}, b
     case 'STEP_BACK':
       if(state.step > 0) return {...state, step: state.step - 1 };
       return state;
+    case 'SUPPLIER_WERE_CREATED':
+      return {general_info: {}, contact_info: {}, options_info: {}, bank_info: {}, step: 0}
 
     default:
       return state

@@ -53,39 +53,6 @@ const QuotationCreateWizardForm = (props) => (
                     </div>
                 </div>
             </div>
-            {/*<div className="quotation-modal__params__row">
-        <div className="quotation-modal__params__item -flex -lg">
-          <div className="checkbox-elem">
-            <input 
-              type="radio" 
-              id="regular_period" 
-              name="type" 
-              value='regular'
-              defaultChecked={true}
-              onChange={props.handleChange} />
-            <label className="checkbox-label" htmlFor="regular_period">Regular</label>
-          </div>
-          <div className="checkbox-elem">
-            <input 
-              type="radio" 
-              id="urgent_period" 
-              name="type"
-              value='urgent'
-              onChange={props.handleChange} />
-            <label className="checkbox-label" htmlFor="urgent_period">Urgent</label>
-          </div>
-        </div>
-        <div className="quotation-modal__params__item">
-          <div className="checkbox-elem">
-            <input 
-              type="checkbox" 
-              id="do_not_notify_supplier" 
-              name="do_not_notify_supplier"
-              onChange={props.handleChange} />
-            <label className="checkbox-label" htmlFor="do_not_notify_supplier">Do not notify supplier</label>
-          </div>
-        </div>
-      </div>*/}
         </div>
         <div className="options-buttons quotation-modal__buttons">
             {props.createState.loading ? <Loading/> :

@@ -1,117 +1,112 @@
 import React, {Component} from 'react';
 import Header from './header';
-import Options from '../../controls/options-multi';
+import {history} from '../../../routes/history'
 import {connect} from 'react-redux';
 import {createRequestAction} from '../../../actions/index';
 import {Loading, Error} from '../../helpers';
 import styled from 'styled-components';
 import {Formik} from 'formik';
 import DeliveryTerms from '../create/forms/DeliveryTerms';
-import Supplier from '../../../requestor/supplier';
+// import Supplier from '../../../requestor/supplier';
+import SupplierApi from '../../../requestor/supplier';
+import OptionsForm from '../create/forms/OptionsForm'
+import CommonButton from '../../common/CommonButton'
+import suppliersApi from '../../../requestor/supplier'
 
-const Submit = styled(({className, ...props}) => 
-    <input {...props} type="submit" className={"btn " + className} value="Save" />)`
+
+const Submit = styled(({className, ...props}) =>
+    <input {...props} type="submit" className={"btn " + className} value="Save"/>)`
 margin-top: 20px;
 width: fit-content;
 `;
 
 class ViewSuppierOptions extends Component {
-    state = { 
+    state = {
+        categories: null,
+        ages: null,
+        genders: null,
+        incoterm: null,
+        port: null,
+        defaultValues: null,
     };
 
-    componentDidMount() {
-        if(this.props.needToGetSupplier)
+    localSave = (values) => this.setState({...values})
+    incotermSave = (val) => this.setState({incoterm: val})
+    portSave = (val) => this.setState({port: val})
+
+    async componentDidMount() {
+        if (this.props.needToGetSupplier)
             this.props.getById();
         this.props.getAges();
         this.props.getCategories();
         this.props.getGenders();
+
+        try {
+            const defaultValues = await suppliersApi.getIncoterm(this.props.match.params.id)
+            this.setState({defaultValues: defaultValues.results})
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
+    handleEdit = async () => {
+        const {defaultValues, ...editedPart} = this.state
+        const {categories, genders, ages, payment_terms_date, ...cleanSupplier} = this.props.supplier.data
+        let current_datetime = new Date(payment_terms_date)
+        let formatted_date = current_datetime.getDate() + "/" + (current_datetime.getMonth()) + "/" + current_datetime.getFullYear()
+
+        const editedSupplier = {
+            ...cleanSupplier,
+            categories: editedPart.categories ? editedPart.categories : categories,
+            ages: editedPart.ages ? editedPart.ages : ages,
+            genders: editedPart.genders ? editedPart.genders : genders,
+            formatted_date
+        }
+        const savedIncotermPlusPort = await SupplierApi.saveIncoterm({
+            supplier: this.props.match.params.id,
+            incoterm: editedPart.incoterm || defaultValues[0].incoterm,
+            port: editedPart.port || defaultValues[0].port,
+        })
+        const editedSupplierResponse = await SupplierApi.edit(editedSupplier)
+        if (editedSupplierResponse)
+            history.replace(`/suppliers/view/options/${this.props.match.params.id}`)
     }
 
     render() {
-        
+
         const {supplier, genders, ages, categories, readOnly} = this.props;
-        if([supplier.state, genders.state, ages.state, categories.state].includes("loading"))
-            return <Loading />;
-        if(supplier.state === "fail")
-            return <Error error={supplier.err} />; 
-        else if([genders.state, ages.state, categories.state].includes("fail"))
-            return <Error error={genders.err || ages.err || categories.err} />; 
+        if ([supplier.state, genders.state, ages.state, categories.state].includes("loading"))
+            return <Loading/>;
+        if (supplier.state === "fail")
+            return <Error error={supplier.err}/>;
+        else if ([genders.state, ages.state, categories.state].includes("fail"))
+            return <Error error={genders.err || ages.err || categories.err}/>;
 
         const {id, name} = supplier.data;
-        
-        return (            
+
+        return (
             <>
                 <Header id={id} name={name} selected="2" edit={!readOnly}/>
-
-                <Formik initialValues={ 
-                        {
-                            categories: supplier.data.categories,
-                            genders: supplier.data.genders,
-                            ages: supplier.data.ages,
-                            id,
-                            name 
-                        }
-
-                    }
-                    validateOnBlur={false}
-                    onSubmit={(values, actions) => {
-                        actions.setSubmitting(false);
-
-                        console.log(values);
-                        
-                        actions.setSubmitting(false);
-
-                        Supplier.edit(values).then( (res) => {
-                            if(res.status === 200){
-                                this.props.getById();                            
-                            }
-                        }).catch(res => {
-                            if(res.status === 400){
-                                actions.setErrors(res.response.data);
-                            }
-                        })
-                    }}
-                    render={ ({values, errors, handleSubmit, handleChange, handleBlur}) => (
-                        <div className="bg-box box-supplier">
-                            <form onSubmit={handleSubmit}>
-                                <div className="options">
-                                    <div className="options__col">
-                                        <Options   
-                                            readOnly={readOnly}    
-                                            error={errors.categories}                            
-                                            label='Categories' 
-                                            name='categories' 
-                                            list={categories.data.map(({name, id}) => ({name, value: id}))} 
-                                            value={values.categories}
-                                            onChange={handleChange} />
-                                    </div>
-                                
-                                    <div className="options__col">
-                                        <Options
-                                            readOnly={readOnly}    
-                                            error={errors.genders}
-                                            name='genders' 
-                                            label='Genders' 
-                                            list={genders.data.map(({name, id}) => ({name, value: id}))} 
-                                            value={values.genders}
-                                            onChange={handleChange} />
-
-                                        <Options
-                                            readOnly={readOnly}    
-                                            error={errors.ages}
-                                            name='ages' 
-                                            label='Ages' 
-                                            list={ages.data.map(({name, id}) => ({name, value: id}))} 
-                                            value={values.ages}
-                                            onChange={handleChange} />
-                                    </div>
-
-                                    <DeliveryTerms localSave={() => {}} />
-                                    {!readOnly && <Submit onClick={handleSubmit} />} 
-                                </div>
-                            </form>
-                        </div>  
-                )}/>
+                <div className="bg-box">
+                    {this.props.supplier.data &&
+                    <OptionsForm
+                        editMode={true}
+                        supplier={this.props.match.params.id}
+                        readOnly={this.props.readOnly}
+                        saveStepInfo={(info) => this.localSave(info)}
+                        options_info={{
+                            categories: this.props.supplier.data.categories,
+                            genders: this.props.supplier.data.genders,
+                            ages: this.props.supplier.data.ages,
+                        }}
+                        defaultValues={this.state.defaultValues}
+                    />}
+                    {this.props.match.path.match(/\/edit\//gm)
+                    &&
+                    <CommonButton style={{maxWidth: '80px'}} type="btn btn1" text={'Save'}
+                                  onClick={this.handleEdit}/>}
+                </div>
             </>
         );
     }

@@ -6,13 +6,14 @@ import Input from '../../controls/input';
 import ConnectedDropdown from '../../controls/ConnectedDropdown';
 import {createAction} from '../../../actions';
 import {generalStore} from '../../../ducks/productSagas/createProduct'
+import Checkbox from "../../controls/checkbox";
 
 const GeneralHooks = (props) => {
-    const [trade_mark, setName] = useState(props.product.trade_mark || props.store.trade_mark || '');
-    const [target_price, setTargetPrice] = useState(props.product.target_price || props.store.target_price || 0);
-    const [collection, setCollection] = useState(props.product.collection || props.store.collection || '');
-    const [buying_manager, setBuyingManager] = useState(props.product.buying_manager || props.store.buying_manager || '');
-    const [MOQ_range, setMOQ_range] = useState(props.product.MOQ || props.store.MOQ || {from: '', to: ''});
+    const [name, setName] = useState(props.product.name || '');
+    const [target_price, setTargetPrice] = useState(props.product.target_price || '');
+    const [moq, setMoq] = useState(props.product.moq || 0);
+    const [code, setCode] = useState(props.product.code || '');
+    const [vendor_code, setVendorCode] = useState(props.product.vendor_code || '');
 
     return (
         <div className="product__item">
@@ -28,27 +29,48 @@ const GeneralHooks = (props) => {
                                 required='required'
                                 simple={true}
                                 onChange={(e) => setName(e.target.value)}
-                                onBlur={() => props.saveToStore({name: 'trade_mark', data: trade_mark})}
-                                name='trade_mark'
-                                value={trade_mark}
-                                label="Trade mark"/>
+                                onBlur={() => props.saveToStore({name: 'name', data: name})}
+                                name='name'
+                                value={name}
+                                label="Name"/>
                             {props.requestErrors.response && <Message
                                 color='red'
                                 size='small'>
-                                {props.requestErrors.response.trade_mark[0]}
+                                {props.requestErrors.response.name[0]}
                             </Message>}
                         </div>
                     </div>
                     {props.generalMap && <ConnectedDropdown
                         required='required'
-                        name='season'
-                        options={props.generalMap.get('season').map((s, i) => ({name: s.value, id: i + 1}))}
+                        name='theme'
+                        options={props.generalMap.get('themes').map((s, i) => ({name: s.name, id: s.name}))}
                         saveToStore={props.saveToStore}
-                        valueFromStore={props.store.season}
+                        valueFromStore={props.product.theme}
                     />}
+                    {props.generalMap && <ConnectedDropdown
+                        required='required'
+                        name='trade_mark'
+                        options={props.generalMap.get('trademark').map((s) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.trade_mark}
+                    />}
+                    {props.generalFilter && <ConnectedDropdown
+                        required='required'
+                        name='season'
+                        options={props.generalFilter.season.map((s, i) => ({name: s.text, id: s.value}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.season}
+                    />}
+                    {props.requestErrors.response && <Message
+                        color='red'
+                        size='small'>
+                        {props.requestErrors.response.season[0]}
+                    </Message>}
                     <div className="product-columns__item">
                         <div className="select-elem">
                             <Input
+                                required='required'
+                                type='number'
                                 simple={true}
                                 onChange={(e) => setTargetPrice(e.target.value)}
                                 onBlur={() => props.saveToStore({name: 'target_price', data: target_price})}
@@ -57,108 +79,79 @@ const GeneralHooks = (props) => {
                                 label="Target price"/>
                         </div>
                     </div>
+                    {props.generalFilter && <ConnectedDropdown
+                        required='required'
+                        name='year'
+                        options={props.generalFilter.year.map((s, i) => ({name: s.text, id: s.value}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.year}
+                    />}
+                    {props.generalMap && <ConnectedDropdown
+                        required='required'
+                        name='collection'
+                        options={props.generalMap.get('collections').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.collection}
+                    />}
+                    {props.requestErrors.response && <Message
+                        color='red'
+                        size='small'>
+                        {props.requestErrors.response.collection[0]}
+                    </Message>}
                     <div className="product-columns__item">
-                        <div className="select-elem">
-                            {/* need to get it from back */}
-                            <label className="box-field__label required">Year:</label>
-                            <div className="ui fluid selection dropdown">
-                                <input type="hidden"/>
-                                <div className="default text">2019</div>
-                                <i className="dropdown icon"></i>
-                                <div className="menu">
-                                    <div className="item" data-value="af">2019</div>
-                                    <div className="item active" data-value="ax">offline</div>
-                                </div>
-                            </div>
-                        </div>
+                        <Input
+                            required='required'
+                            label='MOQ'
+                            simple={true}
+                            name='moq'
+                            type='number'
+                            onChange={(e) => setMoq(e.target.value)}
+                            onBlur={() => props.saveToStore({name: 'moq', data: moq})}
+                            value={moq}/>
                     </div>
                     <div className="product-columns__item">
-                        <div className="select-elem">
-                            <label className="box-field__label required">Collection:</label>
-                            {/* <div className="ui fluid selection dropdown">
-                <input type="hidden" />
-                <div className="default text">Весна-Лето 2019</div>
-                <i className="dropdown icon"></i>
-                <div className="menu">
-                  <div className="item" data-value="af">Весна-Лето 2019</div>
-                  <div className="item active" data-value="ax">offline</div>
-                </div>
-              </div> */}
-                            <Input
-                                required='required'
-                                className='width-90'
-                                simple={true}
-                                name='collection'
-                                type='text'
-                                onChange={(e) => setCollection(e.target.value)}
-                                onBlur={() => props.saveToStore({name: 'collection', data: collection})}
-                                value={collection}/>
-                        </div>
+                        <Input
+                            disabled={props.edit ? true : false}
+                            label='Code 1C'
+                            simple={true}
+                            name='code'
+                            type='number'
+                            className={props.edit ? 'hover-none' : ''}
+                            onChange={(e) => setCode(e.target.value)}
+                            onBlur={() => props.saveToStore({name: 'code', data: code})}
+                            value={code}/>
                     </div>
                     <div className="product-columns__item">
-                        <div className="box-field">
-                            <label className="box-field__label">MOQ: </label>
-                            <div className="box-field_two">
-                                <span className="box-field__smalllabel">From</span>
-                                <Input
-                                    className='width-90'
-                                    simple={true}
-                                    name='MOQ_from'
-                                    type='number'
-                                    onChange={(e) => setMOQ_range({...MOQ_range, from: e.target.value})}
-                                    onBlur={() => props.saveToStore({name: 'moq', data: MOQ_range})}
-                                    value={MOQ_range.from}/>
-                                <span className="box-field__smalllabel">to</span>
-                                <Input
-                                    className='width-90'
-                                    simple={true}
-                                    type='number'
-                                    name='MOQ_to'
-                                    onChange={(e) => setMOQ_range({...MOQ_range, to: e.target.value})}
-                                    onBlur={() => props.saveToStore({name: 'moq', data: MOQ_range})}
-                                    value={MOQ_range.to}/>
-                            </div>
-                        </div>
+                        <Input
+                            label='Article'
+                            simple={true}
+                            name='vendor_code'
+                            type='number'
+                            onChange={(e) => setVendorCode(e.target.value)}
+                            onBlur={() => props.saveToStore({name: 'vendor_code', data: vendor_code})}
+                            value={vendor_code}/>
                     </div>
+                    {props.generalFilter && <ConnectedDropdown
+                        label='Product manager'
+                        required='required'
+                        name='buing_manager'
+                        options={props.generalFilter.buying_manager.map((s) => ({name: s.text, id: s.value}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.userId}
+                    />}
+                    {props.generalFilter && <ConnectedDropdown
+                        name='department'
+                        options={props.generalFilter.department.map((s) => ({name: s.text, id: s.value}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.department}
+                    />}
                     <div className="product-columns__item">
-                        <div className="box-field">
-                            <label className="box-field__label">Code 1C</label>
-                            <div className="box-field__results">00000004060</div>
-                        </div>
-                    </div>
-                    <div className="product-columns__item">
-                        <div className="box-field">
-                            <label className="box-field__label">Vendor code:</label>
-                            <div className="box-field__results">00000004060</div>
-                        </div>
-                    </div>
-                    <div className="product-columns__item">
-                        <div className="select-elem">
-                            <label className="box-field__label">Buying manager:</label>
-                            {/* <div className="ui fluid selection dropdown">
-                <input type="hidden" />
-                <div className="default text">Nick Sipson</div>
-                <i className="dropdown icon"></i>
-                <div className="menu">
-                  <div className="item" data-value="af">Nick Sipson</div>
-                  <div className="item active" data-value="ax">offline</div>
-                </div>
-              </div> */}
-                            <Input
-                                className='width-90'
-                                simple={true}
-                                name='buying_manager'
-                                type='text'
-                                onChange={(e) => setBuyingManager(e.target.value)}
-                                onBlur={() => props.saveToStore({name: 'buying_manager', data: buying_manager})}
-                                value={buying_manager}/>
-                        </div>
-                    </div>
-                    <div className="product-columns__item">
-                        <div className="checkbox-elem checkbox-elem_1">
-                            <input type="checkbox" id="checkbox-1"/>
-                            <label className="checkbox-label" htmlFor="checkbox-1">Package</label>
-                        </div>
+                        <Checkbox
+                            label='Package'
+                            name='package'
+                            checked={props.product.package}
+                            onChange={(e) => props.saveToStore({name: 'package', data: e.checked})}
+                        />
                     </div>
                 </div>
             </div>
@@ -167,7 +160,8 @@ const GeneralHooks = (props) => {
 }
 
 export default connect((state) => ({
-    store: generalStore(state)
+    store: generalStore(state),
+    userId: state.auth.id
 }), (dispatch) => ({
     saveToStore: (payload) => dispatch(createAction('GENERAL', payload))
 }))(GeneralHooks);

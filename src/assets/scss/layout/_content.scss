@@ -113,7 +113,7 @@ p {
   padding: 24px 0 30px;
   position: relative;
   flex-grow: 12;
-  z-index: 0
+  //z-index: 0
 }
 
 input[type="text"], input[type="tel"], input[type="password"], input[type="url"], input[type="number"], textarea {
@@ -207,6 +207,18 @@ input[type=number]::-webkit-outer-spin-button {
   &:hover {
     background: transparent;
     color: $color-active;
+  }
+}
+
+.btn4 {
+  white-space: nowrap;
+  background: $green;
+  color: #fff;
+  border-color: $green;
+
+  &:hover {
+    background: transparent;
+    color: $green;
   }
 }
 

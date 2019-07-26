@@ -22,9 +22,9 @@ const setIntervals = (store) => {
         store.quotationsInvitationsInterval = setInterval( () => {
             store.dispatch({type: 'GET_SUPPLIER_NOTIFICATIONS' })
         }, 60000)
-        store.quotationsRequestChangesInterval = setInterval( () => {
-            store.dispatch({type: 'GET_REQUEST_CHANGES' })
-        }, 59000)
+        // store.quotationsRequestChangesInterval = setInterval( () => {
+        //     store.dispatch({type: 'GET_REQUEST_CHANGES' })
+        // }, 59000)
     }
 }
 const sagaMiddleware = createSagaMiddleware()
@@ -38,7 +38,7 @@ export default () => {
         );
 
     store.quotationsInvitationsInterval = false
-    store.quotationsRequestChangesInterval = false
+    // store.quotationsRequestChangesInterval = false
 
     sagaMiddleware.run(saga)
     
@@ -51,8 +51,8 @@ export default () => {
         if(store.getState().auth.role !== 'supplier'){
             clearInterval(store.quotationsInvitationsInterval)
             store.quotationsInvitationsInterval = false
-            clearInterval(store.quotationsRequestChangesInterval)
-            store.quotationsRequestChangesInterval = false
+            // clearInterval(store.quotationsRequestChangesInterval)
+            // store.quotationsRequestChangesInterval = false
         }
 
         if (previousValue !== currentValue) {
@@ -72,11 +72,6 @@ export default () => {
     }
       
     const unsubscribe = store.subscribe(handleChange)
-
-    store.dispatch({type: 'API_REQUEST', payload: {
-        type: 'messages',
-        method: 'getAllMessages'
-    }})
     
     setIntervals(store);
 

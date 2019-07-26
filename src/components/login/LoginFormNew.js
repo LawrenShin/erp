@@ -13,7 +13,8 @@ import logo from "../../assets/logo.svg";
 class LoginFormNew extends Component {
     state = {
         respond: '',
-        email: ''
+        email: '',
+        error: false
     };
 
     handleClick = () => this.props.togglePasswordReset();
@@ -40,7 +41,7 @@ class LoginFormNew extends Component {
                                         const res = await resetPassword.SendMeLink(email);
                                         this.setState({respond: res.details, email: email});
                                     } catch (error) {
-                                        console.log(error);
+                                       this.setState({error: error.response.data.email[0]})
                                     }
                                 }
                                 setSubmitting(false);
@@ -76,12 +77,10 @@ class LoginFormNew extends Component {
                                 </>)}
                         </Formik>
                     </div>
+                    {this.state.error ? <p className="-error">{this.state.error}</p> : ''}
                 </div>}
                 {this.state.respond &&
                 <div className='login__sendok'>
-                    <div className="login__logo">
-                        <img src={logo} width="160" alt=""/>
-                    </div>
                     <p className="-title">Password successfully reset</p>
                     <p className='-subtitle'>We've sent an email to {this.state.email} with password reset instructions.
                         Do not forget that the letter can get into the SPAM folder.</p>

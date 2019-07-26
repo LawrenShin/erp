@@ -36,13 +36,18 @@ class QuotationListFilter extends Component {
     renderDropdown = (name, filter) => {
         const {options} = this.props;
         const placeholder = this.filterNameTransformer(name, 'fromBack');
+        
+        name = this.props.prefix ? this.props.prefix + name : filter.altName ? filter.altName : name
+        
+        let valuedAsName = null
+        if(Array.isArray(filter.extra) && this.props.valueAsName) valuedAsName = filter.extra.map(f => ({ text: f.text, value: f.text }))
 
         return (
             <Dropdown
                 key={uuid()}
                 name={name}
                 placeholder={placeholder}
-                options={filter.extra}
+                options={this.props.valueAsName ? valuedAsName : filter.extra}
                 value={options[name]}
                 onChange={this.handleChange}/>
         )
@@ -59,12 +64,13 @@ class QuotationListFilter extends Component {
                 focus={lastFocus === `_last_focus_${name}` ? true : false}
                 name={name}
                 placeholder={placeholder}
-                value={options[name]}
+                value={options[filter.alt_name || name]}
                 onChange={this.handleChange}/>
         )
     };
 
     filtersTypeSplitter = (filters) => {
+        console.log(filters)
         let dropdowns = [], inputs = [], dataSchrodinger = false;
         if('data' in filters) dataSchrodinger = true;
 

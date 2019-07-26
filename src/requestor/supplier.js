@@ -1,5 +1,9 @@
 import Api from './api';
-
+import { store } from '../store/createdStore'
+const getIncotermsList = () => Api.get(`main/incoterms/`)
+const getCityList = () => Api.get(`main/city/`)
+const getIncoterm = (id) => Api.get(`suppliers/incotermsplusport/?supplier=${id}`)
+const saveIncoterm = (data) => Api.post(`suppliers/incotermsplusport/`, true, data)
 //SUPPLIERS REQUESTS
 //suppliers for list of suppliers
 /*export*/ const list = (options = '') => {
@@ -7,23 +11,28 @@ import Api from './api';
     //refactor options for request
     let refactored = [];
     for(let o in options){
-        if(o !== 'start' && o !== 'checkboxes' && o !== 'ratings' && o !== 'ordering' && options[o]) {
+        if(!o.match(/start|checkboxes|ratings|ordering|countries|cities/gm) && options[o]) {
             refactored.push(`${o}=${options[o]}`);
-        };
+        }
         if(o === 'checkboxes'){
             for(let box in options['checkboxes']){
-                refactored.push(`${box}=${options['checkboxes'][box]}`);
+                refactored.push(`${box}=${options['checkboxes'][box] ? 2 : 3}`);
             }
         }
-        if(o === 'ratings'){
-            for(let rating in options['ratings']){
-                refactored.push(`${rating}=from_${options['ratings'][rating].from}to_${options['ratings'][rating].to}`);
-            }
+        if(o === 'countries' && options[o]){
+            refactored.push(`factory_country=${options[o]}`);
+        }
+        if(o === 'cities' && options[o]){
+            refactored.push(`factory_city=${options[o]}`);
+        }
+        if(o === 'age' && options[o]){
+            refactored.push(`ages=${options[o]}`);
         }
         if(o === 'ordering'){
             refactored.push(`${o}=${options[o].join(',')}`);
         }
     }
+    
     if(refactored.length) return Api.get(`${request}?${refactored.join('&')}`);
     return Api.get(`${request}`);
 }
@@ -60,7 +69,6 @@ const getSupplierDetails = (id) => {
 
 //create supplier
 /*export*/ const create = (supplierData) => {
-    console.log(supplierData);
     const data = new FormData();
     for(let prop in supplierData){
         data.append(prop, supplierData[prop]);
@@ -135,6 +143,7 @@ const suppliersAges = (supplierId, ageId) => {
     });
 }
 const suppliersContacts = (supplierId, incoterm) => {
+    if(!incoterm.purpose) return 'perpose is empty'
     const data = {
         supplier: supplierId,
         ...incoterm
@@ -216,12 +225,18 @@ const uploadContract = ({ supplier, file }) => {
     let bodyFormData = new FormData();
     bodyFormData.append('file', file)
     bodyFormData.append('supplier', supplier)
-    return Api.post('suppliers/contract/', true, bodyFormData, false, false, {'Content-Type': 'multipart/form-data' })
+    return Api.post('suppliers/contract/', true, bodyFormData, false, false, {'Content-Type': 'multipart/form-data' }, {
+        onUploadProgress: function(progressEvent) {
+          var percentCompleted = Math.round( (progressEvent.loaded * 100) / progressEvent.total );
+          store.dispatch({ type: 'SUPPLIER_CONTRACT_UPLOAD_PERCENTAGE', payload: {percentCompleted, name: file.name} })
+        }
+      })
 }
 const getUploadedContract = (id) => Api.get(`suppliers/contract/?supplier=${id}`)
 const deleteUploadedContract = (id) => Api.delete(`suppliers/contract/${id}/`)
 
 export default {
+    getIncotermsList,
     saveContacts,
     saveAges,
     saveGenders,
@@ -242,4 +257,7 @@ export default {
     uploadContract,
     getUploadedContract,
     deleteUploadedContract,
+    getCityList,
+    saveIncoterm,
+    getIncoterm,
 }

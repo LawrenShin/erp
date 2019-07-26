@@ -16,9 +16,9 @@ class ResetPassword extends Component {
         } catch (e) {
             if ('response' in e) this.setState({error: e.response.data.new_password});
         }
-    }
+    };
 
-    handleClick = (d) => history.push('/dashboard')
+    handleClick = (d) => history.push('/suppliers');
 
     render() {
         return (

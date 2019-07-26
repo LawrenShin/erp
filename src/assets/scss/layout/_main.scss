@@ -12,8 +12,7 @@
     color: $color-active;
     cursor: pointer;
     display: inline-block;
-    margin: 3px 0 0 13px;
-    transform: translate(0, 3px);
+    margin: 0 0 0 13px;
     flex-shrink: 0;
 
     i {
@@ -495,6 +494,12 @@
   margin: -30px;
   border-radius: 50%;
   animation: spin 2s linear infinite;
+
+  &__wrapper {
+    &.-padding-80 {
+      padding: 80px;
+    }
+  }
 
   &.spinner__small {
     width: 30px;

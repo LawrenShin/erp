@@ -21,6 +21,7 @@ import Api from '../../../requestor/api';
 import Common from '../../../requestor/common';
 import axios from 'axios';
 import Table from './orderTable';
+import {NavLink} from "react-router-dom";
 
 const Submit = styled(({className, ...props}) =>
     <input type="submit" className={"btn " + className} {...props} value="Save"/>)`
@@ -31,7 +32,8 @@ width: fit-content;
 class ViewSuppierOrderHistory extends Component {
     state = {
         tableWidth: 0,
-        tableHeight: 0
+        tableHeight: 0,
+        sample: []
     };
 
     ref = React.createRef();
@@ -62,13 +64,16 @@ class ViewSuppierOrderHistory extends Component {
         window.removeEventListener("resize", this.onResize);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener("resize", this.onResize);
         this.onResize();
 
         if (this.props.needToGetSupplier)
             this.props.getById();
         this.props.getOrderList();
+
+        const sample = await Api.get(`quotations/supplier_item/?supplier=${this.props.match.params.id}`).then(res => res.results);
+        this.setState({sample})
     }
 
     render() {
@@ -81,7 +86,26 @@ class ViewSuppierOrderHistory extends Component {
                 <Header id={id} name={name} selected="4" edit={!readOnly}/>
 
                 <div className="box-bg-cards" ref={this.ref}>
-
+                    <table className='supplier__history'>
+                        <thead>
+                        <tr>
+                            <td>Quotation</td>
+                            <td>Request sample status</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.state.sample.map(item => <>
+                            {item.status === 'declined' ? '' : <>
+                                <tr>
+                                    <td><NavLink to={`/quotations/${item.quotation}`}
+                                                 className="text">Quotation {item.quotation}</NavLink></td>
+                                    <td>{item.sample_status.replace(/_/g, ' ')}</td>
+                                </tr>
+                            </>}
+                        </>)}
+                        </tbody>
+                    </table>
+                    {/*
                     {
                         [supplier.state].includes("loading") ?
                             <Loading/> :
@@ -210,10 +234,14 @@ class ViewSuppierOrderHistory extends Component {
                                                 </form>
                                             )}/>
 
-                                    <Table headers={this.headers} list={this.props.orderList}
-                                           width={this.state.tableWidth} height={this.state.tableHeight}/>
+                                    <Table
+                                        headers={this.headers}
+                                        list={{data: [], state: 'loaded'} || this.props.orderList}
+                                        width={this.state.tableWidth}
+                                        height={this.state.tableHeight}/>
                                 </>
                     }
+                    */}
                 </div>
             </>
         );

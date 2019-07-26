@@ -22,6 +22,10 @@
     max-height: 80vh;
     overflow: auto;
 
+    &.-select-supplier-modal {
+      height: 100%;
+    }
+
     &.-lg {
       width: 100%;
       max-width: 1170px;

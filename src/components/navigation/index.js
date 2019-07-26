@@ -105,7 +105,8 @@ class Navigation extends React.Component {
 
         return (
             <nav className="main-menu">
-                <UserProfile/>
+                {/* User profile was here */}
+                {/*<UserProfile/>*/}
                 <ul>
                     {navLinks.filter(({hideForRoles}) => !hideForRoles || !hideForRoles.includes(role)).map((link) => (
                         <li key={link.linkName}>
@@ -139,6 +140,6 @@ class Navigation extends React.Component {
 const mapStateToProps = (state) => ({
     auth: state.auth,
     role: state.auth.role
-})
+});
 
 export default connect(mapStateToProps)(Navigation);

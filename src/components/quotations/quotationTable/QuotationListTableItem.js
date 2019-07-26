@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import QuotationTableHeaderItem from './QuotationTableHeaderItem'
 import QuotationTableRowItem from './QuotationTableRowItem'
 import uuid from 'uuid'
+import Api from "../../../requestor/api";
 
 class QuotationListTableItem extends Component {
+    state = {
+        sample: []
+    };
+
     heads = ['Style name', 'Product group', 'Shell fabric', 'Color', 'Target price', 'Changes request'];
 
     selectFields = (quot) => {
@@ -18,7 +23,10 @@ class QuotationListTableItem extends Component {
         return selected
     }
 
-    
+    async componentDidMount() {
+        const sample = await Api.get(`quotations/supplier_item/?quotation=${this.props.quotId}`).then(res => res.results);
+        this.setState({sample})
+    }
 
     render() {
         return (
@@ -35,10 +43,13 @@ class QuotationListTableItem extends Component {
                     <div className="data-table__body">
                         {this.props.products.data.map(listItem => <QuotationTableRowItem
                             key={uuid()}
+                            status={this.props.quotationInfo.is_samples_requested}
+                            sample={this.state.sample}
                             control={true}
                             paused={listItem.pause}
                             addedSuppliers={this.props.suppliers.data}
                             distributedRelations={this.props.distributedRelations.data.filter(dr => dr.product === listItem.product.id)}
+                            productRelations={this.props.productRelations}
                             {...listItem.product} />
                         )}
                     </div>
@@ -50,4 +61,6 @@ class QuotationListTableItem extends Component {
 
 export default connect(state => ({
     distributedRelations: state.quotations.currentQuotationReducer.distributedRelations,
+    quotationInfo: state.quotations.currentQuotationReducer.currentQuotation.data,
+    productRelations: state.quotations.currentQuotationReducer.addedProductsRelations.data
 }))(QuotationListTableItem)

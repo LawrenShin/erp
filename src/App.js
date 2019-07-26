@@ -9,6 +9,11 @@ import { Provider, ReactReduxContext  } from 'react-redux';
 import { history } from './routes/history';
 import { store } from './store/createdStore'
 
+// if (process.env.NODE_ENV !== 'production') {
+  // const {whyDidYouUpdate} = require('why-did-you-update');
+//   whyDidYouUpdate(React, { exclude: [/^Notificator/] });
+// }
+
 class App extends Component {
   render() {
     return (

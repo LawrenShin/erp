@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import Loading from '../../../helpers/loading'
 import ModalSemantic from '../../../common/ModalSemantic'
 import CommonButton from '../../../common/CommonButton'
-import { createFiltersSelector, createOptionsSelector } from '../../../../ducks/quotations/index'
+import { createListsSelector, createFiltersSelector, createOptionsSelector } from '../../../../ducks/quotations/index'
 
 import QuotationTableHeaderItem from '../../quotationTable/QuotationTableHeaderItem'
 import QuotationTableRowModal from '../../quotationTable/QuotationTableRowModal'
@@ -12,10 +12,6 @@ import QuotationTableRowModal from '../../quotationTable/QuotationTableRowModal'
 import QuotationListFilter from "../../QuotationListFilter"
 
 class InvitationStatusModal extends Component {
-    componentDidMount() {
-        this.props.getInvitationStatus(this.props.quotationId)
-    }
-
     updateOptions = (fName, value) => this.props.setOption({filterName: fName, value})
 
     heads = ['', 'ID', 'Name', 'Status',  'Country'];
@@ -35,13 +31,28 @@ class InvitationStatusModal extends Component {
                         <h2>Invitation Status</h2>
 
                         <div className="quotation-modal__count">
-                            <div>Sent: {this.props.invitationStatus.data.length}</div>
-                            <div>Replied: {this.props.invitationStatus.data && this.countReplied(this.props.invitationStatus.data)}</div>
+                            {this.props.invitationStatus && <>
+                                <div>Sent: {this.props.invitationStatus.length}</div>
+                                <div>Replied: {this.props.invitationStatus.data && this.countReplied(this.props.invitationStatus)}</div>
+                            </>}
                         </div>
 
                         {this.props.filters ? <QuotationListFilter
                             search={true}
-                            filters={this.props.filters}
+                            filters={{
+                                name: {
+                                    field_class: "CharField",
+                                    field_name: "name",
+                                    alt_name: 'supplier__name__icontains',
+                                    lookup_expr: "icontains",
+                                    value: this.props.options.supplier__name__icontains,
+                                },
+                                status: {...this.props.filters.status, extra: [
+                                    {text: 'Waiting', value: 'waiting'}, 
+                                    {text: 'Accepted', value: 'accepted'}, 
+                                    {text: 'Declined', value: 'declined'}
+                                ]},
+                            }}
                             options={this.props.options}
                             updateOptions={this.updateOptions}
                             clearAll={this.props.clearOptions}
@@ -51,8 +62,8 @@ class InvitationStatusModal extends Component {
                                 <div className="data-table__header">
                                     <QuotationTableHeaderItem heads={this.heads} control={false} buttonRemind={true}/>
                                 </div>
-                                {this.props.invitationStatus.data.length ? <div className="data-table__body">
-                                    {this.props.invitationStatus.data.map(listItem => <QuotationTableRowModal
+                                {(this.props.invitationStatus && this.props.invitationStatus.length) ? <div className="data-table__body">
+                                    {this.props.invitationStatus.map(listItem => <QuotationTableRowModal
                                             invitationModal={true}
                                             show_id={true}
                                             name={listItem.supplier.name}
@@ -63,13 +74,17 @@ class InvitationStatusModal extends Component {
                                             // confirmed={listItem.confirmed}
                                             id={listItem.supplier_id}
                                             key={listItem.id}
-
                                             buttonRemind={true}
                                             handleRemindSupplier={this.handleRemindSupplier}
                                             handleGetSupplierInQuotation={this.handleGetSupplierInQuotation}
                                         />
                                     )}
-                                </div> : <Loading />}
+                                </div> 
+                                    : 
+                                    (Array.isArray(this.props.invitationStatus) && 
+                                    this.props.invitationStatus.length === 0) ? <h1>No comments were found</h1> 
+                                        : 
+                                    <Loading className='spinner__wrapper -padding-80' />}
                             </div>
                         </div>
                     </div>
@@ -80,14 +95,16 @@ class InvitationStatusModal extends Component {
 }
 
 export default connect(state => ({
-    invitationStatus: state.quotations.currentQuotationReducer.invitationStatus,
+    invitationStatus: createListsSelector('invitationStatus')(state),
     filters: createFiltersSelector('suppliers')(state),
-    options: createOptionsSelector('suppliers')(state),
+    options: createOptionsSelector('invitationStatus')(state),
 }), dispatch => ({
-    getModalsData: () => dispatch({type: 'REQUEST_MODALS_DATA'}),
-    clearOptions: () => dispatch({type: 'CLEAR_QUOTATIONS_OPTION_S'}),
-    setOption: (payload) => dispatch({type: 'QUOTATIONS_OPTION_S', payload}),
-    getInvitationStatus: (payload) => dispatch({type: 'GET_INVITATION_STATUS', payload}),
+    clearOptions: () => dispatch({type: 'QUOTATIONS_OPTION_I'}),
+    setOption: (payload) => {
+        let {value, filterName} = payload
+        if(filterName === 'name') filterName = 'supplier__name__icontains'
+        return dispatch({ type: 'QUOTATIONS_OPTION_I', payload: {value, filterName} })
+    },
     remindSupplier: (payload) => dispatch({type: 'REMIND_SUPPLIER', payload}),
     getSupplierInQuotation: (payload) => dispatch({type: 'GET_SUPPLIER_IN_QUOTATION', payload}),
 }))(InvitationStatusModal);

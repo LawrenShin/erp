@@ -9,7 +9,10 @@ export default class MinMaxInput extends React.Component {
         minValue: this.props.min !== undefined ? this.props.min : this.props.value.min || "",
         maxValue: this.props.max !== undefined ? this.props.max : this.props.value.max || ""
     };
-
+componentWillReceiveProps(props){
+    if (props.min) this.setState({ minValue: +props.min })
+    if (props.max) this.setState({ maxValue: +props.max })
+}
     getName = (type) => {
         if (type === 'min')
             return this.props.minName !== undefined ? this.props.minName : this.props.name.min || "";
@@ -50,15 +53,25 @@ export default class MinMaxInput extends React.Component {
                                     <div style={{color: "red"}}>{this.props.minError}</div> : null
                             }
                         </span>
-                        <input type="text" className="box-field__input" value={this.state.minValue} required={this.props.required}
-                               onChange={(e) => this.onChange(e, "min")}/>
+                        <input 
+                            disabled={this.props.readOnly}
+                            type="number" 
+                            className="box-field__input" 
+                            value={this.state.minValue} 
+                            required={this.props.required}
+                            onChange={(e) => this.onChange(e, "min")} />
                         <span className="box-field__smalllabel">{this.props.maxLabel || 'Max'}</span>
                         {
                             this.props.maxError ?
                                 <div style={{color: "red"}}>{this.props.maxError}</div> : null
                         }
-                        <input type="text" className="box-field__input" value={this.state.maxValue} required={this.props.required}
-                               onChange={(e) => this.onChange(e, "max")}/>
+                        <input 
+                            disabled={this.props.readOnly}
+                            type="number" 
+                            className="box-field__input" 
+                            value={this.state.maxValue} 
+                            required={this.props.required}
+                            onChange={(e) => this.onChange(e, "max")}/>
                     </div>
                 </div>
             </div>

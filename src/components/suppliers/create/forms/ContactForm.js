@@ -59,7 +59,7 @@ class ContactForm extends Component {
                         <label className="box-field__label required">{field.name}</label>
                         <Dropdown
                             defaultValue={prevCity ? prevCity[0].key : ''}
-                            onChange={this.localSave}
+                            onChange={this.dropdownSave}
                             search selection
                             options={this.state.citiesOptions}
                             name={field.inputName}/>
@@ -83,7 +83,7 @@ class ContactForm extends Component {
                         <label className="box-field__label required">{field.name}</label>
                         <Dropdown
                             defaultValue={prevCountry ? prevCountry[0].key : ''}
-                            onChange={this.localSave}
+                            onChange={this.dropdownSave}
                             search selection
                             options={this.state.countriesOptions}
                             name={field.inputName}/>
@@ -93,13 +93,20 @@ class ContactForm extends Component {
         }
 
         return (
-            <Input required={field.required} key={index} onChange={this.localSave} label={field.name} name={field.inputName}
-                   value={this.state.info[field.inputName] ? this.state.info[field.inputName] : ''}/>
+            <Input 
+                key={index} 
+                required={field.required} 
+                onChange={this.localSave} 
+                label={field.name}
+                name={field.inputName}
+                type={field.name.match(/tel/gi) ? 'number' : 'text'}
+                value={this.state.info[field.inputName] ? this.state.info[field.inputName] : ''} 
+            />
         )
 
     }
 
-    localSave = ({name, value, checked}) => {
+    localSave = ({ name, value, checked }) => {
         //finally this switcher defines where to save what after change
         switch (name) {
             case 'legal_city':
@@ -124,13 +131,38 @@ class ContactForm extends Component {
         }
     }
 
-    pullIncoterms = () => {
-        return this._incotermsForm.state.incoterms;
+    dropdownSave = (e, { name, value, checked = false }) => {
+        //finally this switcher defines where to save what after change
+        switch (name) {
+            case 'legal_city':
+                this.setState({legalCity: this.state.cities.filter((city) => city.id === value)[0]}, () => this.proceed(0));
+                break;
+            case 'legal_city_factory':
+                this.setState({legalCityFactory: this.state.cities.filter((city) => city.id === value)[0]}, () => this.proceed(0));
+                break;
+            case 'legal_country':
+                this.setState({legalCountry: this.state.countries.filter((country) => country.id === value)[0]}, () => this.proceed(0));
+                break;
+            case 'legal_country_factory':
+                this.setState({legalCountryFactory: this.state.countries.filter((country) => country.id === value)[0]}, () => this.proceed(0));
+                break;
+
+            default:
+                this.setState((prev) => {
+                    let state = prev;
+                    state.info[name] = value || checked;
+                    return state;
+                }, () => this.proceed(0))
+        }
     }
+
+    // pullIncoterms = () => {
+    //     return this._incotermsForm.state.incoterms;
+    // }
 
     proceed = (step = 1) => {
         const state = this.state;
-        let dataToSave = {...state.info, incoterms: this.pullIncoterms()};
+        let dataToSave = {...state.info};
         //check wether to set values to proceed. Has a bug - if u set values and come back changing any of them causes reset of all.
         if (state.legalCity) contactFormPropDefiner(dataToSave, 'legal_city', state.legalCity.id);
         if (state.legalCityFactory) contactFormPropDefiner(dataToSave, 'factory_city', state.legalCityFactory.id);
@@ -180,16 +212,20 @@ class ContactForm extends Component {
                     <form>
                         <div className="form-box">
                             {this.state.legalFields.map((field, index) => this.renderFields(field, index))}
-                            <CheckboxComponent className="form-box__item checkbox-card" onChange={this.localSave}
-                                               label=' factory address is the same' name='factory_address_same'/>
+                            {/* <CheckboxComponent 
+                                className="form-box__item checkbox-card" 
+                                onChange={this.localSave}
+                                label=' factory address is the same' 
+                                name='factory_address_same'
+                            /> */}
                         </div>
                     </form>
-                    <IncotermsContactForm
+                    {/* <IncotermsContactForm
                         renderFields={this.renderFields}
                         removeIncoterm={this.removeIncoterm}
                         ref={this.getIncotermsFormRef}
                         prevIncoterms={this.props.info.incoterms || ''}
-                    />
+                    /> */}
                 </div>
             );
         } else {

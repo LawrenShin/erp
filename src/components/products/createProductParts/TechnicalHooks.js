@@ -34,10 +34,12 @@ const TechnicalHooks = (props) => {
 
     const renderDropdowns = (map) => {
         let drops = [];
-        let requireds = ['product_type', 'size_range', 'product_category', 'shell_fabric_1', 'shell_fabric_1_weight', 'shell_fabric_1_composition', 'shell_fabric_1_constraction'];
+        let requireds = ['kinds', 'sizes', 'category'];
         for (let [name, options] of map) {
+            if(name === 'category') {
+                continue;
+            }
             const req = requireds.filter(word => word === name)[0];
-            if (name === 'sizes') console.log(props.technicalStore[name], props.technicalStore)
             drops.push(
                 <WrappError
                     key={uuid()}
@@ -45,13 +47,13 @@ const TechnicalHooks = (props) => {
                     name={name}
                     options={options}
                     saveToStore={props.saveToStore}
-                    valueFromStore={props.technicalStore[name]}
+                    valueFromStore={props.product[name] || props.technicalStore[name]}
                     requestErrors={props.requestErrors}
                 />
             )
         }
         return drops.map(d => d)
-    }
+    };
 
     return (
         <div className="product__item">
@@ -61,18 +63,111 @@ const TechnicalHooks = (props) => {
             </div>
             <div className="product-details">
                 <div className="product-details__box">
-                    {renderDropdowns(props.technicalMap.entries())}
+                    {props.technicalMap && <ConnectedDropdown
+                        required='required'
+                        name='category'
+                        options={props.technicalMap.get('category').map((s, i) => ({name: s.name, id: s.name}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.category}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Product category'
+                        required='required'
+                        name='kind'
+                        options={props.technicalMap.get('kinds').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.kind}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Size range'
+                        required='required'
+                        name='size_grid'
+                        options={props.technicalMap.get('sizes').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.size_grid}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        required='required'
+                        name='purpose'
+                        options={props.technicalMap.get('purpose').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.purpose}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        required='required'
+                        name='length'
+                        options={props.technicalMap.get('length').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.length}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Pocket type'
+                        required='required'
+                        name='type_pocket'
+                        options={props.technicalMap.get('typepocket').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.type_pocket}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Waist level'
+                        required='required'
+                        name='level_waist'
+                        options={props.technicalMap.get('levelwaist').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.level_waist}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Neck type'
+                        required='required'
+                        name='kind_neck'
+                        options={props.technicalMap.get('kindneck').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.kind_neck}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Fastener type'
+                        required='required'
+                        name='kind_fastener'
+                        options={props.technicalMap.get('kindfastener').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.kind_fastener}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Shape'
+                        required='required'
+                        name='silhouette'
+                        options={props.technicalMap.get('silhouettes').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.silhouette}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        label='Strap type'
+                        required='required'
+                        name='kind_strap'
+                        options={props.technicalMap.get('kindstrap').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.kind_strap}
+                    />}
+                    {props.technicalMap && <ConnectedDropdown
+                        required='required'
+                        name='sleeve'
+                        options={props.technicalMap.get('sleeve').map((s, i) => ({name: s.name, id: s.id}))}
+                        saveToStore={props.saveToStore}
+                        valueFromStore={props.product.sleeve}
+                    />}
+                    {/*renderDropdowns(props.technicalMap.entries())*/}
                 </div>
 
                 <ProductTabsHooks
+                    product={props.product}
                     fabricMap={props.fabricMap}
                     saveToStore={props.saveToStore}
                     shell_fabric_tab={props.technicalStore.shell_fabric_tab}
                 />
 
-                <div className="product-columns product-checkboxes">
+                {/*<div className="product-columns product-checkboxes">
                     {renderCheckboxes(checkboxesList)}
-                </div>
+                </div>*/}
             </div>
         </div>
     );

@@ -2,7 +2,8 @@ import ApiDefiner, {getDefaultResponse} from './apiRequestDefiner';
 
 const DEFAULTS = {
   start: '?',
-  ages: '',
+  name__icontains: '',
+  age: '',
   payment_terms: '',
   categories: '',
   genders: '',
@@ -13,6 +14,7 @@ const DEFAULTS = {
   status: '',
   type: '',
   offset: 0,
+  ordering: [],
   limit: 50,
   checkboxes: {
     is_timely_response_to_letters: true,
@@ -76,7 +78,7 @@ export default (state = {
             .request( (requestState) => ({...state, paymentTerms: {data: [], state: requestState}}))
             .ready( (payload, requestState) => ({...state, paymentTerms: {
                 data: payload.data.data.results.map(({id, name}) => (
-                  { key: name, value: id, text: name }
+                  { key: id, value: id, text: name }
                 )), 
                 state: requestState}})
               )
@@ -107,13 +109,14 @@ export default (state = {
       case 'SET_FILTERS':
         return {...state, filters: action.filters};
       case 'ADD_OPTIONS_SUPPLIERS':
-        let changes = Object.assign({}, state.options);
+        let changes = Object.assign({}, state.options), option = action.payload.option.toLowerCase().replace(' ', '_')
+        console.log(changes, state.options)
         for(let prop in changes){
-          if(prop === action.payload.option.toLowerCase() && prop !== 'start' && prop !== 'checkboxes') 
+          if(prop === option && prop !== 'start' && prop !== 'checkboxes') 
             changes[prop] = action.payload.value;
             if(prop === 'checkboxes'){
             for(let box in changes['checkboxes']){
-              if(box === action.payload.option) 
+              if(box === option) 
                 changes['checkboxes'][box] = action.payload.value;
             }
           }
@@ -135,7 +138,17 @@ export default (state = {
         return { ...state, uploadedContracts: { ...state.uploadedContracts, loading: false, results: payload } }
       case 'UPLOAD_CONTRACT_ERROR':
         return { ...state, uploadedContracts: { ...state.uploadedContracts, loading: false, error: payload } }
-        
+      case 'SET_FILTER_NAME_SUPPLIER':
+        return { ...state, options: { ...state.options, name__icontains: payload } }
+      case 'ADD_ORDERING': 
+        return { ...state, 
+          options: {
+            ...state.options,
+            ordering: !!state.options.ordering.length ? [state.options.ordering.includes(payload) ? `-${payload}` : state.options.ordering.includes(`-${payload}`) ? `${payload}` : `-${payload}`] 
+            : [`-${payload}`] 
+          }
+        }
+
       default:
         return state
     }

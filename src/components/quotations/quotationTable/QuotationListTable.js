@@ -21,7 +21,7 @@ class QuotationListTable extends Component {
 
     render() {
         return (
-            <div className='data-table__wrapper'>
+            <div className='data-table__wrapper' id={this.props.id ? this.props.id : ''} onScroll={this.props.onScroll}>
                 <div className='data-table'>
                     <div className="data-table__header">
                         <QuotationTableHeader 
